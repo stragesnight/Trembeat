@@ -13,8 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Getter
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 @Table(name = "roles", indexes = {
         @Index(columnList = "name", unique = true)
 })
