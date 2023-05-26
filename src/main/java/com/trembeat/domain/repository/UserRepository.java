@@ -1,4 +1,4 @@
-package com.trembeat.domain.dao;
+package com.trembeat.domain.repository;
 
 import com.trembeat.domain.models.User;
 import org.springframework.data.jpa.repository.Query;
