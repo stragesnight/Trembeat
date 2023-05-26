@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
+/**
+ * Spring Boot Security configuration class
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
