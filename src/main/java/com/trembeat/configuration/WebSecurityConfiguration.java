@@ -1,5 +1,7 @@
 package com.trembeat.configuration;
 
+import com.trembeat.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,6 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration {
+    @Autowired
+    private UserService _userService;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> {
@@ -25,7 +31,8 @@ public class WebSecurityConfiguration {
                 })
                 .logout(logout -> {
                     logout.permitAll();
-                });
+                })
+                .userDetailsService(_userService);
 
         return http.build();
     }
