@@ -1,4 +1,4 @@
-package com.sopilka.configuration;
+package com.trembeat.configuration;
 
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

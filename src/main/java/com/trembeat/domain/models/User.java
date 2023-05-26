@@ -1,4 +1,4 @@
-package com.sopilka.domain.models;
+package com.trembeat.domain.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

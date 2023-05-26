@@ -1,13 +1,13 @@
-package com.sopilka;
+package com.trembeat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SopilkaApplication {
+public class TrembeatApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SopilkaApplication.class, args);
+        SpringApplication.run(TrembeatApplication.class, args);
     }
 
 }

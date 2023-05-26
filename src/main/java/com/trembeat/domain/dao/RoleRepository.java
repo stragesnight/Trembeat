@@ -1,6 +1,6 @@
-package com.sopilka.domain.dao;
+package com.trembeat.domain.dao;
 
-import com.sopilka.domain.models.Role;
+import com.trembeat.domain.models.Role;
 import org.springframework.data.repository.CrudRepository;
 
 /**
