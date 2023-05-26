@@ -1,13 +1,25 @@
 package com.trembeat.controllers;
 
+import com.trembeat.domain.models.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
-    @RequestMapping("/login")
-    public ModelAndView login() {
-        return new ModelAndView("layout", "content", "user/login");
+    @GetMapping("/login")
+    public String getLogin() {
+        return "user/login";
+    }
+
+    @GetMapping("/register")
+    public ModelAndView getRegister() {
+        return new ModelAndView("user/register", "user", new User());
+    }
+
+    @PostMapping("/register")
+    public ModelAndView postRegister() {
+        // TODO
+        return null;
     }
 }

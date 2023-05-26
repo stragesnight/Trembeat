@@ -1,3 +1,4 @@
+<div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content">
     <form th:action="@{~/login}" th:method="POST">
         <div>
@@ -10,4 +11,5 @@
         </div>
         <input type="submit" value="Login">
     </form>
+</div>
 </div>
