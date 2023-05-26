@@ -1,0 +1,24 @@
+<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:fragment="content">
+    <form th:action="@{~/register}" th:method="POST" th:object="${user}">
+        <h1 th:text="${user.getUsername()}"></h1>
+        <div>
+            <label for="username">Username: </label>
+            <input type="text" id="username" th:field="*{username}">
+        </div>
+        <div>
+            <label for="email">Email: </label>
+            <input type="text" id="email" th:field="*{email}">
+        </div>
+        <div>
+            <label for="password">Password: </label>
+            <input type="password" id="password" th:field="*{password}">
+        </div>
+        <div>
+            <label for="passwordConfirmation">Confirm password: </label>
+            <input type="password" id="passwordConfirmation" th:field="*{passwordConfirmation}">
+        </div>
+        <input type="submit" value="Register">
+    </form>
+</div>
+</div>
