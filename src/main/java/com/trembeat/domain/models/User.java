@@ -1,5 +1,6 @@
 package com.trembeat.domain.models;
 
+import com.trembeat.annotations.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Getter
+@ValidPassword
 @NoArgsConstructor
 @Table(name = "users", indexes = {
         @Index(columnList = "username", unique = true),
@@ -50,6 +52,7 @@ public class User implements UserDetails {
     @Setter
     @NotNull
     @NotEmpty
+    @ValidEmail
     @Column(name = "email", length = 256, nullable = false, unique = true)
     String email;
 

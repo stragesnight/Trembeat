@@ -2,6 +2,7 @@ package com.trembeat.controllers;
 
 import com.trembeat.domain.models.User;
 import com.trembeat.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String postRegister(User user) {
+    public String postRegister(@ModelAttribute("user") @Valid User user) {
         return _userService.registerUser(user)
                 ? "home/index"
                 : "user/register";
