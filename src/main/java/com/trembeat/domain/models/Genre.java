@@ -27,6 +27,6 @@ public class Genre {
     @Column(name = "name", length = 64, nullable = false, unique = true)
     String name;
 
-    @OneToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
     Set<Sound> sounds;
 }

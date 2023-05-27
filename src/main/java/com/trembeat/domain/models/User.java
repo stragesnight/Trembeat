@@ -60,7 +60,7 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Role> roles;
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     Set<Sound> sounds;
 
 
