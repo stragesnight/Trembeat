@@ -31,13 +31,11 @@ public class Sound {
     String description;
 
     @Setter
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "genre_id", nullable = false)
     Genre genre;
 
     @Setter
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     User author;

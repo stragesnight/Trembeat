@@ -37,15 +37,21 @@ public class SoundService {
         System.out.printf("name: %s\n", file.getOriginalFilename());
         System.out.printf("sound.id: %d\n", sound.getId());
 
-        String filepath = String.format("classpath:/static/audio/%d.mp3", sound.getId());
+        String filepath = String.format("%s/static/uploads/audio/%d.mp3",
+                getClass().getClassLoader().getResource(".").getFile(),
+                sound.getId());
 
-        OutputStream os;
         try {
-            os = new BufferedOutputStream(new FileOutputStream(filepath));
+            File outputFile = new File(filepath);
+            outputFile.getParentFile().mkdirs();
+            outputFile.createNewFile();
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(outputFile));
             os.write(file.getBytes());
             os.flush();
             os.close();
         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
             return false;
         }
 

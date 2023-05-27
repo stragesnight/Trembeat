@@ -3,14 +3,15 @@ package com.trembeat.controllers;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.services.SoundService;
+import com.trembeat.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -27,28 +28,29 @@ public class SoundController {
     }
 
     @GetMapping("/sound/upload")
-    public ModelAndView getUpload(Principal principal) {
-        User user = (User)principal;
-
-        // TODO: error page
-        if (user == null)
-            return new ModelAndView("home/index");
-
-        Sound sound = new Sound();
-        sound.setAuthor(user);
-        // TODO: ViewModel genre handling
-        sound.setGenre(new Genre());
-
+    public ModelAndView getUpload() {
         return new ModelAndView("sound/upload", Map.of(
-                "sound", sound,
+                "sound", new Sound(),
                 "genres", _genreRepo.findAll()
         ));
     }
 
     @PostMapping("/sound/upload")
     public String postUpload(
+            Authentication auth,
             @ModelAttribute("sound") @Valid Sound sound,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("genreId") Long genreId) {
+
+        User user = (User)auth.getPrincipal();
+        // TODO: error page
+        if (user == null)
+            return "sound/upload";
+
+        sound.setAuthor(user);
+        // TODO: ViewModel genre handling
+        sound.setGenre(_genreRepo.findById(genreId).get());
+
         return _soundService.addSound(sound, file)
                 ? "home/index"
                 : "sound/upload";

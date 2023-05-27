@@ -1,6 +1,6 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content">
-    <form th:action="@{~/sound/upload}" th:method="POST" th:object="${sound}">
+    <form enctype="multipart/form-data" th:action="@{~/sound/upload}" th:method="POST" th:object="${sound}">
         <div>
             <label for="title">Title: </label>
             <input type="text" id="title" th:field="*{title}">
@@ -11,16 +11,15 @@
         </div>
         <div>
             <label for="genre">Genre: </label>
-            <select id="genre">
-                <option th:each="genre: ${genres}">
-                    <span th:value="${genre.getId()}" th:text="${genre.getName()}"></span>
-                </option>
+            <select id="genre" name="genreId">
+                <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"></option>
             </select>
         </div>
         <div>
             <label for="file">File: </label>
             <input type="file" id="file" name="file">
         </div>
+        <input type="submit" value="Upload">
     </form>
 </div>
 </div>

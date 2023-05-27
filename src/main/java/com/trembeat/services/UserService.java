@@ -35,6 +35,15 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Find user by id
+     * @param id Id to search for
+     * @return Found User entity
+     */
+    public User findById(Long id) {
+        return _userRepo.findById(id).orElse(null);
+    }
+
+    /**
      * Register new user
      * @param user User data to be registered
      * @return true, if user was registered successfully, otherwise - false

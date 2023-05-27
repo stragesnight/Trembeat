@@ -24,11 +24,12 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> {
                     request.requestMatchers(
-                                "/",
-                                "/about*",
-                                "/login*",
-                                "/register*",
-                                "/sound")
+                                    "/",
+                                    "/about*",
+                                    "/login*",
+                                    "/register*",
+                                    "/sound",
+                                    "/uploads*")
                             .permitAll()
                             .anyRequest()
                             .authenticated();
