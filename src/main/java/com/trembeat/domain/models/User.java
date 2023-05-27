@@ -60,6 +60,9 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Role> roles;
 
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    Set<Sound> sounds;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
