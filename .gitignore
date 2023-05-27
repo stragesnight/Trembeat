@@ -34,3 +34,6 @@ build/
 
 ### Private properties ###
 src/main/resources/env.properties
+
+### Sound files ###
+src/main/resources/static/audio
