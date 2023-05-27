@@ -1,13 +1,13 @@
 package com.trembeat.controllers;
 
-import com.trembeat.domain.models.Sound;
-import com.trembeat.domain.models.User;
-import com.trembeat.domain.repository.GenreRepository;
-import com.trembeat.domain.repository.SoundRepository;
+import com.trembeat.domain.models.*;
+import com.trembeat.domain.repository.*;
+import com.trembeat.services.SoundService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -16,14 +16,14 @@ import java.util.Map;
 @Controller
 public class SoundController {
     @Autowired
-    private SoundRepository _soundRepo;
+    private SoundService _soundService;
     @Autowired
     private GenreRepository _genreRepo;
 
 
     @GetMapping("/sound")
     public ModelAndView getIndex() {
-        return new ModelAndView("sound/index", "sounds", _soundRepo.findAll());
+        return new ModelAndView("sound/index", "sounds", _soundService.findAll());
     }
 
     @GetMapping("/sound/upload")
@@ -36,6 +36,8 @@ public class SoundController {
 
         Sound sound = new Sound();
         sound.setAuthor(user);
+        // TODO: ViewModel genre handling
+        sound.setGenre(new Genre());
 
         return new ModelAndView("sound/upload", Map.of(
                 "sound", sound,
@@ -44,8 +46,11 @@ public class SoundController {
     }
 
     @PostMapping("/sound/upload")
-    public ModelAndView postUpload(@ModelAttribute("sound") @Valid Sound sound) {
-        // TODO
-        return null;
+    public String postUpload(
+            @ModelAttribute("sound") @Valid Sound sound,
+            @RequestParam("file") MultipartFile file) {
+        return _soundService.addSound(sound, file)
+                ? "home/index"
+                : "sound/upload";
     }
 }
