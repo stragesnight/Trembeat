@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "sounds", indexes = {
-
+        @Index(columnList = "title")
 })
 public class Sound {
     @Id
@@ -27,7 +27,6 @@ public class Sound {
 
     @Setter
     @NotNull
-    @NotEmpty
     @Column(name = "description", length = 512, nullable = false)
     String description;
 

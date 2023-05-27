@@ -1,0 +1,18 @@
+<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:fragment="content">
+    <ul>
+        <li th:each="sound: ${sounds}">
+            <h3 th:text="${sound.getTitle()}"></h3>
+            <p>
+                By <span th:text="${sound.getAuthor().getUsername()}"></span>
+            </p>
+            <p>
+                Genre: <span th:text="${sound.getGenre().getName()}"></span>
+            </p>
+            <audio controls>
+                <source th:src="@{~/audio/${sound.getId()}.mp3}">
+            </audio>
+        </li>
+    </ul>
+</div>
+</div>
