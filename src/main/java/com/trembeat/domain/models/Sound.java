@@ -1,7 +1,6 @@
 package com.trembeat.domain.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 /**
@@ -22,14 +21,11 @@ public class Sound {
 
     @Setter
     @NonNull
-    @NotNull
-    @NotEmpty
     @Column(name = "title", length = 128, nullable = false)
     String title;
 
     @Setter
     @NonNull
-    @NotNull
     @Column(name = "description", length = 512, nullable = false)
     String description;
 

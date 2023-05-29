@@ -13,7 +13,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="genreId">Genre</label>
             </div>
-            <select class="custom-select" id="genreId" name="genreId">
+            <select class="custom-select" id="genreId" th:field="*{genreId}">
                 <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"></option>
             </select>
         </div>
@@ -22,10 +22,11 @@
                 <span class="input-group-text">Audio file</span>
             </div>
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="file" name="file">
+                <input type="file" class="custom-file-input" id="file" th:field="*{file}">
                 <label class="custom-file-label" for="file">Choose file</label>
             </div>
         </div>
+        <input type="text" id="authorId" th:field="*{authorId}" hidden>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
 </div>

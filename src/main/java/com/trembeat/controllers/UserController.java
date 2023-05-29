@@ -1,6 +1,6 @@
 package com.trembeat.controllers;
 
-import com.trembeat.domain.models.User;
+import com.trembeat.domain.viewmodels.UserViewModel;
 import com.trembeat.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ public class UserController {
 
     @GetMapping("/register")
     public ModelAndView getRegister() {
-        return new ModelAndView("user/register", "user", new User());
+        return new ModelAndView("user/register", "user", new UserViewModel());
     }
 
     @PostMapping("/register")
-    public String postRegister(@ModelAttribute("user") @Valid User user) {
+    public String postRegister(@ModelAttribute("user") @Valid UserViewModel user) {
         return _userService.registerUser(user)
                 ? "home/index"
                 : "user/register";

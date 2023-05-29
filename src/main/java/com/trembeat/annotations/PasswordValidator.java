@@ -1,6 +1,6 @@
 package com.trembeat.annotations;
 
-import com.trembeat.domain.models.User;
+import com.trembeat.domain.viewmodels.UserViewModel;
 import jakarta.validation.*;
 
 
@@ -12,7 +12,7 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Obj
 
     @Override
     public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
-        User user = (User)o;
+        UserViewModel user = (UserViewModel)o;
         return user != null && user.getPassword().compareTo(user.getPasswordConfirmation()) == 0;
     }
 }

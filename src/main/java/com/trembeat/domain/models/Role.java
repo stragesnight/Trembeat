@@ -2,7 +2,6 @@ package com.trembeat.domain.models;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -19,14 +18,11 @@ import java.util.Set;
 })
 public class Role implements GrantedAuthority {
     @Id
-    @NotNull
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Setter
-    @NotNull
-    @NotEmpty
     @Column(name = "name", length = 32, unique = true)
     String name;
 

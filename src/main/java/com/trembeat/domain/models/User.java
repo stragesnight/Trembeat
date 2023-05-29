@@ -1,8 +1,6 @@
 package com.trembeat.domain.models;
 
-import com.trembeat.annotations.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +14,6 @@ import java.util.Set;
  */
 @Entity
 @Getter
-@ValidPassword
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @Table(name = "users", indexes = {
@@ -33,31 +30,17 @@ public class User implements UserDetails {
 
     @Setter
     @NonNull
-    @NotNull
-    @NotEmpty
     @Column(name = "username", length = 64, nullable = false, unique = true)
     String username;
 
     @Setter
     @NonNull
-    @NotNull
-    @NotEmpty
     // TODO: ensure that safe BCrypt string length is in fact 60
     @Column(name = "password", length = 60, nullable = false)
     String password;
 
     @Setter
     @NonNull
-    @NotNull
-    @NotEmpty
-    @Transient
-    String passwordConfirmation;
-
-    @Setter
-    @NonNull
-    @NotNull
-    @NotEmpty
-    @ValidEmail
     @Column(name = "email", length = 256, nullable = false, unique = true)
     String email;
 
