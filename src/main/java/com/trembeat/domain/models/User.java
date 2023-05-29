@@ -17,7 +17,8 @@ import java.util.Set;
 @Entity
 @Getter
 @ValidPassword
-@NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Table(name = "users", indexes = {
         @Index(columnList = "username", unique = true),
         @Index(columnList = "password", unique = true),
@@ -31,12 +32,14 @@ public class User implements UserDetails {
     Long id;
 
     @Setter
+    @NonNull
     @NotNull
     @NotEmpty
     @Column(name = "username", length = 64, nullable = false, unique = true)
     String username;
 
     @Setter
+    @NonNull
     @NotNull
     @NotEmpty
     // TODO: ensure that safe BCrypt string length is in fact 60
@@ -44,12 +47,14 @@ public class User implements UserDetails {
     String password;
 
     @Setter
+    @NonNull
     @NotNull
     @NotEmpty
     @Transient
     String passwordConfirmation;
 
     @Setter
+    @NonNull
     @NotNull
     @NotEmpty
     @ValidEmail

@@ -30,7 +30,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "name", length = 32, unique = true)
     String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     Set<User> users;
 
 
