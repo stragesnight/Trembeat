@@ -4,6 +4,7 @@ import com.trembeat.annotations.*;
 import com.trembeat.domain.models.User;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * User view model during profile editing
@@ -12,6 +13,8 @@ import lombok.*;
 @ValidPassword
 @NoArgsConstructor
 public class UserEditViewModel {
+    private MultipartFile profilePicture;
+
     @NotNull
     @NotEmpty
     private String username;

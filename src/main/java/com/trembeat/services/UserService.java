@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
 
 
 /**
@@ -82,10 +85,41 @@ public class UserService implements UserDetailsService {
                 user.setEmail(viewModel.getEmail());
             }
 
+            if (viewModel.getProfilePicture() != null)
+                addProfilePicture(userId, viewModel.getProfilePicture());
+
             _userRepo.save(user);
             return true;
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    /**
+     * Add profile picture for a given user
+     * @param userId User id to assign profile picture to
+     * @param file File containing image data
+     * @return true, if file was saved successfully, otherwise - false
+     */
+    private boolean addProfilePicture(Long userId, MultipartFile file) {
+        String filepath = String.format("%s/static/uploads/profile-pictures/%d.jpg",
+                getClass().getClassLoader().getResource(".").getFile(),
+                userId);
+
+        try {
+            File outputFile = new File(filepath);
+            outputFile.getParentFile().mkdirs();
+            outputFile.createNewFile();
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(outputFile));
+            os.write(file.getBytes());
+            os.flush();
+            os.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

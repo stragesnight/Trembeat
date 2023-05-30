@@ -4,7 +4,7 @@
 
 Add the ability to view and edit user profiles
 
-- [ ] Profile photo
+- [x] Profile photo
 - [x] Registration date
 - [x] Description/info field
 - [ ] Profile view page:
