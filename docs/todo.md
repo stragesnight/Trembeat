@@ -10,7 +10,7 @@ Add the ability to view and edit user profiles
 - [ ] Profile view page:
     * General information
     * List of uploaded files with search and sorting
-- [ ] Profile edit page
+- [x] Profile edit page
 - [ ] Email verification?
 
 ## Audio
