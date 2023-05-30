@@ -5,8 +5,8 @@
 Add the ability to view and edit user profiles
 
 - [ ] Profile photo
-- [ ] Registration date
-- [ ] Description/info field
+- [x] Registration date
+- [x] Description/info field
 - [ ] Profile view page:
     * General information
     * List of uploaded files with search and sorting

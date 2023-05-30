@@ -53,9 +53,9 @@ public class UserService implements UserDetailsService {
         try {
             User user = new User(
                     userViewModel.getUsername(),
+                    userViewModel.getBio(),
                     _passwordEncoder.encode(userViewModel.getPassword()),
-                    userViewModel.getEmail(),
-                    "");
+                    userViewModel.getEmail());
 
             _userRepo.save(user);
             return true;

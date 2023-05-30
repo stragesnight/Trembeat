@@ -16,6 +16,9 @@ public class UserViewModel {
     private String username;
 
     @NotNull
+    private String bio;
+
+    @NotNull
     @NotEmpty
     private String password;
 
