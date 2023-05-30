@@ -54,7 +54,8 @@ public class UserService implements UserDetailsService {
             User user = new User(
                     userViewModel.getUsername(),
                     _passwordEncoder.encode(userViewModel.getPassword()),
-                    userViewModel.getEmail());
+                    userViewModel.getEmail(),
+                    "");
 
             _userRepo.save(user);
             return true;

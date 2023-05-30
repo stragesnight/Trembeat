@@ -5,8 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -35,6 +34,11 @@ public class User implements UserDetails {
 
     @Setter
     @NonNull
+    @Column(name = "bio", length = 256, nullable = false)
+    String bio;
+
+    @Setter
+    @NonNull
     // TODO: ensure that safe BCrypt string length is in fact 60
     @Column(name = "password", length = 60, nullable = false)
     String password;
@@ -44,7 +48,9 @@ public class User implements UserDetails {
     @Column(name = "email", length = 256, nullable = false, unique = true)
     String email;
 
-    @Setter
+    @Column(name = "registration_date", nullable = false)
+    Date registrationDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
     Set<Role> roles;
 
@@ -75,5 +81,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @PrePersist
+    private void prePersist() {
+        registrationDate = new Date();
     }
 }
