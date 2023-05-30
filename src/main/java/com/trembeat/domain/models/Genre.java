@@ -18,12 +18,12 @@ public class Genre {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Setter
     @Column(name = "name", length = 64, nullable = false, unique = true)
-    String name;
+    private String name;
 
     @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
-    Set<Sound> sounds;
+    private Set<Sound> sounds;
 }

@@ -17,27 +17,27 @@ public class Sound {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Setter
     @NonNull
     @Column(name = "title", length = 128, nullable = false)
-    String title;
+    private String title;
 
     @Setter
     @NonNull
     @Column(name = "description", length = 512, nullable = false)
-    String description;
+    private String description;
 
     @Setter
     @NonNull
     @ManyToOne
     @JoinColumn(name = "genre_id", nullable = false)
-    Genre genre;
+    private Genre genre;
 
     @Setter
     @NonNull
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
-    User author;
+    private User author;
 }

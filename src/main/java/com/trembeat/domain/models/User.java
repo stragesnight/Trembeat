@@ -25,37 +25,37 @@ public class User implements UserDetails {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Setter
     @NonNull
     @Column(name = "username", length = 64, nullable = false, unique = true)
-    String username;
+    private String username;
 
     @Setter
     @NonNull
     @Column(name = "bio", length = 256, nullable = false)
-    String bio;
+    private String bio;
 
     @Setter
     @NonNull
     // TODO: ensure that safe BCrypt string length is in fact 60
     @Column(name = "password", length = 60, nullable = false)
-    String password;
+    private String password;
 
     @Setter
     @NonNull
     @Column(name = "email", length = 256, nullable = false, unique = true)
-    String email;
+    private String email;
 
     @Column(name = "registration_date", nullable = false)
-    Date registrationDate;
+    private Date registrationDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    Set<Role> roles;
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    Set<Sound> sounds;
+    private Set<Sound> sounds;
 
 
     @Override

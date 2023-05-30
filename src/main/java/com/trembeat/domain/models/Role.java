@@ -20,14 +20,14 @@ public class Role implements GrantedAuthority {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Setter
     @Column(name = "name", length = 32, unique = true)
-    String name;
+    private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    Set<User> users;
+    private Set<User> users;
 
 
     @Override
