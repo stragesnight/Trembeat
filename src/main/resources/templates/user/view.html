@@ -1,0 +1,33 @@
+<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:fragment="content" class="container">
+    <div class="card w-25">
+        <img th:src="@{~/uploads/profile-pictures/{id}.jpg (id = ${viewedUser.getId()})}" class="card-img-top" alt="profile picture">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${viewedUser.getUsername()}"></h5>
+            <p class="card-text" th:text="${viewedUser.getBio()}"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                Email: <span th:text="${viewedUser.getEmail()}"></span>
+            </li>
+            <li class="list-group-item">
+                Registration date: <span th:text="${viewedUser.getRegistrationDate()}"></span>
+            </li>
+        </ul>
+    </div>
+    <h2>Uploads</h2>
+    <ul>
+        <li th:each="sound: ${viewedUser.getUploads()}" class="card text-center w-25">
+            <div class="card-body">
+                <h3 class="card-title" th:text="${sound.getTitle()}"></h3>
+                <p class="card-text">
+                    Genre: <span th:text="${sound.getGenre().getName()}"></span>
+                </p>
+                <audio controls>
+                    <source th:src="@{~/uploads/audio/{id}.mp3(id = ${sound.getId()})}">
+                </audio>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>

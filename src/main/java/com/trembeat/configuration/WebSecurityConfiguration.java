@@ -29,7 +29,8 @@ public class WebSecurityConfiguration {
                                     "/login*",
                                     "/register*",
                                     "/sound",
-                                    "/uploads*")
+                                    "/uploads/**",
+                                    "/user/*")
                             .permitAll()
                             .anyRequest()
                             .authenticated();
