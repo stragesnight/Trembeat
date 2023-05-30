@@ -34,6 +34,7 @@ General front-end improvements and goals
 
 - [ ] Substitute Bootstrap with own styles
 - [ ] Improve page layout
+- [ ] Add localization support
 
 ## Back-end general
 
