@@ -51,6 +51,10 @@ public class User implements UserDetails {
     @Column(name = "registration_date", nullable = false)
     private Date registrationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "profile_picture_id")
+    private ProfilePicture profilePicture;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 

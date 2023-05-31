@@ -4,21 +4,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 /**
- * Sound entity in database, holds metadata and not sound itself
+ * Sound file entity
  */
 @Entity
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @Table(name = "sounds", indexes = {
-        @Index(columnList = "title")
+        @Index(columnList = "title"),
+        @Index(columnList = "content_id")
 })
-public class Sound {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Sound extends FileEntity {
     @Setter
     @NonNull
     @Column(name = "title", length = 128, nullable = false)
