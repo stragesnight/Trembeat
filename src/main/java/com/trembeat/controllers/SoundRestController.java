@@ -20,19 +20,17 @@ public class SoundRestController extends GenericContentController {
     @Autowired
     private GenreRepository _genreRepo;
     @Autowired
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    private SoundContentStore _soundContentStore;
+    private SoundStorageService _soundStorageService;
 
 
     @GetMapping("/api/get-sound/{id}")
     public ResponseEntity<?> getSound(@PathVariable Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
-
         if (optionalSound.isEmpty())
             return getResponse(HttpStatus.NO_CONTENT);
 
         Sound sound = optionalSound.get();
-        InputStreamResource isr = new InputStreamResource(_soundContentStore.getContent(sound));
+        InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound.getId()));
 
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
@@ -63,7 +61,7 @@ public class SoundRestController extends GenericContentController {
 
         try {
             sound = _soundRepo.save(sound);
-            _soundContentStore.setContent(sound, soundViewModel.getFile().getInputStream());
+            _soundStorageService.save(sound.getId(), soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return getResponse(HttpStatus.BAD_REQUEST);
         }
@@ -90,9 +88,9 @@ public class SoundRestController extends GenericContentController {
             return getResponse(HttpStatus.FORBIDDEN);
 
         try {
-            sound = _soundRepo.save(sound);
             // TODO: proper sound file editing
-            _soundContentStore.setContent(sound, soundViewModel.getFile().getInputStream());
+            sound = _soundRepo.save(sound);
+            _soundStorageService.save(sound.getId(), soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return getResponse(HttpStatus.BAD_REQUEST);
         }
@@ -114,8 +112,8 @@ public class SoundRestController extends GenericContentController {
         if (sound.getAuthor().getId() != user.getId())
             return getResponse(HttpStatus.FORBIDDEN);
 
+        _soundStorageService.delete(sound.getId());
         _soundRepo.deleteById(id);
-        _soundContentStore.unsetContent(sound);
 
         return getResponse(HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package com.trembeat.controllers;
 
 import com.trembeat.domain.models.FileEntity;
+import jdk.jfr.ContentType;
 import org.springframework.http.*;
 
 /**
@@ -9,7 +10,7 @@ import org.springframework.http.*;
 public abstract class GenericContentController {
     protected HttpHeaders getHeaders(FileEntity fileEntity) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType(fileEntity.getMimeType()));
+        headers.setContentType(MediaType.parseMediaType(fileEntity.getMimeType()));
         headers.setContentLength(fileEntity.getContentLength());
 
         return headers;

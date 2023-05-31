@@ -20,8 +20,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private ProfilePictureRepository _profilePictureRepo;
     @Autowired
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    private ProfilePictureContentStore _profilePictureContentStore;
+    private ProfilePictureStorageService _profilePictureStorageService;
     private BCryptPasswordEncoder _passwordEncoder;
 
 
@@ -94,7 +93,7 @@ public class UserService implements UserDetailsService {
                 picture = _profilePictureRepo.save(picture);
 
                 user.setProfilePicture(picture);
-                _profilePictureContentStore.setContent(picture, viewModel.getProfilePicture().getInputStream());
+                _profilePictureStorageService.save(picture.getId(), viewModel.getProfilePicture().getInputStream());
             }
 
             _userRepo.save(user);
@@ -112,8 +111,8 @@ public class UserService implements UserDetailsService {
     public boolean deleteUser(Long userId) {
         try {
             User user = _userRepo.findById(userId).get();
+            _profilePictureStorageService.delete(user.getProfilePicture().getId());
             _userRepo.delete(user);
-            _profilePictureContentStore.unsetContent(user.getProfilePicture());
             return true;
         } catch (Exception ex) {
             return false;
