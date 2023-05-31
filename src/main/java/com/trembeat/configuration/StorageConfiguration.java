@@ -18,13 +18,21 @@ public class StorageConfiguration {
 
             String soundsPath = String.format("%sstatic/uploads/sounds/", basePath);
             new File(soundsPath).mkdirs();
-            registry.addConverter(
-                (Converter<Sound, String>)sound -> String.format("%s%d.mp3", soundsPath, sound.getId()));
+            registry.addConverter(new Converter<Sound, String>() {
+                @Override
+                public String convert(Sound source) {
+                    return String.format("%s%d.mp3", soundsPath, source.getId());
+                }
+            });
 
             String ppPath = String.format("%sstatic/uploads/profile-pictures/", basePath);
             new File(ppPath).mkdirs();
-            registry.addConverter(
-                (Converter<ProfilePicture, String>)picture -> String.format("%s%d.jpeg", soundsPath, picture.getId()));
+            registry.addConverter(new Converter<ProfilePicture, String>() {
+                @Override
+                public String convert(ProfilePicture source) {
+                    return String.format("%s%d.jpeg", soundsPath, source.getId());
+                }
+            });
         };
 
         return configurer;

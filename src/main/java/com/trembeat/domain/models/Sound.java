@@ -11,8 +11,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 @Table(name = "sounds", indexes = {
-        @Index(columnList = "title"),
-        @Index(columnList = "content_id")
+        @Index(columnList = "title")
 })
 public class Sound extends FileEntity {
     @Setter

@@ -10,9 +10,7 @@ import java.util.Set;
  */
 @Entity
 @NoArgsConstructor
-@Table(name = "profile_pictures", indexes = {
-        @Index(columnList = "content_id")
-})
+@Table(name = "profile_pictures")
 public class ProfilePicture extends FileEntity {
     @OneToMany(mappedBy = "profilePicture")
     private Set<User> users;
