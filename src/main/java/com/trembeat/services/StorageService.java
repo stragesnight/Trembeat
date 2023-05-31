@@ -9,10 +9,17 @@ import java.io.*;
 public abstract class StorageService<TID> {
     /**
      * Get absolute filepath for given id
-     * @param id Id to retrieve absolute filepath for
+     * @param id Id of associated entity to retrieve absolute filepath for
      * @return absolute filepath for given entity id
      */
-    public abstract String getFullPath(TID id);
+    protected abstract String getFullPath(TID id);
+
+    /**
+     * Get file extension for given id
+     * @param id Id of associated entity to retreive file extension for
+     * @return Corresponding file extension
+     */
+    protected abstract String getFileExtension(TID id);
 
     /**
      * Save data for given entity id

@@ -93,7 +93,7 @@ public class UserService implements UserDetailsService {
                 picture = _profilePictureRepo.save(picture);
 
                 user.setProfilePicture(picture);
-                _profilePictureStorageService.save(picture.getId(), viewModel.getProfilePicture().getInputStream());
+                _profilePictureStorageService.save(picture, viewModel.getProfilePicture().getInputStream());
             }
 
             _userRepo.save(user);
@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
     public boolean deleteUser(Long userId) {
         try {
             User user = _userRepo.findById(userId).get();
-            _profilePictureStorageService.delete(user.getProfilePicture().getId());
+            _profilePictureStorageService.delete(user.getProfilePicture());
             _userRepo.delete(user);
             return true;
         } catch (Exception ex) {

@@ -15,8 +15,4 @@ public abstract class GenericContentController {
 
         return headers;
     }
-
-    protected ResponseEntity<?> getResponse(HttpStatus status) {
-        return new ResponseEntity<>(null, null, status);
-    }
 }

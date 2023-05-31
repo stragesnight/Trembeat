@@ -30,10 +30,10 @@ public class UserRestController extends GenericContentController {
         Optional<ProfilePicture> optionalProfilePicture = _profilePictureRepo.findById(id);
 
         if (optionalProfilePicture.isEmpty())
-            return getResponse(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         ProfilePicture profilePicture = optionalProfilePicture.get();
-        InputStreamResource isr = new InputStreamResource(_profilePictureStorageService.load(profilePicture.getId()));
+        InputStreamResource isr = new InputStreamResource(_profilePictureStorageService.load(profilePicture));
 
         return new ResponseEntity<>(isr, getHeaders(profilePicture), HttpStatus.OK);
     }
@@ -46,9 +46,9 @@ public class UserRestController extends GenericContentController {
     @PostMapping("/api/put-user")
     public ResponseEntity<?> putUser(@ModelAttribute("user") @Valid UserRegisterViewModel viewModel) {
         if (!_userService.registerUser(viewModel))
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/patch-user")
@@ -59,23 +59,23 @@ public class UserRestController extends GenericContentController {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         if (!_userService.updateUser(user.getId(), viewModel))
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/delete-user")
     public ResponseEntity<?> deleteUser(Authentication auth) {
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         if (!_userService.deleteUser(user.getId()))
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

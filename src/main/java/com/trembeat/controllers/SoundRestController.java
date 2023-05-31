@@ -27,10 +27,10 @@ public class SoundRestController extends GenericContentController {
     public ResponseEntity<?> getSound(@PathVariable Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
         if (optionalSound.isEmpty())
-            return getResponse(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         Sound sound = optionalSound.get();
-        InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound.getId()));
+        InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound));
 
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
@@ -47,7 +47,7 @@ public class SoundRestController extends GenericContentController {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Sound sound = new Sound(
                 soundViewModel.getTitle(),
@@ -61,12 +61,12 @@ public class SoundRestController extends GenericContentController {
 
         try {
             sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound.getId(), soundViewModel.getFile().getInputStream());
+            _soundStorageService.save(sound, soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/patch-sound/{id}")
@@ -77,44 +77,44 @@ public class SoundRestController extends GenericContentController {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Optional<Sound> optionalSound = _soundRepo.findById(id);
         if (optionalSound.isEmpty())
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Sound sound = optionalSound.get();
         if (sound.getAuthor().getId() != user.getId())
-            return getResponse(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         try {
             // TODO: proper sound file editing
             sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound.getId(), soundViewModel.getFile().getInputStream());
+            _soundStorageService.save(sound, soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/delete-sound/{id}")
     public ResponseEntity<?> deleteSound(Authentication auth, @PathVariable Long id) {
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Optional<Sound> optionalSound = _soundRepo.findById(id);
         if (optionalSound.isEmpty())
-            return getResponse(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Sound sound = optionalSound.get();
         if (sound.getAuthor().getId() != user.getId())
-            return getResponse(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        _soundStorageService.delete(sound.getId());
+        _soundStorageService.delete(sound);
         _soundRepo.deleteById(id);
 
-        return getResponse(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
