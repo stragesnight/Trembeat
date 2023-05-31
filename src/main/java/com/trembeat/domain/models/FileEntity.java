@@ -14,19 +14,16 @@ import java.util.Date;
 @NoArgsConstructor
 public abstract class FileEntity {
     @Id
+    @ContentId
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-
-    @ContentId
-    // TODO: find walid contentId length
-    @Column(name = "content_id", length = 256, nullable = false, unique = true)
-    protected String contentId;
 
     @ContentLength
     @Column(name = "content_length", nullable = false)
     protected Long contentLength;
 
+    @MimeType
     @Column(name = "mime_type", length = 64, nullable = false)
     protected String mimeType;
 
