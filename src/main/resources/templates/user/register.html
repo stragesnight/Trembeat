@@ -1,6 +1,6 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content" class="container w-25">
-    <form th:action="@{~/register}" th:method="POST" th:object="${user}">
+    <form th:action="@{~/api/put-user}" th:method="post" th:object="${user}">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Enter username" required>

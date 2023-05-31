@@ -21,7 +21,7 @@ Improve audio upload and playback
 - [ ] Audio search and sorting
 - [ ] Custom playback element with controls
 - [ ] Cover image upload
-- [ ] Proper audio deletion
+- [x] Proper audio deletion
 - [ ] Audio view page
 - [ ] Editing page
 - [ ] Reaction  button
@@ -34,6 +34,7 @@ General front-end improvements and goals
 
 - [ ] Substitute Bootstrap with own styles
 - [ ] Improve page layout
+- [ ] AJAX content loading
 - [ ] Add localization support
 
 ## Back-end general
@@ -43,8 +44,8 @@ General back-end improvements and goals
 - [x] Model and view model separation
 - [ ] Improve data validation
 - [ ] Cover code with tests
-- [ ] Storage service for user-uploaded content
-- [ ] Content retrieval API:
+- [x] Storage service for user-uploaded content
+- [x] Content retrieval API:
     * Audio with search, pagination and sorting
     * Images (audio covers, user profile pictures)
 

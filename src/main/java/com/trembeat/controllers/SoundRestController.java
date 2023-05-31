@@ -24,7 +24,7 @@ public class SoundRestController extends GenericContentController {
     private SoundContentStore _soundContentStore;
 
 
-    @PostMapping("/api/get-sound/{id}")
+    @GetMapping("/api/get-sound/{id}")
     public ResponseEntity<?> getSound(@PathVariable Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
 

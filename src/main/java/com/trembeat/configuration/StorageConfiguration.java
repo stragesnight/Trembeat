@@ -6,6 +6,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.core.convert.converter.Converter;
 
 import java.io.File;
+import java.io.IOException;
 
 @Configuration
 public class StorageConfiguration {
@@ -21,7 +22,11 @@ public class StorageConfiguration {
             registry.addConverter(new Converter<Sound, String>() {
                 @Override
                 public String convert(Sound source) {
-                    return String.format("%s%d.mp3", soundsPath, source.getId());
+                    String path = String.format("%s%d.mp3", soundsPath, source.getId());
+                    try {
+                        new File(path).createNewFile();
+                    } catch (IOException e) { }
+                    return path;
                 }
             });
 

@@ -1,6 +1,6 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content" class="container w-25">
-    <form enctype="multipart/form-data" th:action="@{~/edit-profile}" th:method="POST" th:object="${user}">
+    <form enctype="multipart/form-data" th:action="@{~/api/patch-user}" th:method="post" th:object="${user}">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Profile picture</span>

@@ -16,6 +16,7 @@ public class UserProfileViewModel {
     private String email;
     private String bio;
     private Date registrationDate;
+    private ProfilePicture profilePicture;
     private Iterable<Sound> uploads;
 
 
@@ -25,6 +26,7 @@ public class UserProfileViewModel {
         email = user.getEmail();
         bio = user.getBio();
         registrationDate = user.getRegistrationDate();
+        profilePicture = user.getProfilePicture();
         uploads = repository.findAllByAuthorId(user.getId());
     }
 }

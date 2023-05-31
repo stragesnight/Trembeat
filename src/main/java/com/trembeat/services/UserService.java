@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-
 
 /**
  * User access service, implements UserDetailsService
@@ -20,7 +18,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository _userRepo;
     @Autowired
-    private ProfilePictureRepository _profilePictureRepository;
+    private ProfilePictureRepository _profilePictureRepo;
     @Autowired
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private ProfilePictureContentStore _profilePictureContentStore;
@@ -90,7 +88,11 @@ public class UserService implements UserDetailsService {
             }
 
             if (viewModel.getProfilePicture() != null) {
-                ProfilePicture picture = _profilePictureRepository.save(new ProfilePicture());
+                ProfilePicture picture = new ProfilePicture();
+                picture.setMimeType(viewModel.getProfilePicture().getContentType());
+                picture.setContentLength(viewModel.getProfilePicture().getSize());
+                picture = _profilePictureRepo.save(picture);
+
                 user.setProfilePicture(picture);
                 _profilePictureContentStore.setContent(picture, viewModel.getProfilePicture().getInputStream());
             }
