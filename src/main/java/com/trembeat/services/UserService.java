@@ -1,14 +1,13 @@
 package com.trembeat.services;
 
+import com.trembeat.domain.models.ProfilePicture;
 import com.trembeat.domain.models.User;
-import com.trembeat.domain.repository.UserRepository;
-import com.trembeat.domain.viewmodels.UserEditViewModel;
-import com.trembeat.domain.viewmodels.UserRegisterViewModel;
+import com.trembeat.domain.repository.*;
+import com.trembeat.domain.viewmodels.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
@@ -20,6 +19,11 @@ import java.io.*;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository _userRepo;
+    @Autowired
+    private ProfilePictureRepository _profilePictureRepository;
+    @Autowired
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    private ProfilePictureContentStore _profilePictureContentStore;
     private BCryptPasswordEncoder _passwordEncoder;
 
 
@@ -85,8 +89,11 @@ public class UserService implements UserDetailsService {
                 user.setEmail(viewModel.getEmail());
             }
 
-            if (viewModel.getProfilePicture() != null)
-                addProfilePicture(userId, viewModel.getProfilePicture());
+            if (viewModel.getProfilePicture() != null) {
+                ProfilePicture picture = _profilePictureRepository.save(new ProfilePicture());
+                user.setProfilePicture(picture);
+                _profilePictureContentStore.setContent(picture, viewModel.getProfilePicture().getInputStream());
+            }
 
             _userRepo.save(user);
             return true;
@@ -96,30 +103,18 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Add profile picture for a given user
-     * @param userId User id to assign profile picture to
-     * @param file File containing image data
-     * @return true, if file was saved successfully, otherwise - false
+     * Delete user from database
+     * @param userId Id of user to be deleted
+     * @return true, if user was deleted successfully, otherwise - false
      */
-    private boolean addProfilePicture(Long userId, MultipartFile file) {
-        String filepath = String.format("%s/static/uploads/profile-pictures/%d.jpg",
-                getClass().getClassLoader().getResource(".").getFile(),
-                userId);
-
+    public boolean deleteUser(Long userId) {
         try {
-            File outputFile = new File(filepath);
-            outputFile.getParentFile().mkdirs();
-            outputFile.createNewFile();
-            OutputStream os = new BufferedOutputStream(new FileOutputStream(outputFile));
-            os.write(file.getBytes());
-            os.flush();
-            os.close();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
+            User user = _userRepo.findById(userId).get();
+            _userRepo.delete(user);
+            _profilePictureContentStore.unsetContent(user.getProfilePicture());
+            return true;
+        } catch (Exception ex) {
             return false;
         }
-
-        return true;
     }
 }

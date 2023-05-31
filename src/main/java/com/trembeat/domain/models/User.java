@@ -51,6 +51,7 @@ public class User implements UserDetails {
     @Column(name = "registration_date", nullable = false)
     private Date registrationDate;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "profile_picture_id")
     private ProfilePicture profilePicture;
