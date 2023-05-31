@@ -3,16 +3,25 @@ package com.trembeat.services;
 import com.trembeat.domain.models.ProfilePicture;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Profile picture storage and retrieval service
  */
 @Service
 public class ProfilePictureStorageService extends StorageService<ProfilePicture> {
     private static String _basePath;
+    private Map<String, String> _contentTypes;
 
 
     public ProfilePictureStorageService() {
         _basePath = getClass().getClassLoader().getResource(".").getFile();
+        _contentTypes = new HashMap<>();
+        _contentTypes.put("image/jpeg", "jpeg");
+        _contentTypes.put("image/png", "png");
+        _contentTypes.put("image/gif", "gif");
+        _contentTypes.put("image/webp", "webp");
     }
 
     @Override
@@ -21,12 +30,15 @@ public class ProfilePictureStorageService extends StorageService<ProfilePicture>
     }
 
     @Override
-    protected String getFileExtension(ProfilePicture sound) {
-        return switch (sound.getMimeType()) {
-            case "image/gif" -> "gif";
-            case "audio/jpeg" -> "jpeg";
-            case "audio/png" -> "png";
-            default -> "";
-        };
+    protected String getFileExtension(ProfilePicture profilePicture) {
+        if (!isAcceptedContentType(profilePicture.getMimeType()))
+            return "";
+
+        return _contentTypes.get(profilePicture.getMimeType());
+    }
+
+    @Override
+    public boolean isAcceptedContentType(String contentType) {
+        return _contentTypes.containsKey(contentType);
     }
 }

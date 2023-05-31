@@ -17,7 +17,7 @@ Add the ability to view and edit user profiles
 
 Improve audio upload and playback
 
-- [ ] Audio format recognition and support on upload
+- [x] Audio format recognition and support on upload
 - [ ] Audio search and sorting
 - [ ] Custom playback element with controls
 - [ ] Cover image upload

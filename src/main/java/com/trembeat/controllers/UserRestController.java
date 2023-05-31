@@ -3,8 +3,7 @@ package com.trembeat.controllers;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.ProfilePictureRepository;
 import com.trembeat.domain.viewmodels.*;
-import com.trembeat.services.ProfilePictureStorageService;
-import com.trembeat.services.UserService;
+import com.trembeat.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -22,7 +21,7 @@ public class UserRestController extends GenericContentController {
     @Autowired
     private UserService _userService;
     @Autowired
-    private ProfilePictureStorageService _profilePictureStorageService;
+    private ProfilePictureStorageService _storageService;
 
 
     @PostMapping("/api/get-profile-picture/{id}")
@@ -33,7 +32,7 @@ public class UserRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         ProfilePicture profilePicture = optionalProfilePicture.get();
-        InputStreamResource isr = new InputStreamResource(_profilePictureStorageService.load(profilePicture));
+        InputStreamResource isr = new InputStreamResource(_storageService.load(profilePicture));
 
         return new ResponseEntity<>(isr, getHeaders(profilePicture), HttpStatus.OK);
     }

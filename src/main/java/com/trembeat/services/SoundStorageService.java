@@ -4,16 +4,25 @@ package com.trembeat.services;
 import com.trembeat.domain.models.Sound;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Sound data storage and retrieval service
  */
 @Service
 public class SoundStorageService extends StorageService<Sound> {
     private static String _basePath;
+    private static Map<String, String> _contentTypes;
 
 
     public SoundStorageService() {
         _basePath = getClass().getClassLoader().getResource(".").getFile();
+        _contentTypes = new HashMap<>();
+        _contentTypes.put("audio/mpeg", "mp3");
+        _contentTypes.put("audio/wav", "wav");
+        _contentTypes.put("audio/opus", "opus");
+        _contentTypes.put("audio/ogg", "ogg");
     }
 
     @Override
@@ -26,12 +35,14 @@ public class SoundStorageService extends StorageService<Sound> {
 
     @Override
     protected String getFileExtension(Sound sound) {
-        return switch (sound.getMimeType()) {
-            case "audio/mpeg" -> "mp3";
-            case "audio/wav" -> "wav";
-            case "audio/opus" -> "opus";
-            case "audio/ogg" -> "ogg";
-            default -> "";
-        };
+        if (!isAcceptedContentType(sound.getMimeType()))
+            return "";
+
+        return _contentTypes.get(sound.getMimeType());
+    }
+
+    @Override
+    public boolean isAcceptedContentType(String contentType) {
+        return _contentTypes.containsKey(contentType);
     }
 }

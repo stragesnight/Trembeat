@@ -20,7 +20,7 @@ public class SoundRestController extends GenericContentController {
     @Autowired
     private GenreRepository _genreRepo;
     @Autowired
-    private SoundStorageService _soundStorageService;
+    private SoundStorageService _storageService;
 
 
     @GetMapping("/api/get-sound/{id}")
@@ -30,7 +30,7 @@ public class SoundRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         Sound sound = optionalSound.get();
-        InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound));
+        InputStreamResource isr = new InputStreamResource(_storageService.load(sound));
 
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
@@ -49,6 +49,9 @@ public class SoundRestController extends GenericContentController {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        if (!_storageService.isAcceptedContentType(soundViewModel.getFile().getContentType()))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         Sound sound = new Sound(
                 soundViewModel.getTitle(),
                 soundViewModel.getDescription(),
@@ -61,7 +64,7 @@ public class SoundRestController extends GenericContentController {
 
         try {
             sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound, soundViewModel.getFile().getInputStream());
+            _storageService.save(sound, soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -79,6 +82,9 @@ public class SoundRestController extends GenericContentController {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        if (!_storageService.isAcceptedContentType(soundViewModel.getFile().getContentType()))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         Optional<Sound> optionalSound = _soundRepo.findById(id);
         if (optionalSound.isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -90,7 +96,7 @@ public class SoundRestController extends GenericContentController {
         try {
             // TODO: proper sound file editing
             sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound, soundViewModel.getFile().getInputStream());
+            _storageService.save(sound, soundViewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -112,7 +118,7 @@ public class SoundRestController extends GenericContentController {
         if (sound.getAuthor().getId() != user.getId())
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
-        _soundStorageService.delete(sound);
+        _storageService.delete(sound);
         _soundRepo.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

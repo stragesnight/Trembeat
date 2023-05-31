@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private ProfilePictureRepository _profilePictureRepo;
     @Autowired
-    private ProfilePictureStorageService _profilePictureStorageService;
+    private ProfilePictureStorageService _storageService;
     private BCryptPasswordEncoder _passwordEncoder;
 
 
@@ -89,11 +89,14 @@ public class UserService implements UserDetailsService {
             if (viewModel.getProfilePicture() != null) {
                 ProfilePicture picture = new ProfilePicture();
                 picture.setMimeType(viewModel.getProfilePicture().getContentType());
+                if (!_storageService.isAcceptedContentType(picture.getMimeType()))
+                    return false;
+
                 picture.setContentLength(viewModel.getProfilePicture().getSize());
                 picture = _profilePictureRepo.save(picture);
 
                 user.setProfilePicture(picture);
-                _profilePictureStorageService.save(picture, viewModel.getProfilePicture().getInputStream());
+                _storageService.save(picture, viewModel.getProfilePicture().getInputStream());
             }
 
             _userRepo.save(user);
@@ -111,7 +114,7 @@ public class UserService implements UserDetailsService {
     public boolean deleteUser(Long userId) {
         try {
             User user = _userRepo.findById(userId).get();
-            _profilePictureStorageService.delete(user.getProfilePicture());
+            _storageService.delete(user.getProfilePicture());
             _userRepo.delete(user);
             return true;
         } catch (Exception ex) {

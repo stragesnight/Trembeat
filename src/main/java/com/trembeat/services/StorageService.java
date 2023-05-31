@@ -22,6 +22,13 @@ public abstract class StorageService<TID> {
     protected abstract String getFileExtension(TID id);
 
     /**
+     * Check if given content type is accepted by storage service
+     * @param contentType Content type to check
+     * @return true, if content type is accepted, otherwise - false
+     */
+    public abstract boolean isAcceptedContentType(String contentType);
+
+    /**
      * Save data for given entity id
      * @param id Id of associated entity to save
      * @param inputStream Incoming data stream
