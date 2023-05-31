@@ -24,7 +24,7 @@ public class SoundRestController extends GenericContentController {
     private SoundContentStore _soundContentStore;
 
 
-    @GetMapping("/api/sound/{id}")
+    @PostMapping("/api/get-sound/{id}")
     public ResponseEntity<?> getSound(@PathVariable Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
 
@@ -37,12 +37,12 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
 
-    @GetMapping("/api/sound")
+    @PostMapping("/api/get-sound")
     public ResponseEntity<?> getAllSounds() {
         return new ResponseEntity<>(_soundRepo.findAll(), null, HttpStatus.OK);
     }
 
-    @PutMapping("/api/sound")
+    @PostMapping("/api/put-sound")
     public ResponseEntity<?> putSound(
             Authentication auth,
             @ModelAttribute("sound") @Valid SoundViewModel soundViewModel) {
@@ -57,6 +57,9 @@ public class SoundRestController extends GenericContentController {
                 // TODO: genre validation
                 _genreRepo.findById(soundViewModel.getGenreId()).get(),
                 user);
+        // TODO: move this into constructor?
+        sound.setMimeType(soundViewModel.getFile().getContentType());
+        sound.setContentLength(soundViewModel.getFile().getSize());
 
         try {
             sound = _soundRepo.save(sound);
@@ -68,7 +71,7 @@ public class SoundRestController extends GenericContentController {
         return getResponse(HttpStatus.OK);
     }
 
-    @PatchMapping("/api/sound/{id}")
+    @PostMapping("/api/patch-sound/{id}")
     public ResponseEntity<?> patchSound(
             Authentication auth,
             @PathVariable Long id,
@@ -97,7 +100,7 @@ public class SoundRestController extends GenericContentController {
         return getResponse(HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/sound/{id}")
+    @PostMapping("/api/delete-sound/{id}")
     public ResponseEntity<?> deleteSound(Authentication auth, @PathVariable Long id) {
         User user = (User)auth.getPrincipal();
         if (user == null)
@@ -112,6 +115,7 @@ public class SoundRestController extends GenericContentController {
             return getResponse(HttpStatus.FORBIDDEN);
 
         _soundRepo.deleteById(id);
+        _soundContentStore.unsetContent(sound);
 
         return getResponse(HttpStatus.OK);
     }

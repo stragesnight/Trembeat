@@ -26,7 +26,7 @@ public class UserRestController extends GenericContentController {
     private ProfilePictureContentStore _profilePictureContentStore;
 
 
-    @GetMapping("/api/profile-picture/{id}")
+    @PostMapping("/api/get-profile-picture/{id}")
     public ResponseEntity<?> getProfilePicture(@PathVariable Long id) {
         Optional<ProfilePicture> optionalProfilePicture = _profilePictureRepo.findById(id);
 
@@ -39,27 +39,20 @@ public class UserRestController extends GenericContentController {
         return new ResponseEntity<>(isr, getHeaders(profilePicture), HttpStatus.OK);
     }
 
-    @GetMapping("/api/user/{id}")
+    @PostMapping("/api/get-user/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(_userService.findById(id), null, HttpStatus.OK);
     }
 
-    @PutMapping("/api/user")
-    public ResponseEntity<?> putUser(
-            Authentication auth,
-            @ModelAttribute("user") @Valid UserRegisterViewModel viewModel) {
-
-        User user = (User)auth.getPrincipal();
-        if (user == null)
-            return getResponse(HttpStatus.BAD_REQUEST);
-
+    @PostMapping("/api/put-user")
+    public ResponseEntity<?> putUser(@ModelAttribute("user") @Valid UserRegisterViewModel viewModel) {
         if (!_userService.registerUser(viewModel))
             return getResponse(HttpStatus.BAD_REQUEST);
 
         return getResponse(HttpStatus.OK);
     }
 
-    @PatchMapping("/api/user")
+    @PostMapping("/api/patch-user")
     public ResponseEntity<?> patchUser(
             Authentication auth,
             @PathVariable Long id,
@@ -75,7 +68,7 @@ public class UserRestController extends GenericContentController {
         return getResponse(HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/user")
+    @PostMapping("/api/delete-user")
     public ResponseEntity<?> deleteUser(Authentication auth) {
         User user = (User)auth.getPrincipal();
         if (user == null)
