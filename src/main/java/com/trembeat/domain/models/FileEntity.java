@@ -18,9 +18,6 @@ public abstract class FileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column(name = "content_id", unique = true)
-    protected UUID contentId;
-
     @Column(name = "content_length", nullable = false)
     protected Long contentLength;
 
