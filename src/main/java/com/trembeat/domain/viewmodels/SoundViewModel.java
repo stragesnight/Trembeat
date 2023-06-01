@@ -1,30 +1,31 @@
 package com.trembeat.domain.viewmodels;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
+import com.trembeat.domain.models.Sound;
+import lombok.Data;
+
+import java.util.Date;
 
 /**
- * Sound view model
+ * Sound view model during display
  */
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(force = true)
 public class SoundViewModel {
-    @NotNull
-    @NotEmpty
+    private Long id;
     private String title;
-
-    @NotNull
     private String description;
+    private String genreName;
+    private String mimeType;
+    private UserViewModel author;
+    private Date uploadDate;
 
-    @NotNull
-    private MultipartFile file;
 
-    @NotNull
-    private Long genreId;
-
-    @NotNull
-    @NonNull
-    private Long authorId;
+    public SoundViewModel(Sound sound) {
+        id = sound.getId();
+        title = sound.getTitle();
+        description = sound.getDescription();
+        genreName = sound.getGenre().getName();
+        mimeType = sound.getMimeType();
+        author = new UserViewModel(sound.getAuthor());
+        uploadDate = sound.getUploadDate();
+    }
 }

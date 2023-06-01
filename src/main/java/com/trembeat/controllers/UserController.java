@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 @Controller
 public class UserController {
     @Autowired
@@ -46,8 +48,10 @@ public class UserController {
 
         Iterable<Sound> sounds = _soundRepo.findAllByAuthor(
                 user, PageRequest.of(0, WebConfiguration.PAGE_LEN));
-        UserProfileViewModel viewModel = new UserProfileViewModel(user, sounds);
+        UserViewModel viewModel = new UserViewModel(user);
 
-        return new ModelAndView("user/view", "viewedUser", viewModel);
+        return new ModelAndView("user/view", Map.of(
+                "viewedUser", viewModel,
+                "uploads", sounds));
     }
 }
