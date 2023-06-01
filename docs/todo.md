@@ -18,7 +18,8 @@ Add the ability to view and edit user profiles
 Improve audio upload and playback
 
 - [x] Audio format recognition and support on upload
-- [ ] Audio search and sorting
+- [x] Audio search
+- [ ] Audio sorting
 - [ ] Custom playback element with controls
 - [ ] Cover image upload
 - [x] Proper audio deletion
@@ -34,7 +35,7 @@ General front-end improvements and goals
 
 - [ ] Substitute Bootstrap with own styles
 - [ ] Improve page layout
-- [ ] AJAX content loading
+- [x] AJAX content loading
 - [ ] Add localization support
 
 ## Back-end general

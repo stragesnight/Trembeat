@@ -14,14 +14,12 @@ import java.util.Map;
 @Controller
 public class SoundController {
     @Autowired
-    private SoundRepository _soundRepo;
-    @Autowired
     private GenreRepository _genreRepo;
 
 
     @GetMapping("/sound")
-    public ModelAndView getIndex() {
-        return new ModelAndView("sound/index", "sounds", _soundRepo.findAll());
+   public String getIndex() {
+        return "sound/index";
     }
 
     @GetMapping("/sound/upload")

@@ -30,6 +30,7 @@ public class WebSecurityConfiguration {
                                     "/register*",
                                     "/sound",
                                     "/api/**",
+                                    "/js/**",
                                     "/user/*")
                             .permitAll()
                             .anyRequest()

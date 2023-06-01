@@ -57,7 +57,6 @@ public class UserRestController extends GenericContentController {
     @PostMapping("/api/patch-user")
     public ResponseEntity<?> patchUser(
             Authentication auth,
-            @PathVariable Long id,
             @ModelAttribute("user") @Valid UserEditViewModel viewModel) {
 
         User user = (User)auth.getPrincipal();

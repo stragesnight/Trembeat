@@ -58,7 +58,7 @@ public class SoundRestController extends GenericContentController {
                 String.format("%%%s%%", title.orElse("")),
                 PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN))
                 .stream()
-                .map(s -> new SoundViewModel(s));
+                .map(SoundViewModel::new);
 
         return new ResponseEntity<>(sounds, null, HttpStatus.OK);
     }

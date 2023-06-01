@@ -1,20 +1,11 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content">
-    <ul>
-        <li th:each="sound: ${sounds}" class="card text-center w-25">
-            <div class="card-body">
-                <h3 class="card-title" th:text="${sound.getTitle()}"></h3>
-                <p class="card-text">
-                    By <span th:text="${sound.getAuthor().getUsername()}"></span>
-                </p>
-                <p class="card-text">
-                    Genre: <span th:text="${sound.getGenre().getName()}"></span>
-                </p>
-                <audio controls>
-                    <source th:src="@{'~/api/get-sound-data?id=' + ${sound.getId()}}">
-                </audio>
-            </div>
-        </li>
-    </ul>
+    <div id="sound-card-container"></div>
+
+    <div hidden>
+        <div th:replace="fragments/sound-card"></div>
+    </div>
+
+    <script th:src="@{~/js/sound_index.js}"></script>
 </div>
 </div>
