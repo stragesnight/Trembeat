@@ -2,7 +2,7 @@ package com.trembeat.controllers;
 
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
-import com.trembeat.domain.viewmodels.SoundViewModel;
+import com.trembeat.domain.viewmodels.SoundUploadViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class SoundController {
     public ModelAndView getUpload(Authentication auth) {
         User user = (User)auth.getPrincipal();
         return new ModelAndView("sound/upload", Map.of(
-                "sound", new SoundViewModel(user.getId()),
+                "sound", new SoundUploadViewModel(user.getId()),
                 "genres", _genreRepo.findAll()));
     }
 }

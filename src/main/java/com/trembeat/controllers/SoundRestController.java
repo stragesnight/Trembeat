@@ -3,7 +3,7 @@ package com.trembeat.controllers;
 import com.trembeat.configuration.WebConfiguration;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
-import com.trembeat.domain.viewmodels.SoundViewModel;
+import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 public class SoundRestController extends GenericContentController {
@@ -25,8 +26,8 @@ public class SoundRestController extends GenericContentController {
     private SoundStorageService _storageService;
 
 
-    @GetMapping("/api/get-sound/{id}")
-    public ResponseEntity<?> getSound(@PathVariable Long id) {
+    @GetMapping("/api/get-sound-data")
+    public ResponseEntity<?> getSoundData(@RequestParam("id") Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
         if (optionalSound.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -37,13 +38,27 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
 
+    @GetMapping("/api/get-sound")
+    public ResponseEntity<?> getSound(@RequestParam("id") Long id) {
+        Optional<Sound> optionalSound = _soundRepo.findById(id);
+        if (optionalSound.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        Sound sound = optionalSound.get();
+
+        return new ResponseEntity<>(new SoundViewModel(sound), getHeaders(sound), HttpStatus.OK);
+    }
+
     @GetMapping("/api/get-sounds")
     public ResponseEntity<?> getSounds(
-            @RequestParam("title") String title,
+            @RequestParam("title") Optional<String> title,
             @RequestParam("page") Optional<Integer> page) {
 
-        Page<Sound> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
-                title, PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN));
+        Stream<SoundViewModel> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
+                String.format("%%%s%%", title.orElse("")),
+                PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN))
+                .stream()
+                .map(s -> new SoundViewModel(s));
 
         return new ResponseEntity<>(sounds, null, HttpStatus.OK);
     }
@@ -51,28 +66,28 @@ public class SoundRestController extends GenericContentController {
     @PostMapping("/api/put-sound")
     public ResponseEntity<?> putSound(
             Authentication auth,
-            @ModelAttribute("sound") @Valid SoundViewModel soundViewModel) {
+            @ModelAttribute("sound") @Valid SoundUploadViewModel viewModel) {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        if (!_storageService.isAcceptedContentType(soundViewModel.getFile().getContentType()))
+        if (!_storageService.isAcceptedContentType(viewModel.getFile().getContentType()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Sound sound = new Sound(
-                soundViewModel.getTitle(),
-                soundViewModel.getDescription(),
+                viewModel.getTitle(),
+                viewModel.getDescription(),
                 // TODO: genre validation
-                _genreRepo.findById(soundViewModel.getGenreId()).get(),
+                _genreRepo.findById(viewModel.getGenreId()).get(),
                 user);
         // TODO: move this into constructor?
-        sound.setMimeType(soundViewModel.getFile().getContentType());
-        sound.setContentLength(soundViewModel.getFile().getSize());
+        sound.setMimeType(viewModel.getFile().getContentType());
+        sound.setContentLength(viewModel.getFile().getSize());
 
         try {
             sound = _soundRepo.save(sound);
-            _storageService.save(sound, soundViewModel.getFile().getInputStream());
+            _storageService.save(sound, viewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -80,17 +95,17 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/api/patch-sound/{id}")
+    @PostMapping("/api/patch-sound")
     public ResponseEntity<?> patchSound(
             Authentication auth,
-            @PathVariable Long id,
-            @ModelAttribute("sound") @Valid SoundViewModel soundViewModel) {
+            @RequestParam("id") Long id,
+            @ModelAttribute("sound") @Valid SoundUploadViewModel viewModel) {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        if (!_storageService.isAcceptedContentType(soundViewModel.getFile().getContentType()))
+        if (!_storageService.isAcceptedContentType(viewModel.getFile().getContentType()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Optional<Sound> optionalSound = _soundRepo.findById(id);
@@ -104,7 +119,7 @@ public class SoundRestController extends GenericContentController {
         try {
             // TODO: proper sound file editing
             sound = _soundRepo.save(sound);
-            _storageService.save(sound, soundViewModel.getFile().getInputStream());
+            _storageService.save(sound, viewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -112,8 +127,8 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/api/delete-sound/{id}")
-    public ResponseEntity<?> deleteSound(Authentication auth, @PathVariable Long id) {
+    @PostMapping("/api/delete-sound")
+    public ResponseEntity<?> deleteSound(Authentication auth, @RequestParam("id") Long id) {
         User user = (User)auth.getPrincipal();
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

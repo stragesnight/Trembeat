@@ -24,7 +24,7 @@ public class UserRestController extends GenericContentController {
     private ProfilePictureStorageService _storageService;
 
 
-    @PostMapping("/api/get-profile-picture/{id}")
+    @GetMapping("/api/get-profile-picture/{id}")
     public ResponseEntity<?> getProfilePicture(@PathVariable Long id) {
         Optional<ProfilePicture> optionalProfilePicture = _profilePictureRepo.findById(id);
 
@@ -37,9 +37,13 @@ public class UserRestController extends GenericContentController {
         return new ResponseEntity<>(isr, getHeaders(profilePicture), HttpStatus.OK);
     }
 
-    @PostMapping("/api/get-user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(_userService.findById(id), null, HttpStatus.OK);
+    @GetMapping("/api/get-user")
+    public ResponseEntity<?> getUser(@RequestParam("id") Long id) {
+        User user = _userService.findById(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(new UserViewModel(user), null, HttpStatus.OK);
     }
 
     @PostMapping("/api/put-user")

@@ -11,7 +11,7 @@
                     Genre: <span th:text="${sound.getGenre().getName()}"></span>
                 </p>
                 <audio controls>
-                    <source th:src="@{~/api/get-sound/{id}(id = ${sound.getId()})}">
+                    <source th:src="@{'~/api/get-sound-data?id=' + ${sound.getId()}}">
                 </audio>
             </div>
         </li>
