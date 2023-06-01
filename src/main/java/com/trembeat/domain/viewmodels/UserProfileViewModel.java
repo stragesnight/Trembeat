@@ -1,7 +1,6 @@
 package com.trembeat.domain.viewmodels;
 
 import com.trembeat.domain.models.*;
-import com.trembeat.domain.repository.SoundRepository;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,13 +19,13 @@ public class UserProfileViewModel {
     private Iterable<Sound> uploads;
 
 
-    public UserProfileViewModel(User user, SoundRepository repository) {
+    public UserProfileViewModel(User user, Iterable<Sound> uploads) {
         id = user.getId();
         username = user.getUsername();
         email = user.getEmail();
         bio = user.getBio();
         registrationDate = user.getRegistrationDate();
         profilePicture = user.getProfilePicture();
-        uploads = repository.findAllByAuthorId(user.getId());
+        this.uploads = uploads;
     }
 }

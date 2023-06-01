@@ -8,6 +8,9 @@ import org.springframework.web.servlet.config.annotation.*;
  */
 @Configuration
 public class WebConfiguration extends WebMvcConfigurationSupport {
+    public static final int PAGE_LEN = 10;
+
+
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         // Add access to user-uploaded files

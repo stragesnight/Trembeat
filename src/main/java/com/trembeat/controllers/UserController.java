@@ -1,10 +1,12 @@
 package com.trembeat.controllers;
 
-import com.trembeat.domain.models.User;
+import com.trembeat.configuration.WebConfiguration;
+import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.SoundRepository;
 import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +43,11 @@ public class UserController {
         if (user == null)
             return new ModelAndView("home/index");
 
-        UserProfileViewModel viewModel = new UserProfileViewModel(user, _soundRepo);
+
+        Iterable<Sound> sounds = _soundRepo.findAllByAuthor(
+                user, PageRequest.of(0, WebConfiguration.PAGE_LEN));
+        UserProfileViewModel viewModel = new UserProfileViewModel(user, sounds);
+
         return new ModelAndView("user/view", "viewedUser", viewModel);
     }
 }

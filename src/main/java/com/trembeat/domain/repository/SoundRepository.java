@@ -1,7 +1,7 @@
 package com.trembeat.domain.repository;
 
 import com.trembeat.domain.models.*;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
@@ -15,7 +15,7 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
      * @param pageable Pagination to apply for query
      * @return Set of found sounds
      */
-    Iterable<Sound> findAllByTitleLikeIgnoreCase(String title, Pageable pageable);
+    Page<Sound> findAllByTitleLikeIgnoreCase(String title, Pageable pageable);
 
     /**
      * Find all sounds uploaded by user with given id
@@ -23,5 +23,5 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
      * @param pageable Pagination to apply for query
      * @return Set of found sounds
      */
-    Iterable<Sound> findAllByAuthor(User author, Pageable pageable);
+    Page<Sound> findAllByAuthor(User author, Pageable pageable);
 }

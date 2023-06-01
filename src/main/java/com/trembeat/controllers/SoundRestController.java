@@ -1,5 +1,6 @@
 package com.trembeat.controllers;
 
+import com.trembeat.configuration.WebConfiguration;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.SoundViewModel;
@@ -7,6 +8,7 @@ import com.trembeat.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +37,15 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
     }
 
-    @PostMapping("/api/get-sound")
-    public ResponseEntity<?> getAllSounds() {
-        return new ResponseEntity<>(_soundRepo.findAll(), null, HttpStatus.OK);
+    @GetMapping("/api/get-sounds")
+    public ResponseEntity<?> getSounds(
+            @RequestParam("title") String title,
+            @RequestParam("page") Optional<Integer> page) {
+
+        Page<Sound> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
+                title, PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN));
+
+        return new ResponseEntity<>(sounds, null, HttpStatus.OK);
     }
 
     @PostMapping("/api/put-sound")
