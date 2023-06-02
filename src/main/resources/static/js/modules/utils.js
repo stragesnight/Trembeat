@@ -1,9 +1,5 @@
 export async function ajaxFormData(form, redirect = undefined) {
-    const formData = new FormData()
-
-    for (let input of form.querySelectorAll("input")) {
-        formData.append(input.name, input.value)
-    }
+    const formData = new FormData(form)
 
     const response = await fetch(
         form.action,
@@ -12,9 +8,6 @@ export async function ajaxFormData(form, redirect = undefined) {
             mode: "cors",
             credentials: "same-origin",
             redirect: "follow",
-            headers: {
-                //"Content-Type": "multipart/form-data"
-            },
             body: formData
         })
 
@@ -27,8 +20,11 @@ export async function ajaxFormData(form, redirect = undefined) {
     if (redirect)
         window.location = redirect
 
-    if (response.body)
+    try {
         return await response.json()
+    } catch (e) {
+        return null
+    }
 }
 
 export async function ajaxGet(url, method = "GET") {
