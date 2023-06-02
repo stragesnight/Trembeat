@@ -51,7 +51,8 @@ public class UserRestController extends GenericContentController {
         if (!_userService.registerUser(viewModel))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        User user = (User)_userService.loadUserByUsername(viewModel.getUsername());
+        return getProfileRedirect(user);
     }
 
     @PostMapping("/api/patch-user")
@@ -66,7 +67,7 @@ public class UserRestController extends GenericContentController {
         if (!_userService.updateUser(user.getId(), viewModel))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return getProfileRedirect(user);
     }
 
     @PostMapping("/api/delete-user")
@@ -78,6 +79,9 @@ public class UserRestController extends GenericContentController {
         if (!_userService.deleteUser(user.getId()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(
+                new Response(null, "/"),
+                null,
+                HttpStatus.OK);
     }
 }

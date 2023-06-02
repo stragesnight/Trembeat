@@ -45,8 +45,9 @@ public class SoundRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         Sound sound = optionalSound.get();
+        SoundViewModel viewModel = new SoundViewModel(sound);
 
-        return new ResponseEntity<>(new SoundViewModel(sound), getHeaders(sound), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(viewModel), getHeaders(sound), HttpStatus.OK);
     }
 
     @GetMapping("/api/get-sounds")
@@ -60,7 +61,7 @@ public class SoundRestController extends GenericContentController {
                 .stream()
                 .map(SoundViewModel::new);
 
-        return new ResponseEntity<>(sounds, null, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(sounds), null, HttpStatus.OK);
     }
 
     @PostMapping("/api/put-sound")
@@ -92,7 +93,7 @@ public class SoundRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return getProfileRedirect(user);
     }
 
     @PostMapping("/api/patch-sound")
@@ -124,7 +125,7 @@ public class SoundRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return getProfileRedirect(user);
     }
 
     @PostMapping("/api/delete-sound")
@@ -144,6 +145,6 @@ public class SoundRestController extends GenericContentController {
         _storageService.delete(sound);
         _soundRepo.deleteById(id);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return getProfileRedirect(user);
     }
 }

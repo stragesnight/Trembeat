@@ -1,4 +1,4 @@
-export async function ajaxFormData(form, redirect = undefined) {
+export async function ajaxFormData(form) {
     const formData = new FormData(form)
 
     const response = await fetch(
@@ -16,12 +16,12 @@ export async function ajaxFormData(form, redirect = undefined) {
         return;
     }
 
-    // TODO: get redirection url from server
-    if (redirect)
-        window.location = redirect
-
     try {
-        return await response.json()
+        const json = await response.json()
+        if (json.redirectURL && json.redirectURL.length > 0)
+            window.location = json.redirectURL
+
+        return json.responseObject
     } catch (e) {
         return null
     }
@@ -49,7 +49,7 @@ export async function ajaxLoadSounds(card, container, page = 0) {
 
     container.innerHTML = ""
 
-    for (let sound of json) {
+    for (let sound of json.responseObject) {
         let node = card.cloneNode(true)
         node.querySelector(".--d-sound-title").innerText = sound.title
         node.querySelector(".--d-sound-author").innerText = sound.author.username
