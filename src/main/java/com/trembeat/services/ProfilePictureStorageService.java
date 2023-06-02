@@ -26,7 +26,10 @@ public class ProfilePictureStorageService extends StorageService<ProfilePicture>
 
     @Override
     protected String getFullPath(ProfilePicture profilePicture) {
-        return String.format("%sstatic/uploads/profile-picture/%d.%s", _basePath, profilePicture.getId());
+        return String.format("%sstatic/uploads/profile-picture/%d.%s",
+                _basePath,
+                profilePicture.getId(),
+                getFileExtension(profilePicture));
     }
 
     @Override

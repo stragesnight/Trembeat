@@ -47,6 +47,7 @@ public abstract class StorageService<TID> {
             outputStream.flush();
             outputStream.close();
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
 

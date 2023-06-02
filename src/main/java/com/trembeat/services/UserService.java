@@ -102,6 +102,7 @@ public class UserService implements UserDetailsService {
             _userRepo.save(user);
             return true;
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return false;
         }
     }
