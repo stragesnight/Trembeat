@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -120,13 +121,9 @@ public class SoundRestController extends GenericContentController {
         if (!_soundStorageService.isAcceptedContentType(viewModel.getFile().getContentType()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        Optional<Sound> optionalSound = _soundRepo.findById(id);
-        if (optionalSound.isEmpty())
+        Sound sound = tryGetSound(id, user);
+        if (sound == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        Sound sound = optionalSound.get();
-        if (sound.getAuthor().getId() != user.getId())
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         if (viewModel.getCover() != null && !updateCover(new Image(), viewModel.getCover(), sound))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -148,13 +145,9 @@ public class SoundRestController extends GenericContentController {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        Optional<Sound> optionalSound = _soundRepo.findById(id);
-        if (optionalSound.isEmpty())
+        Sound sound = tryGetSound(id, user);
+        if (sound == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        Sound sound = optionalSound.get();
-        if (sound.getAuthor().getId() != user.getId())
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         _soundStorageService.delete(sound);
         _soundRepo.deleteById(id);
@@ -179,5 +172,17 @@ public class SoundRestController extends GenericContentController {
         }
 
         return true;
+    }
+
+    private Sound tryGetSound(Long id, User author) {
+        Optional<Sound> optionalSound = _soundRepo.findById(id);
+        if (optionalSound.isEmpty())
+            return null;
+
+        Sound sound = optionalSound.get();
+        if (!Objects.equals(sound.getAuthor().getId(), author.getId()))
+            return null;
+
+        return sound;
     }
 }
