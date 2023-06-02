@@ -84,11 +84,14 @@ public class SoundRestController extends GenericContentController {
         if (!_soundStorageService.isAcceptedContentType(viewModel.getFile().getContentType()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
+        if (optionalGenre.isEmpty())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         Sound sound = new Sound(
                 viewModel.getTitle(),
                 viewModel.getDescription(),
-                // TODO: genre validation
-                _genreRepo.findById(viewModel.getGenreId()).get(),
+                optionalGenre.get(),
                 user);
 
         // TODO: move this into constructor?
@@ -112,26 +115,32 @@ public class SoundRestController extends GenericContentController {
     public ResponseEntity<?> patchSound(
             Authentication auth,
             @RequestParam("id") Long id,
-            @ModelAttribute("sound") @Valid SoundUploadViewModel viewModel) {
+            @ModelAttribute("sound") @Valid SoundEditViewModel viewModel) {
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-        if (!_soundStorageService.isAcceptedContentType(viewModel.getFile().getContentType()))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         Sound sound = tryGetSound(id, user);
         if (sound == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        sound.setTitle(viewModel.getTitle());
+        sound.setDescription(viewModel.getDescription());
+
+        if (viewModel.getGenreId() != sound.getGenre().getId()) {
+            Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
+            if (optionalGenre.isEmpty())
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+            sound.setGenre(optionalGenre.get());
+        }
+
         if (viewModel.getCover() != null && !updateCover(sound.getCover(), viewModel.getCover(), sound))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         try {
-            // TODO: proper sound file editing
-            sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound, viewModel.getFile().getInputStream());
+            _soundRepo.save(sound);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

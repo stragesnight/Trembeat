@@ -24,7 +24,7 @@ Improve audio upload and playback
 - [x] Cover image upload
 - [x] Proper audio deletion
 - [x] Audio view page
-- [ ] Editing page
+- [x] Editing page
 - [ ] Reaction  button
 - [ ] Comments
 - [ ] Playlists

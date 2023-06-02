@@ -42,4 +42,18 @@ public class SoundController {
 
         return new ModelAndView("sound/view", "sound", new SoundViewModel(optionalSound.get()));
     }
+
+    @GetMapping("/sound/edit/{id}")
+    public ModelAndView getEdit(Authentication auth, @PathVariable Long id) {
+        User user = (User)auth.getPrincipal();
+        Optional<Sound> optionalSound = _soundRepo.findById(id);
+        // TODO: error page
+        if (optionalSound.isEmpty() || optionalSound.get().getAuthor().getId() != user.getId())
+            return new ModelAndView("home/index");
+
+        return new ModelAndView("sound/edit", Map.of(
+                "sound", new SoundEditViewModel(optionalSound.get()),
+                "genres", _genreRepo.findAll()
+        ));
+    }
 }
