@@ -1,14 +1,20 @@
-<div class="card text-center w-25" id="sound-card" th:fragment="sound-card">
+<!--/*@thymesVar id="sound" type="com.trembeat.domain.viewmodels.SoundViewModel"*/-->
+<div th:fragment="sound-card" id="sound-card" class="card text-center w-25">
+    <img th:src="@{'/api/get-cover?id=' + ${sound?.getCover()?.getId()}}" class="card-img-top --d-sound-cover" alt="cover image">
     <div class="card-body">
-        <h3 class="card-title --d-sound-title"></h3>
+        <h3 class="card-title --d-sound-title" th:text="${sound?.getTitle()} ?: ''"></h3>
         <p class="card-text">
-            By <span class="--d-sound-author"></span>
+            By <span class="--d-sound-author" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>
         </p>
-        <p class="card-text">
-            Genre: <span class="--d-sound-genre"></span>
-        </p>
-        <audio controls>
-            <source class="--d-sound-src">
-        </audio>
     </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Genre: <span class="--d-sound-genre" th:text="${sound?.getGenreName()} ?: ''"></span>
+        </li>
+        <li class="list-group-item">
+            <audio controls>
+                <source class="--d-sound-src" th:src="${'/api/get-sound-data?id=' + sound?.getId()} ?: ''">
+            </audio>
+        </li>
+    </ul>
 </div>

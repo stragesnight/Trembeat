@@ -18,6 +18,9 @@ public class FileEntityViewModel {
 
 
     public FileEntityViewModel(FileEntity fileEntity) {
+        if (fileEntity == null)
+            return;
+
         id = fileEntity.getId();
         mimeType = fileEntity.getMimeType();
         uploadDate = fileEntity.getUploadDate();

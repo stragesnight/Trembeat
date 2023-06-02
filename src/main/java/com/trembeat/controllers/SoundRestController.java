@@ -125,7 +125,7 @@ public class SoundRestController extends GenericContentController {
         if (sound == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        if (viewModel.getCover() != null && !updateCover(new Image(), viewModel.getCover(), sound))
+        if (viewModel.getCover() != null && !updateCover(sound.getCover(), viewModel.getCover(), sound))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         try {
@@ -157,7 +157,7 @@ public class SoundRestController extends GenericContentController {
 
     private boolean updateCover(Image cover, MultipartFile file, Sound sound) {
         cover.setMimeType(file.getContentType());
-        if (!_soundStorageService.isAcceptedContentType(cover.getMimeType()))
+        if (!_imageStorageService.isAcceptedContentType(cover.getMimeType()))
             return false;
 
         cover.setContentLength(file.getSize());

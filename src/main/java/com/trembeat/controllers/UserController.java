@@ -45,7 +45,6 @@ public class UserController {
         if (user == null)
             return new ModelAndView("home/index");
 
-
         Iterable<Sound> sounds = _soundRepo.findAllByAuthor(
                 user, PageRequest.of(0, WebConfiguration.PAGE_LEN));
         UserViewModel viewModel = new UserViewModel(user);

@@ -55,6 +55,7 @@ export async function ajaxLoadSounds(card, container, page = 0) {
         node.querySelector(".--d-sound-author").innerText = sound.author.username
         node.querySelector(".--d-sound-genre").innerText = sound.genreName
         node.querySelector(".--d-sound-src").src = `/api/get-sound-data?id=${sound.id}`
+        node.querySelector(".--d-sound-cover").src = `/api/get-cover?id=${sound.cover.id}`
         container.appendChild(node)
     }
 }

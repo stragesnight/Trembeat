@@ -1,0 +1,5 @@
+<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:fragment="content">
+    <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
+</div>
+</div>
