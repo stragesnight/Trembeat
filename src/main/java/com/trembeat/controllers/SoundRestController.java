@@ -81,7 +81,8 @@ public class SoundRestController extends GenericContentController {
                 viewModel.getDescription(),
                 // TODO: genre validation
                 _genreRepo.findById(viewModel.getGenreId()).get(),
-                user);
+                user,
+                new AudioCover());
         // TODO: move this into constructor?
         sound.setMimeType(viewModel.getFile().getContentType());
         sound.setContentLength(viewModel.getFile().getSize());

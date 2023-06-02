@@ -35,4 +35,10 @@ public class Sound extends FileEntity {
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
+
+    @Setter
+    @NonNull
+    @ManyToOne
+    @JoinColumn(name = "cover_id")
+    private AudioCover cover;
 }

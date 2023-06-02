@@ -15,7 +15,7 @@ public class UserViewModel {
     private String email;
     private String bio;
     private Date registrationDate;
-    private ProfilePicture profilePicture;
+    private FileEntityViewModel profilePicture;
 
 
     public UserViewModel(User user) {
@@ -24,6 +24,6 @@ public class UserViewModel {
         email = user.getEmail();
         bio = user.getBio();
         registrationDate = user.getRegistrationDate();
-        profilePicture = user.getProfilePicture();
+        profilePicture = new FileEntityViewModel(user.getProfilePicture());
     }
 }
