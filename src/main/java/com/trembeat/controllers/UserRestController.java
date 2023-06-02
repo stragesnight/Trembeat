@@ -24,8 +24,8 @@ public class UserRestController extends GenericContentController {
     private ProfilePictureStorageService _storageService;
 
 
-    @GetMapping("/api/get-profile-picture/{id}")
-    public ResponseEntity<?> getProfilePicture(@PathVariable Long id) {
+    @GetMapping("/api/get-profile-picture")
+    public ResponseEntity<?> getProfilePicture(@RequestParam("id") Long id) {
         Optional<ProfilePicture> optionalProfilePicture = _profilePictureRepo.findById(id);
 
         if (optionalProfilePicture.isEmpty())
