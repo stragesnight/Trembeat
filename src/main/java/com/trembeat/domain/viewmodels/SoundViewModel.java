@@ -11,12 +11,19 @@ import java.util.Date;
 @Data
 public class SoundViewModel {
     private Long id;
+
     private String title;
+
     private String description;
+
     private String genreName;
+
     private String mimeType;
+
     private UserViewModel author;
+
     private Date uploadDate;
+
     private FileEntityViewModel cover;
 
 

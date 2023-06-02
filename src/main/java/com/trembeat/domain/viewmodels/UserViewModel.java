@@ -11,10 +11,15 @@ import java.util.Date;
 @Data
 public class UserViewModel {
     private Long id;
+
     private String username;
+
     private String email;
+
     private String bio;
+
     private Date registrationDate;
+
     private FileEntityViewModel profilePicture;
 
 

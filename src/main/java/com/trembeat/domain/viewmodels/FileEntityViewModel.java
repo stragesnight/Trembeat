@@ -11,7 +11,9 @@ import java.util.Date;
 @Data
 public class FileEntityViewModel {
     private Long id;
+
     private String mimeType;
+
     private Date uploadDate;
 
 

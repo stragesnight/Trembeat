@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class Response {
     private Object responseObject;
+
     private String redirectURL;
 
 

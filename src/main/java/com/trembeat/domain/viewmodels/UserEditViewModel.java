@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @ValidPassword
 @NoArgsConstructor
 public class UserEditViewModel {
+
     private MultipartFile profilePicture;
 
     @NotNull
