@@ -21,9 +21,9 @@ Improve audio upload and playback
 - [x] Audio search
 - [ ] Audio sorting
 - [ ] Custom playback element with controls
-- [ ] Cover image upload
+- [x] Cover image upload
 - [x] Proper audio deletion
-- [ ] Audio view page
+- [x] Audio view page
 - [ ] Editing page
 - [ ] Reaction  button
 - [ ] Comments
