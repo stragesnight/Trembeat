@@ -1,40 +1,24 @@
 package com.trembeat.controllers;
 
 import com.trembeat.domain.models.*;
-import com.trembeat.domain.repository.ProfilePictureRepository;
 import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
 public class UserRestController extends GenericContentController {
     @Autowired
-    private ProfilePictureRepository _profilePictureRepo;
-    @Autowired
     private UserService _userService;
-    @Autowired
-    private ProfilePictureStorageService _storageService;
 
 
     @GetMapping("/api/get-profile-picture")
     public ResponseEntity<?> getProfilePicture(@RequestParam("id") Long id) {
-        Optional<ProfilePicture> optionalProfilePicture = _profilePictureRepo.findById(id);
-
-        if (optionalProfilePicture.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        ProfilePicture profilePicture = optionalProfilePicture.get();
-        InputStreamResource isr = new InputStreamResource(_storageService.load(profilePicture));
-
-        return new ResponseEntity<>(isr, getHeaders(profilePicture), HttpStatus.OK);
+        return getImageData(id);
     }
 
     @GetMapping("/api/get-user")

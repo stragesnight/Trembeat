@@ -21,6 +21,8 @@ public class SoundUploadViewModel {
     @NotNull
     private MultipartFile file;
 
+    private MultipartFile cover;
+
     @NotNull
     private Long genreId;
 

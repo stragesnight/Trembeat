@@ -37,8 +37,7 @@ public class Sound extends FileEntity {
     private User author;
 
     @Setter
-    @NonNull
     @ManyToOne
     @JoinColumn(name = "cover_id")
-    private AudioCover cover;
+    private Image cover;
 }

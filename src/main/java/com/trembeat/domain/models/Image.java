@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "profile_pictures")
-public class ProfilePicture extends FileEntity {
+public class Image extends FileEntity {
     @Getter
     @OneToMany(mappedBy = "profilePicture")
     private Set<User> users;

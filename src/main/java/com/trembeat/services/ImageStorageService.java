@@ -1,21 +1,21 @@
 package com.trembeat.services;
 
-import com.trembeat.domain.models.ProfilePicture;
+import com.trembeat.domain.models.Image;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Profile picture storage and retrieval service
+ * Image storage and retrieval service
  */
 @Service
-public class ProfilePictureStorageService extends StorageService<ProfilePicture> {
+public class ImageStorageService extends StorageService<Image> {
     private static String _basePath;
     private Map<String, String> _contentTypes;
 
 
-    public ProfilePictureStorageService() {
+    public ImageStorageService() {
         _basePath = getClass().getClassLoader().getResource(".").getFile();
         _contentTypes = new HashMap<>();
         _contentTypes.put("image/jpeg", "jpeg");
@@ -25,19 +25,19 @@ public class ProfilePictureStorageService extends StorageService<ProfilePicture>
     }
 
     @Override
-    protected String getFullPath(ProfilePicture profilePicture) {
-        return String.format("%sstatic/uploads/profile-picture/%d.%s",
+    protected String getFullPath(Image image) {
+        return String.format("%sstatic/uploads/image/%d.%s",
                 _basePath,
-                profilePicture.getId(),
-                getFileExtension(profilePicture));
+                image.getId(),
+                getFileExtension(image));
     }
 
     @Override
-    protected String getFileExtension(ProfilePicture profilePicture) {
-        if (!isAcceptedContentType(profilePicture.getMimeType()))
+    protected String getFileExtension(Image image) {
+        if (!isAcceptedContentType(image.getMimeType()))
             return "";
 
-        return _contentTypes.get(profilePicture.getMimeType());
+        return _contentTypes.get(image.getMimeType());
     }
 
     @Override

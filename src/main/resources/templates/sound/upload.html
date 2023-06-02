@@ -26,6 +26,15 @@
                 <label class="custom-file-label" for="file">Choose file</label>
             </div>
         </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Cover image</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="cover" th:field="*{cover}">
+                <label class="custom-file-label" for="cover">Choose file</label>
+            </div>
+        </div>
         <input type="text" id="authorId" th:field="*{authorId}" hidden>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>

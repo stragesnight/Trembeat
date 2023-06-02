@@ -1,6 +1,6 @@
 package com.trembeat.services;
 
-import com.trembeat.domain.models.ProfilePicture;
+import com.trembeat.domain.models.Image;
 import com.trembeat.domain.models.User;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
@@ -18,9 +18,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository _userRepo;
     @Autowired
-    private ProfilePictureRepository _profilePictureRepo;
+    private ImageRepository _profilePictureRepo;
     @Autowired
-    private ProfilePictureStorageService _storageService;
+    private ImageStorageService _storageService;
     private BCryptPasswordEncoder _passwordEncoder;
 
 
@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService {
             }
 
             if (viewModel.getProfilePicture() != null) {
-                ProfilePicture picture = new ProfilePicture();
+                Image picture = new Image();
                 picture.setMimeType(viewModel.getProfilePicture().getContentType());
                 if (!_storageService.isAcceptedContentType(picture.getMimeType()))
                     return false;
