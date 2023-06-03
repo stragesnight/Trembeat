@@ -4,6 +4,7 @@ const card = document.getElementById("sound-card")
 const container = document.getElementById("sound-card-container")
 const formSearch = document.getElementById("formSearch")
 const fieldSearchTitle = document.getElementById("fieldSearchTitle")
+const fieldSearchOrderby = document.getElementById("fieldSearchOrderby")
 
 let currentPage = 0
 let currentTitle = ""
@@ -21,7 +22,7 @@ function loadSoundsWrapper(title, page, append) {
 
 if (formSearch && fieldSearchTitle) {
     formSearch.addEventListener("submit", ev => {
-        loadSoundsWrapper(fieldSearchTitle.value, 0, false)
+        loadSoundsWrapper(fieldSearchTitle.value, 0, false, fieldSearchOrderby.value)
         ev.preventDefault()
     })
 }
@@ -32,7 +33,7 @@ window.addEventListener("scroll", ev => {
         return;
     }
 
-    loadSoundsWrapper(currentTitle, currentPage + 1, true)
+    loadSoundsWrapper(currentTitle, currentPage + 1, true, fieldSearchOrderby.value)
 
     canLoad = false
     setTimeout(() => {

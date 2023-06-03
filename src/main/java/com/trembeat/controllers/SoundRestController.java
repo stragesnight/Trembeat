@@ -59,12 +59,26 @@ public class SoundRestController extends GenericContentController {
     @GetMapping("/api/get-sounds")
     public ResponseEntity<?> getSounds(
             @RequestParam("title") Optional<String> title,
-            @RequestParam("page") Optional<Integer> page) {
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("orderby") Optional<String> orderby,
+            @RequestParam("asc") Optional<Boolean> orderAsc) {
+
+        Sort sort = Sort.unsorted();
+        if (orderby.isPresent() && Sound.orderableFields.contains(orderby)) {
+            sort = Sort.by(
+                    orderAsc.orElse(false) ? Sort.Direction.DESC : Sort.Direction.ASC,
+                    orderby.get());
+        }
+
+        PageRequest pageRequest = PageRequest.of(
+                page.orElse(0),
+                WebConfiguration.PAGE_LEN,
+                sort);
 
         Page<SoundViewModel> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
                 String.format("%%%s%%", title.orElse("")),
-                PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN))
-                .map(SoundViewModel::new);
+                pageRequest)
+            .map(SoundViewModel::new);
 
         return new ResponseEntity<>(new Response(sounds), null, HttpStatus.OK);
     }

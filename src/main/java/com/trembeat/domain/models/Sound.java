@@ -3,7 +3,7 @@ package com.trembeat.domain.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * Sound file entity
@@ -16,6 +16,16 @@ import java.util.Date;
         @Index(columnList = "title")
 })
 public class Sound extends FileEntity {
+    @Transient
+    public static final Set<String> orderableFields;
+
+    static {
+        orderableFields = new HashSet<>();
+        orderableFields.add("title");
+        orderableFields.add("uploadDate");
+        orderableFields.add("lastBumpDate");
+    }
+
     @Setter
     @NonNull
     @Column(name = "title", length = 128, nullable = false)

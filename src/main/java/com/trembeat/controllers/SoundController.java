@@ -21,8 +21,8 @@ public class SoundController {
 
 
     @GetMapping("/sound")
-    public String getIndex() {
-        return "sound/index";
+    public ModelAndView getIndex() {
+        return new ModelAndView("sound/index", "orderFields", Sound.orderableFields);
     }
 
     @GetMapping("/sound/upload")

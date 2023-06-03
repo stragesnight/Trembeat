@@ -44,8 +44,15 @@ export async function ajaxGet(url, method = "GET") {
     return await response.json()
 }
 
-export async function ajaxLoadSounds(card, container, title = '', page = 0, append = false) {
-    const json = await ajaxGet(`/api/get-sounds?title=${title}&page=${page}`)
+export async function ajaxLoadSounds(
+    card,
+    container,
+    title = '',
+    page = 0,
+    append = false,
+    orderby = '') {
+
+    const json = await ajaxGet(`/api/get-sounds?title=${title}&page=${page}&orderby=${orderby}`)
 
     if (!append)
         container.innerHTML = ""

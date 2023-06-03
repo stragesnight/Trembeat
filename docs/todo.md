@@ -19,13 +19,13 @@ Improve audio upload and playback
 
 - [x] Audio format recognition and support on upload
 - [x] Audio search
-- [ ] Audio sorting
+- [x] Audio sorting
 - [ ] Custom playback element with controls
 - [x] Cover image upload
 - [x] Proper audio deletion
 - [x] Audio view page
 - [x] Editing page
-- [ ] Reaction  button
+- [ ] Reaction button
 - [ ] Comments
 - [ ] Playlists
 
