@@ -44,8 +44,8 @@ export async function ajaxGet(url, method = "GET") {
     return await response.json()
 }
 
-export async function ajaxLoadSounds(card, container, page = 0) {
-    const json = await ajaxGet(`/api/get-sounds?page=${page}`)
+export async function ajaxLoadSounds(card, container, title = '', page = 0) {
+    const json = await ajaxGet(`/api/get-sounds?title=${title}&page=${page}`)
 
     container.innerHTML = ""
 

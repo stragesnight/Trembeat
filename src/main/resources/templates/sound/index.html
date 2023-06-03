@@ -1,5 +1,11 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content">
+    <form id="formSearch" class="container w-25" th:method="post">
+        <div class="input-group col justify-content-center">
+            <input type="search" id="fieldSearchTitle" class="form-control" placeholder="Enter title">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
     <div id="sound-card-container"></div>
     <div hidden>
         <div th:replace="~{fragments/sound-card :: sound-card}"></div>
