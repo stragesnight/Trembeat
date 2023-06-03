@@ -17,7 +17,7 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
      * @param pageable Pagination to apply for query
      * @return Set of found sounds
      */
-    List<Sound> findAllByTitleLikeIgnoreCase(String title, Pageable pageable);
+    Page<Sound> findAllByTitleLikeIgnoreCase(String title, Pageable pageable);
 
     /**
      * Find all sounds uploaded by user with given id

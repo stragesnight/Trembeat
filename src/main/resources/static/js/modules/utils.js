@@ -44,12 +44,13 @@ export async function ajaxGet(url, method = "GET") {
     return await response.json()
 }
 
-export async function ajaxLoadSounds(card, container, title = '', page = 0) {
+export async function ajaxLoadSounds(card, container, title = '', page = 0, append = false) {
     const json = await ajaxGet(`/api/get-sounds?title=${title}&page=${page}`)
 
-    container.innerHTML = ""
+    if (!append)
+        container.innerHTML = ""
 
-    for (let sound of json.responseObject) {
+    for (let sound of json.responseObject.content) {
         let node = card.cloneNode(true)
         node.querySelector(".--d-sound-title").innerText = sound.title
         node.querySelector(".--d-sound-author").innerText = sound.author.username
@@ -58,4 +59,6 @@ export async function ajaxLoadSounds(card, container, title = '', page = 0) {
         node.querySelector(".--d-sound-cover").src = `/api/get-cover?id=${sound.cover.id}`
         container.appendChild(node)
     }
+
+    return json.responseObject
 }

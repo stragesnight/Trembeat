@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.*;
 
 @RestController
 public class SoundRestController extends GenericContentController {
@@ -63,10 +61,9 @@ public class SoundRestController extends GenericContentController {
             @RequestParam("title") Optional<String> title,
             @RequestParam("page") Optional<Integer> page) {
 
-        Stream<SoundViewModel> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
+        Page<SoundViewModel> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
                 String.format("%%%s%%", title.orElse("")),
                 PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN))
-                .stream()
                 .map(SoundViewModel::new);
 
         return new ResponseEntity<>(new Response(sounds), null, HttpStatus.OK);
