@@ -33,10 +33,13 @@ public class SoundRestController extends GenericContentController {
         if (optionalSound.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        Sound sound = optionalSound.get();
-        InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound));
-
-        return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
+        try {
+            Sound sound = optionalSound.get();
+            InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound));
+            return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/api/get-cover")
@@ -120,6 +123,32 @@ public class SoundRestController extends GenericContentController {
         }
 
         return getProfileRedirect(user);
+    }
+
+    @PostMapping("/api/bump-sound")
+    public ResponseEntity<?> bumpSound(Authentication auth, @RequestParam("id") Long id) {
+        if (auth == null) {
+            System.out.println("auth == null");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Sound> optionalSound = _soundRepo.findById(id);
+        if (optionalSound.isEmpty()) {
+            System.out.println("optionalSound is empty");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Sound sound = optionalSound.get();
+        sound.setLastBumpDate(new Date());
+
+        try {
+            _soundRepo.save(sound);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/patch-sound")

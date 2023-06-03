@@ -53,6 +53,7 @@ public class Sound extends FileEntity {
     @JoinColumn(name = "cover_id")
     private Image cover;
 
+    @Setter
     @Column(name = "last_bump_date", nullable = false)
     protected Date lastBumpDate;
 

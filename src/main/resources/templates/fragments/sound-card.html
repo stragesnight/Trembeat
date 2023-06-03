@@ -16,5 +16,11 @@
                 <source class="--d-sound-src" th:src="${'/api/get-sound-data?id=' + sound?.getId()} ?: ''">
             </audio>
         </li>
+        <li class="list-group-item">
+            <form th:action="@{~/api/bump-sound}" class="--d-sound-form-bump" th:method="post">
+                <input type="number" name="id" class="--d-sound-id" th:value="${sound?.getId()} ?: ''" hidden>
+                <button type="submit" class="btn btn-primary">Bump</button>
+            </form>
+        </li>
     </ul>
 </div>

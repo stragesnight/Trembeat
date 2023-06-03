@@ -5,7 +5,6 @@
             <input type="search" id="fieldSearchTitle" class="form-control" placeholder="Enter title">
             <div>
                 <select id="fieldSearchOrderby" class="form-select">
-                    <option selected>Order by</option>
                     <option th:each="orderby: ${orderFields}" th:value="${orderby}" th:text="${orderby}"></option>
                 </select>
             </div>
