@@ -67,9 +67,9 @@ public class SoundRestController extends GenericContentController {
             @RequestParam("asc") Optional<Boolean> orderAsc) {
 
         Sort sort = Sort.unsorted();
-        if (orderby.isPresent() && Sound.orderableFields.contains(orderby)) {
+        if (orderby.isPresent() && Sound.orderableFields.contains(orderby.get())) {
             sort = Sort.by(
-                    orderAsc.orElse(false) ? Sort.Direction.DESC : Sort.Direction.ASC,
+                    orderAsc.orElse(false) ? Sort.Direction.ASC : Sort.Direction.DESC,
                     orderby.get());
         }
 
@@ -127,16 +127,12 @@ public class SoundRestController extends GenericContentController {
 
     @PostMapping("/api/bump-sound")
     public ResponseEntity<?> bumpSound(Authentication auth, @RequestParam("id") Long id) {
-        if (auth == null) {
-            System.out.println("auth == null");
+        if (auth == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         Optional<Sound> optionalSound = _soundRepo.findById(id);
-        if (optionalSound.isEmpty()) {
-            System.out.println("optionalSound is empty");
+        if (optionalSound.isEmpty())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
         Sound sound = optionalSound.get();
         sound.setLastBumpDate(new Date());
@@ -144,7 +140,6 @@ public class SoundRestController extends GenericContentController {
         try {
             _soundRepo.save(sound);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

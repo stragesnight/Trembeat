@@ -12,17 +12,19 @@ let reachedEnd = false
 let canLoad = true
 
 function loadSoundsWrapper(title, page, append) {
+    let orderby = fieldSearchOrderby.options[fieldSearchOrderby.selectedIndex].value
+
     currentTitle = title
     currentPage = page
 
-    ajaxLoadSounds(card, container, title, page, append).then(response => {
+    ajaxLoadSounds(card, container, title, page, append, orderby).then(response => {
         reachedEnd = response.last
     })
 }
 
 if (formSearch && fieldSearchTitle) {
     formSearch.addEventListener("submit", ev => {
-        loadSoundsWrapper(fieldSearchTitle.value, 0, false, fieldSearchOrderby.value)
+        loadSoundsWrapper(fieldSearchTitle.value, 0, false)
         ev.preventDefault()
     })
 }
@@ -33,7 +35,7 @@ window.addEventListener("scroll", ev => {
         return;
     }
 
-    loadSoundsWrapper(currentTitle, currentPage + 1, true, fieldSearchOrderby.value)
+    loadSoundsWrapper(currentTitle, currentPage + 1, true)
 
     canLoad = false
     setTimeout(() => {
