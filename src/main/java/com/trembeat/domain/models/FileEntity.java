@@ -29,7 +29,7 @@ public abstract class FileEntity {
 
 
     @PrePersist
-    private void prePersist() {
+    protected void prePersist() {
         uploadDate = new Date();
     }
 }

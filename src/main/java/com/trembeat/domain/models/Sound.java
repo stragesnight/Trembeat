@@ -3,6 +3,8 @@ package com.trembeat.domain.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * Sound file entity
  */
@@ -40,4 +42,14 @@ public class Sound extends FileEntity {
     @ManyToOne
     @JoinColumn(name = "cover_id")
     private Image cover;
+
+    @Column(name = "last_bump_date", nullable = false)
+    protected Date lastBumpDate;
+
+
+    @Override
+    protected void prePersist() {
+        super.prePersist();
+        lastBumpDate = new Date();
+    }
 }

@@ -24,6 +24,8 @@ public class SoundViewModel {
 
     private Date uploadDate;
 
+    private Date lastBumpDate;
+
     private FileEntityViewModel cover;
 
 
@@ -35,6 +37,7 @@ public class SoundViewModel {
         mimeType = sound.getMimeType();
         author = new UserViewModel(sound.getAuthor());
         uploadDate = sound.getUploadDate();
+        lastBumpDate = sound.getLastBumpDate();
         cover = new FileEntityViewModel(sound.getCover());
     }
 }
