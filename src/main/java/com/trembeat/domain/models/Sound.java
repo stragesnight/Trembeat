@@ -57,6 +57,9 @@ public class Sound extends FileEntity {
     @Column(name = "last_bump_date", nullable = false)
     protected Date lastBumpDate;
 
+    @OneToMany(mappedBy = "sound")
+    private Set<Comment> comments;
+
 
     @Override
     protected void prePersist() {

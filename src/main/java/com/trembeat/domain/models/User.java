@@ -56,11 +56,14 @@ public class User implements UserDetails {
     @JoinColumn(name = "profile_picture_id")
     private Image profilePicture;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author")
     private Set<Sound> sounds;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
 
 
     @Override
