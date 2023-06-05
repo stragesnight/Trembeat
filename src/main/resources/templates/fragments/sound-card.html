@@ -2,7 +2,9 @@
 <div th:fragment="sound-card" id="sound-card" class="card text-center w-25">
     <img th:src="@{'/api/get-cover?id=' + ${sound?.getCover()?.getId()}}" class="card-img-top --d-sound-cover" alt="cover image">
     <div class="card-body">
-        <h3 class="card-title --d-sound-title" th:text="${sound?.getTitle()} ?: ''"></h3>
+        <h3 class="card-title">
+            <a class="--d-sound-title" th:text="${sound?.getTitle()} ?: ''"></a>
+        </h3>
         <p class="card-text">
             By <span class="--d-sound-author" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>
         </p>

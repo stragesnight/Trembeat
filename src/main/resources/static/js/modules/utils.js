@@ -62,6 +62,7 @@ export async function ajaxLoadSounds(
     updateContainer(card, container, json.responseObject.content, append, (n, e) => {
         n.querySelector(".--d-sound-id").value = e.id
         n.querySelector(".--d-sound-title").innerText = e.title
+        n.querySelector(".--d-sound-title").href = `/sound/${e.id}`
         n.querySelector(".--d-sound-author").innerText = e.author.username
         n.querySelector(".--d-sound-genre").innerText = e.genreName
         n.querySelector(".--d-sound-src").src = `/api/get-sound-data?id=${e.id}`
@@ -88,6 +89,7 @@ export async function ajaxLoadComments(
     updateContainer(card, container, json.responseObject.content, append, (n, e) => {
         n.querySelector(".--d-comment-text").innerText = e.text
         n.querySelector(".--d-comment-username").innerText = e.user.username
+        n.querySelector(".--d-comment-username").href = `/user/${e.user.id}`
         n.querySelector(".--d-comment-picture").src = `/api/get-profile-picture?id=${e.user.profilePicture.id}`
     })
 
