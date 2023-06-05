@@ -45,7 +45,7 @@ General front-end improvements and goals
 General back-end improvements and goals
 
 - [x] Model and view model separation
-- [ ] Improve data validation
+- [x] Improve data validation
 - [ ] Cover code with tests
 - [x] Storage service for user-uploaded content
 - [x] Content retrieval API:

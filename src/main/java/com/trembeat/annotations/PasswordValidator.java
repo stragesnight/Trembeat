@@ -1,11 +1,21 @@
 package com.trembeat.annotations;
 
-import com.trembeat.domain.viewmodels.UserEditViewModel;
-import com.trembeat.domain.viewmodels.UserRegisterViewModel;
+import com.trembeat.domain.viewmodels.*;
 import jakarta.validation.*;
+
+import java.util.regex.Pattern;
 
 
 public class PasswordValidator implements ConstraintValidator<ValidPassword, Object> {
+
+    private Pattern pattern;
+    private static final String passwordRegex = "^[a-zA-Z0-9!@#$%^&*()\\-_=\\.]{4,}$";
+
+
+    public PasswordValidator() {
+        pattern = Pattern.compile(passwordRegex);
+    }
+
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -27,12 +37,22 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Obj
 
     private boolean checkRegisterViewModel(Object o) {
         UserRegisterViewModel user = (UserRegisterViewModel)o;
-        return user.getPassword().compareTo(user.getPasswordConfirmation()) == 0;
+        String password = user.getPassword();
+        String confirmation = user.getPasswordConfirmation();
+
+        return isValidPassword(password) && password.compareTo(confirmation) == 0;
     }
 
     private boolean checkEditViewModel(Object o) {
         UserEditViewModel user = (UserEditViewModel)o;
-        return (user.getPassword() == null || user.getPassword().isEmpty())
-                || user.getPassword().compareTo(user.getPasswordConfirmation()) == 0;
+        String password = user.getPassword();
+        String confirmation = user.getPasswordConfirmation();
+
+        return (password == null || password.isEmpty())
+                || (isValidPassword(password) && password.compareTo(confirmation) == 0);
+    }
+
+    private boolean isValidPassword(String password) {
+        return pattern.matcher(password).matches();
     }
 }
