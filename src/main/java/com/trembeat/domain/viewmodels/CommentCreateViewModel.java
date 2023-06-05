@@ -12,7 +12,5 @@ public class CommentCreateViewModel {
     @NotEmpty
     private String text;
 
-    private Long userId;
-
     private Long soundId;
 }
