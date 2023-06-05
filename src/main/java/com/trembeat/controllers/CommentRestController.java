@@ -3,7 +3,8 @@ package com.trembeat.controllers;
 import com.trembeat.configuration.WebConfiguration;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
-import com.trembeat.domain.viewmodels.CommentCreateViewModel;
+import com.trembeat.domain.viewmodels.*;
+import com.trembeat.services.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
@@ -31,9 +32,10 @@ public class CommentRestController extends GenericContentController {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "creationDate");
         Pageable pageable = PageRequest.of(page.orElse(0), WebConfiguration.PAGE_LEN, sort);
-        Page<Comment> comments = _commentRepo.findAllBySound(optionalSound.get(), pageable);
+        Page<CommentViewModel> comments = _commentRepo.findAllBySound(optionalSound.get(), pageable)
+                .map(CommentViewModel::new);
 
-        return new ResponseEntity<>(comments, null, HttpStatus.OK);
+        return new ResponseEntity<>(new Response(comments), null, HttpStatus.OK);
     }
 
     @PostMapping("/api/put-comment")

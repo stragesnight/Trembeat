@@ -59,26 +59,48 @@ export async function ajaxLoadSounds(
 
     const json = await ajaxSend(`/api/get-sounds?title=${title}&page=${page}&orderby=${orderby}`)
 
-    if (!append)
-        container.innerHTML = ""
+    updateContainer(card, container, json.responseObject.content, append, (n, e) => {
+        n.querySelector(".--d-sound-id").value = e.id
+        n.querySelector(".--d-sound-title").innerText = e.title
+        n.querySelector(".--d-sound-author").innerText = e.author.username
+        n.querySelector(".--d-sound-genre").innerText = e.genreName
+        n.querySelector(".--d-sound-src").src = `/api/get-sound-data?id=${e.id}`
+        n.querySelector(".--d-sound-cover").src = `/api/get-cover?id=${e.cover.id}`
 
-    for (let sound of json.responseObject.content) {
-        let node = card.cloneNode(true)
-
-        node.querySelector(".--d-sound-id").value = sound.id
-        node.querySelector(".--d-sound-title").innerText = sound.title
-        node.querySelector(".--d-sound-author").innerText = sound.author.username
-        node.querySelector(".--d-sound-genre").innerText = sound.genreName
-        node.querySelector(".--d-sound-src").src = `/api/get-sound-data?id=${sound.id}`
-        node.querySelector(".--d-sound-cover").src = `/api/get-cover?id=${sound.cover.id}`
-
-        node.querySelector(".--d-sound-form-bump").addEventListener("submit", ev => {
+        n.querySelector(".--d-sound-form-bump").addEventListener("submit", ev => {
             ajaxFormData(ev.target)
             ev.preventDefault()
         })
-
-        container.appendChild(node)
-    }
+    })
 
     return json.responseObject
+}
+
+export async function ajaxLoadComments(
+    card,
+    container,
+    soundId,
+    page = 0,
+    append = false) {
+
+    const json = await ajaxSend(`/api/get-comments?soundId=${soundId}&page=${page}`)
+
+    updateContainer(card, container, json.responseObject.content, append, (n, e) => {
+        n.querySelector(".--d-comment-text").innerText = e.text
+        n.querySelector(".--d-comment-username").innerText = e.user.username
+        n.querySelector(".--d-comment-picture").src = `/api/get-profile-picture?id=${e.user.profilePicture.id}`
+    })
+
+    return json.responseObject
+}
+
+export function updateContainer(card, container, data, append, init) {
+    if (!append)
+        container.innerHTML = ""
+
+    for (let entry of data) {
+        let node = card.cloneNode(true)
+        init(node, entry)
+        container.appendChild(node)
+    }
 }

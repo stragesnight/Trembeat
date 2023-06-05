@@ -56,7 +56,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "profile_picture_id")
     private Image profilePicture;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "author")

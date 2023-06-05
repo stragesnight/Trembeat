@@ -26,7 +26,7 @@ Improve audio upload and playback
 - [x] Audio view page
 - [x] Editing page
 - [x] Reaction button
-- [ ] Comments
+- [x] Comments
 - [ ] Playlists
 
 ## Front-end general
@@ -37,6 +37,8 @@ General front-end improvements and goals
 - [ ] Improve page layout
 - [x] AJAX content loading
 - [ ] Add localization support
+- [ ] Add error page
+- [ ] Hide elements that require authentication
 
 ## Back-end general
 
@@ -49,4 +51,4 @@ General back-end improvements and goals
 - [x] Content retrieval API:
     * Audio with search, pagination and sorting
     * Images (audio covers, user profile pictures)
-
+- [ ] Image compression and resizing

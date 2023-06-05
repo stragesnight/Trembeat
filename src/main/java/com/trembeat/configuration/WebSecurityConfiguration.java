@@ -29,6 +29,7 @@ public class WebSecurityConfiguration {
                                     "/login*",
                                     "/register*",
                                     "/sound",
+                                    "/sound/*",
                                     "/api/**",
                                     "/js/**",
                                     "/user/*")

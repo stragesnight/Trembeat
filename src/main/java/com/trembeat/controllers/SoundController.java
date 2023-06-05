@@ -40,7 +40,11 @@ public class SoundController {
         if (optionalSound.isEmpty())
             return new ModelAndView("home/index");
 
-        return new ModelAndView("sound/view", "sound", new SoundViewModel(optionalSound.get()));
+        Sound sound = optionalSound.get();
+
+        return new ModelAndView("sound/view", Map.of(
+                "sound", new SoundViewModel(sound),
+                "comment", new CommentCreateViewModel(sound.getId())));
     }
 
     @GetMapping("/sound/edit/{id}")

@@ -1,5 +1,18 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
 <div th:fragment="content">
     <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
+    <h3>Leave comment</h3>
+    <form id="formComment" class="container w-50" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">
+        <div class="form-group">
+            <textarea class="form-control" rows="3" th:field="*{text}" required></textarea>
+        </div>
+        <input type="number" id="fieldSoundId" th:field="*{soundId}" hidden>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+    <div id="comment-container"></div>
+    <div hidden>
+        <div th:replace="~{fragments/comment-card :: comment-card}"></div>
+    </div>
+    <script type="module" th:src="@{~/js/sound/view.js}"></script>
 </div>
 </div>
