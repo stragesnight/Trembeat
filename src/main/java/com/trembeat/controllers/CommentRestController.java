@@ -8,6 +8,7 @@ import com.trembeat.services.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class CommentRestController extends GenericContentController {
         return new ResponseEntity<>(new Response(comments), null, HttpStatus.OK);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/put-comment")
     public ResponseEntity<?> putComment(
             Authentication auth,
@@ -62,6 +64,7 @@ public class CommentRestController extends GenericContentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/delete-comment")
     public ResponseEntity<?> deleteComment(
             Authentication auth,

@@ -37,8 +37,9 @@ General front-end improvements and goals
 - [ ] Improve page layout
 - [x] AJAX content loading
 - [ ] Add localization support
-- [ ] Add error page
+- [x] Add error page
 - [ ] Hide elements that require authentication
+- [ ] Show errors during form validation
 
 ## Back-end general
 

@@ -12,7 +12,8 @@ import java.util.Set;
  */
 @Entity
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Table(name = "roles", indexes = {
         @Index(columnList = "name", unique = true)
 })
@@ -23,7 +24,8 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     @Setter
-    @Column(name = "name", length = 32, unique = true)
+    @NonNull
+    @Column(name = "name", length = 16, unique = true)
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY)

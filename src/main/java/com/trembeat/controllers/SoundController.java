@@ -3,7 +3,11 @@ package com.trembeat.controllers;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
+import jakarta.annotation.security.RolesAllowed;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +29,7 @@ public class SoundController {
         return new ModelAndView("sound/index", "orderFields", Sound.orderableFields);
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/sound/upload")
     public ModelAndView getUpload(Authentication auth) {
         User user = (User)auth.getPrincipal();
@@ -47,6 +52,7 @@ public class SoundController {
                 "comment", new CommentCreateViewModel(sound.getId())));
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/sound/edit/{id}")
     public ModelAndView getEdit(Authentication auth, @PathVariable Long id) {
         User user = (User)auth.getPrincipal();

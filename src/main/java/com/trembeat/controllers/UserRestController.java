@@ -6,6 +6,7 @@ import com.trembeat.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,7 @@ public class UserRestController extends GenericContentController {
         return getProfileRedirect(user);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/patch-user")
     public ResponseEntity<?> patchUser(
             Authentication auth,
@@ -54,6 +56,7 @@ public class UserRestController extends GenericContentController {
         return getProfileRedirect(user);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/delete-user")
     public ResponseEntity<?> deleteUser(Authentication auth) {
         User user = (User)auth.getPrincipal();

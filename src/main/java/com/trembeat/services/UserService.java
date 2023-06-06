@@ -1,6 +1,7 @@
 package com.trembeat.services;
 
 import com.trembeat.domain.models.Image;
+import com.trembeat.domain.models.Role;
 import com.trembeat.domain.models.User;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
@@ -21,11 +22,19 @@ public class UserService implements UserDetailsService {
     private ImageRepository _imageRepo;
     @Autowired
     private ImageStorageService _storageService;
+    private RoleRepository _roleRepo;
     private BCryptPasswordEncoder _passwordEncoder;
 
+    private Role _roleAdmin;
+    private Role _roleUser;
 
-    public UserService() {
+
+    public UserService(RoleRepository roleRepository) {
         _passwordEncoder = new BCryptPasswordEncoder();
+
+        _roleRepo = roleRepository;
+        _roleAdmin = _roleRepo.findByName("ROLE_ADMIN").get();
+        _roleUser = _roleRepo.findByName("ROLE_USER").get();
     }
 
     /**
@@ -62,7 +71,12 @@ public class UserService implements UserDetailsService {
                     _passwordEncoder.encode(viewModel.getPassword()),
                     viewModel.getEmail());
 
+            user.addAuthority(_roleUser);
+            if (_userRepo.findAll().isEmpty())
+                user.addAuthority(_roleAdmin);
+
             _userRepo.save(user);
+
             return true;
         } catch (Exception ex) {
             return false;

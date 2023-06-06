@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.*;
 import org.springframework.http.*;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,6 +87,7 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(new Response(sounds), null, HttpStatus.OK);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/put-sound")
     public ResponseEntity<?> putSound(
             Authentication auth,
@@ -124,6 +126,7 @@ public class SoundRestController extends GenericContentController {
         return getProfileRedirect(user);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/bump-sound")
     public ResponseEntity<?> bumpSound(Authentication auth, @RequestParam("id") Long id) {
         if (auth == null)
@@ -145,6 +148,7 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/patch-sound")
     public ResponseEntity<?> patchSound(
             Authentication auth,
@@ -182,6 +186,7 @@ public class SoundRestController extends GenericContentController {
         return getProfileRedirect(user);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/api/delete-sound")
     public ResponseEntity<?> deleteSound(Authentication auth, @RequestParam("id") Long id) {
         User user = (User)auth.getPrincipal();

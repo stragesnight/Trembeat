@@ -56,6 +56,7 @@ public class User implements UserDetails {
     @JoinColumn(name = "profile_picture_id")
     private Image profilePicture;
 
+    @Setter
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
@@ -65,6 +66,13 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;
 
+
+    public void addAuthority(Role role) {
+        if (roles == null)
+            roles = new HashSet<>();
+
+        roles.add(role);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

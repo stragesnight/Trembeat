@@ -7,6 +7,7 @@ import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class UserController {
         return new ModelAndView("user/register", "user", new UserRegisterViewModel());
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/edit-profile")
     public ModelAndView getEditProfile(Authentication auth) {
         UserEditViewModel viewModel = new UserEditViewModel((User)auth.getPrincipal());
