@@ -1,0 +1,33 @@
+@import "reset.css";
+@import "vars.css";
+
+html {
+    /* TODO: choose font */
+    font-family: sans-serif;
+    background-color: var(--color-bg-primary);
+    color: var(--color-fg-primary);
+}
+
+.t-stuck {
+    margin-bottom: auto;
+}
+
+.d-stuck {
+    margin-top: auto;;
+}
+
+.r-stuck {
+    margin-left: auto;
+}
+
+.l-stuck {
+    margin-right: auto;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+.fullheight {
+    height: 100%;
+}

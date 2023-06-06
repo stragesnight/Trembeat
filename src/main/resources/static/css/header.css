@@ -1,0 +1,14 @@
+header {
+    position: fixed;
+    font-size: 1rem;
+    background-color: var(--color-fg-secondary);
+}
+
+header, header ul {
+    display: flex;
+    flex-direction: row;
+}
+
+header ul li {
+    padding: 8px;
+}

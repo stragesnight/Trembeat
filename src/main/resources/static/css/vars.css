@@ -1,0 +1,10 @@
+:root {
+    --color-bg-primary: #333;
+    --color-bg-secondary: #705f5f;
+    --color-fg-primary: #efe8e8;
+    --color-fg-primary-dim: #877;
+    --color-fg-secondary: #d33;
+    --color-fg-secondary-dim: #944;
+    --size-border-thin: 0.1rem;
+    --size-border-thick: 0.3rem;
+}
