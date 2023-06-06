@@ -51,4 +51,5 @@ General back-end improvements and goals
 - [x] Content retrieval API:
     * Audio with search, pagination and sorting
     * Images (audio covers, user profile pictures)
-- [ ] Image compression and resizing
+- [x] Image compression and resizing
+- [ ] Optimize image resizing

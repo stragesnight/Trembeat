@@ -3,6 +3,9 @@ package com.trembeat.services;
 import com.trembeat.domain.models.Image;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,35 @@ public class ImageStorageService extends StorageService<Image> {
     }
 
     @Override
+    public boolean save(Image id, InputStream inputStream) {
+        if (!super.save(id, inputStream))
+            return false;
+
+        // TODO: replace with https://github.com/bramp/ffmpeg-cli-wrapper ???
+        try {
+            String inFilePath = getFullPath(id);
+            String fileExtension = getFileExtension(id);
+            String cmdPath = getClass().getClassLoader().getResource("resize.sh").getFile();
+            String fullCmd = String.format(
+                    "%s %s %s %s",
+                    cmdPath,
+                    inFilePath,
+                    inFilePath.replace(fileExtension, "tmp." + fileExtension),
+                    inFilePath.replace(fileExtension, "jpeg"));
+
+            new File(cmdPath).setExecutable(true, true);
+            Runtime.getRuntime().exec(fullCmd);
+
+            id.setMimeType(getPreferredContentType());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     protected String getFullPath(Image image) {
         return String.format("%sstatic/uploads/image/%d.%s",
                 _basePath,
@@ -43,5 +75,10 @@ public class ImageStorageService extends StorageService<Image> {
     @Override
     public boolean isAcceptedContentType(String contentType) {
         return _contentTypes.containsKey(contentType);
+    }
+
+    @Override
+    public String getPreferredContentType() {
+        return "image/jpeg";
     }
 }

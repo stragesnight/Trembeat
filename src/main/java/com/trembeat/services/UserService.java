@@ -18,7 +18,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository _userRepo;
     @Autowired
-    private ImageRepository _profilePictureRepo;
+    private ImageRepository _imageRepo;
     @Autowired
     private ImageStorageService _storageService;
     private BCryptPasswordEncoder _passwordEncoder;
@@ -92,11 +92,10 @@ public class UserService implements UserDetailsService {
                 if (!_storageService.isAcceptedContentType(picture.getMimeType()))
                     return false;
 
-                picture.setContentLength(viewModel.getProfilePicture().getSize());
-                picture = _profilePictureRepo.save(picture);
-
-                user.setProfilePicture(picture);
+                picture = _imageRepo.save(picture);
                 _storageService.save(picture, viewModel.getProfilePicture().getInputStream());
+                picture = _imageRepo.save(picture);
+                user.setProfilePicture(picture);
             }
 
             _userRepo.save(user);

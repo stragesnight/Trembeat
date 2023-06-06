@@ -18,9 +18,6 @@ public abstract class FileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
-    @Column(name = "content_length", nullable = false)
-    protected Long contentLength;
-
     @Column(name = "mime_type", length = 64, nullable = false)
     protected String mimeType;
 

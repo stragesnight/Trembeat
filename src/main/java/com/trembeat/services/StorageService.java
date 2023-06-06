@@ -29,6 +29,12 @@ public abstract class StorageService<TID> {
     public abstract boolean isAcceptedContentType(String contentType);
 
     /**
+     * Get preferred content type for storing content
+     * @return String representing preferred content type
+     */
+    public abstract String getPreferredContentType();
+
+    /**
      * Save data for given entity id
      * @param id Id of associated entity to save
      * @param inputStream Incoming data stream

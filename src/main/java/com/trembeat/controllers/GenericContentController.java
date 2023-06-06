@@ -24,7 +24,7 @@ public abstract class GenericContentController {
     protected HttpHeaders getHeaders(FileEntity fileEntity) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(fileEntity.getMimeType()));
-        headers.setContentLength(fileEntity.getContentLength());
+        //headers.setContentLength(fileEntity.getContentLength());
 
         return headers;
     }

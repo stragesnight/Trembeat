@@ -110,7 +110,6 @@ public class SoundRestController extends GenericContentController {
 
         // TODO: move this into constructor?
         sound.setMimeType(viewModel.getFile().getContentType());
-        sound.setContentLength(viewModel.getFile().getSize());
 
         if (viewModel.getCover() != null && !updateCover(new Image(), viewModel.getCover(), sound))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -204,13 +203,11 @@ public class SoundRestController extends GenericContentController {
         if (!_imageStorageService.isAcceptedContentType(cover.getMimeType()))
             return false;
 
-        cover.setContentLength(file.getSize());
-        cover = _imageRepo.save(cover);
-
-        sound.setCover(cover);
-
         try {
+            cover = _imageRepo.save(cover);
             _imageStorageService.save(cover, file.getInputStream());
+            cover = _imageRepo.save(cover);
+            sound.setCover(cover);
         } catch (IOException ex) {
             return false;
         }

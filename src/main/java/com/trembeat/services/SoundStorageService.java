@@ -45,4 +45,9 @@ public class SoundStorageService extends StorageService<Sound> {
     public boolean isAcceptedContentType(String contentType) {
         return _contentTypes.containsKey(contentType);
     }
+
+    @Override
+    public String getPreferredContentType() {
+        return "audio/mpeg";
+    }
 }
