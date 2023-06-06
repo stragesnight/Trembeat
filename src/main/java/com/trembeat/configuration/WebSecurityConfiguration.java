@@ -26,6 +26,7 @@ public class WebSecurityConfiguration {
                     request.requestMatchers(
                                     "/",
                                     "/about*",
+                                    "/error*",
                                     "/login*",
                                     "/register*",
                                     "/sound",
