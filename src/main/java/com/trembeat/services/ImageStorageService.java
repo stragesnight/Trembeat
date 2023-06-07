@@ -34,15 +34,18 @@ public class ImageStorageService extends StorageService<Image> {
 
         // TODO: replace with https://github.com/bramp/ffmpeg-cli-wrapper ???
         try {
-            String inFilePath = getFullPath(id);
             String fileExtension = getFileExtension(id);
+            String inFilePath = getFullPath(id).replace(fileExtension, "old." + fileExtension);
             String cmdPath = getClass().getClassLoader().getResource("resize.sh").getFile();
+
+            new File(getFullPath(id)).renameTo(new File(inFilePath));
+
             String fullCmd = String.format(
                     "%s %s %s %s",
                     cmdPath,
                     inFilePath,
                     inFilePath.replace(fileExtension, "tmp." + fileExtension),
-                    inFilePath.replace(fileExtension, "jpeg"));
+                    inFilePath.replace("old." + fileExtension, "jpeg"));
 
             new File(cmdPath).setExecutable(true, true);
             Runtime.getRuntime().exec(fullCmd);
