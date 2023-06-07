@@ -20,8 +20,12 @@ header .main-container, header .main-container > * {
 
 header ul li, #form-header-search > * {
     display: flex;
+    align-items: stretch;
+}
+
+header ul li a , #form-header-search > * > * {
+    display: flex;
     align-items: center;
-    padding: 0px 16px;
 }
 
 header ul.bordered li {
@@ -40,11 +44,11 @@ header ul.bordered li {
 }
 
 #field-search-title {
-    width: 320px;
+    width: calc(var(--size-main-container) * 0.25);
 }
 
-#header-user-container img {
+#header-user-picture {
     z-index: -1;
-    width: calc(var(--size-height-header) - 0px);
-    height: calc(var(--size-height-header) - 0px);
+    width: var(--size-height-header);
+    height: var(--size-height-header);
 }

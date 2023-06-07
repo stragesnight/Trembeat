@@ -1,14 +1,15 @@
 :root {
     --color-bg-primary: #2a2a2a;
     --color-bg-secondary: #111;
-    --color-bg-secondary-dim: #402f2f;
+    --color-bg-secondary-dim: #333;
     --color-fg-primary: #efe8e8;
-    --color-fg-primary-dim: #877;
+    --color-fg-primary-dim: #777;
     --color-fg-secondary: #d22;
     --color-fg-secondary-dim: #a00;
 
     --size-border-thin: 0.1rem;
     --size-border-thick: 0.3rem;
+    --size-font-smaller: 0.88rem;
     --size-font-normal: 0.92rem;
     --size-font-bigger: 1.25rem;
     --size-font-big: 1.8rem;
