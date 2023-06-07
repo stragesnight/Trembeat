@@ -25,6 +25,11 @@ time, mark, audio, video {
     box-sizing: content-box;
 }
 
+a {
+    color: unset;
+    text-decoration: none;
+}
+
 /* make sure to set some focus styles for accessibility */
 :focus {
     outline: 0;
