@@ -1,25 +1,22 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Header</title>
-    <link rel="stylesheet" href="../../static/css/site.css">
-    <link rel="stylesheet" href="../../static/css/header.css">
-</head>
-<body>
-<header th:fragment="header" class="t-stuck fullwidth">
-    <ul>
-        <li><a th:href="@{~/}">Trembeat</a></li>
-        <li><a th:href="@{~/about}">About</a></li>
-        <li><a th:href="@{~/sound}">Sounds</a></li>
-        <li><a th:href="@{~/sound/upload}">Upload new sound</a></li>
-        <li><a th:href="@{~/edit-profile}">Edit profile</a></li>
-    </ul>
-    <ul class="r-stuck">
-        <li><a th:href="@{~/login}">Sign in</a></li>
-        <li><a th:href="@{~/register}">Sign up</a></li>
-    </ul>
-</header>
-</body>
-</html>
+<div id="header-container" th:fragment="header">
+    <header class="fixed fullwidth">
+        <div class="main-container">
+            <ul class="bordered">
+                <li id="logo" class="btn"><a th:href="@{~/}">Trembeat</a></li>
+                <li class="btn-secondary"><a th:href="@{~/sound}">Explore</a></li>
+                <li class="btn-secondary"><a th:href="@{~/sound/upload}">Upload</a></li>
+            </ul>
+            <form id="form-header-search" th:action="@{~/api/get-sounds}" th:method="post">
+                <input type="search" id="field-search-title" name="fieldSearchTitle" placeholder="Search for music" autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+            <ul th:if="${user == null}">
+                <li class="btn-secondary"><a th:href="@{~/login}">Sign in</a></li>
+                <li class="btn"><a th:href="@{~/register}">Sign up</a></li>
+            </ul>
+            <div th:if="${user}" id="header-user-container">
+                <img th:src="@{'/api/get-profile-picture?id=' + ${user.getId()}}">
+            </div>
+        </div>
+    </header>
+</div>

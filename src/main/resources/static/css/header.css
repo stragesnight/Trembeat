@@ -1,14 +1,50 @@
 header {
-    position: fixed;
-    font-size: 1rem;
-    background-color: var(--color-fg-secondary);
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    min-height: var(--size-height-header);
+    max-height: var(--size-height-header);
+    background-color: var(--color-bg-secondary);
 }
 
-header, header ul {
+header .main-container {
+    border-bottom: var(--color-fg-secondary) solid var(--size-border-thin);
+}
+
+header .main-container, header .main-container > * {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
-header ul li {
-    padding: 8px;
+header ul li, #form-header-search > * {
+    display: flex;
+    align-items: center;
+    padding: 0px 16px;
+}
+
+header ul.bordered li {
+    border-right: var(--size-border-thin) solid var(--color-bg-secondary-dim);
+}
+
+#header-container {
+    margin-bottom: var(--size-height-header);
+}
+
+#logo {
+    font-size: var(--size-font-bigger);
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    background-color: var(--color-fg-secondary) !important;
+}
+
+#field-search-title {
+    width: 320px;
+}
+
+#header-user-container img {
+    z-index: -1;
+    width: calc(var(--size-height-header) - 0px);
+    height: calc(var(--size-height-header) - 0px);
 }

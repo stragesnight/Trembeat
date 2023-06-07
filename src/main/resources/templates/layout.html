@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{~/css/footer.css}">
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header (user = ${user})}"></header>
     <div th:replace="${content}"></div>
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>

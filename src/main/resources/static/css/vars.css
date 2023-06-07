@@ -1,10 +1,18 @@
 :root {
-    --color-bg-primary: #333;
-    --color-bg-secondary: #705f5f;
+    --color-bg-primary: #2a2a2a;
+    --color-bg-secondary: #111;
+    --color-bg-secondary-dim: #402f2f;
     --color-fg-primary: #efe8e8;
     --color-fg-primary-dim: #877;
-    --color-fg-secondary: #d33;
-    --color-fg-secondary-dim: #944;
+    --color-fg-secondary: #d22;
+    --color-fg-secondary-dim: #a00;
+
     --size-border-thin: 0.1rem;
     --size-border-thick: 0.3rem;
+    --size-font-normal: 0.92rem;
+    --size-font-bigger: 1.25rem;
+    --size-font-big: 1.8rem;
+    --size-font-biggest: 2.7rem;
+    --size-height-header: 2.7rem;
+    --size-main-container: 86rem;
 }

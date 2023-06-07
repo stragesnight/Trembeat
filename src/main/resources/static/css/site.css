@@ -6,22 +6,14 @@ html {
     font-family: sans-serif;
     background-color: var(--color-bg-primary);
     color: var(--color-fg-primary);
+    font-size: var(--size-font-normal);
+    overflow: scroll;
 }
 
-.t-stuck {
-    margin-bottom: auto;
-}
-
-.d-stuck {
-    margin-top: auto;;
-}
-
-.r-stuck {
-    margin-left: auto;
-}
-
-.l-stuck {
-    margin-right: auto;
+input[type="search"] {
+    background-color: var(--color-bg-primary);
+    color: var(--color-fg-primary);
+    padding: 4px 8px;
 }
 
 .fullwidth {
@@ -31,3 +23,46 @@ html {
 .fullheight {
     height: 100%;
 }
+
+.main-container {
+    min-width: var(--size-main-container);
+    max-width: var(--size-main-container);
+}
+
+.fixed {
+    position: fixed;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn, button {
+    background-color: var(--color-fg-secondary);
+    color: var(--color-fg-primary);
+}
+
+.btn:hover, button:hover {
+    background-color: var(--color-fg-secondary-dim);
+    text-shadow: var(--color-fg-primary) 0px 0px 1px;
+}
+
+.btn, .btn-secondary {
+    cursor: pointer;
+    padding: 0px 16px;
+}
+
+.btn *, .btn-secondary * {
+    user-select: none;
+}
+
+.btn-secondary:hover {
+    color: var(--color-fg-secondary);
+}
+
