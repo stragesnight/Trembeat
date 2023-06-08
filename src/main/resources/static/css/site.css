@@ -4,10 +4,37 @@
 html {
     /* TODO: choose font */
     font-family: sans-serif;
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-bg-secondary-dim);
     color: var(--color-fg-primary);
     font-size: var(--size-font-normal);
     overflow: scroll;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: var(--size-font-biggest);
+    margin: 48px 0px 24px 0px;
+    padding: 0px 0px 8px 16px;
+    border-bottom: var(--size-border-thick) solid var(--color-fg-secondary);
+}
+
+h2 {
+    font-weight: bold;
+    font-size: var(--size-font-big);
+    margin: 48px 0px 24px 0px;
+    padding: 0px 0px 8px 16px;
+    border-bottom: var(--size-border-thin) solid var(--color-fg-primary);
+}
+
+h3 {
+    font-size: var(--size-font-bigger);
+    margin: 48px 0px 24px 0px;
+    padding: 0px 0px 8px 16px;
+    border-bottom: var(--size-border-thin) solid var(--color-fg-primary-dim);
+}
+
+p {
+    margin-bottom: 16px;
 }
 
 input[type="search"] {
@@ -105,6 +132,12 @@ ul.menu li > *:hover {
     text-shadow: var(--color-fg-primary) 0px 0px 1px;
 }
 
-#menu-header-profile {
-    position: absolute;
+#content-container {
+    justify-content: center;
+}
+
+#content-container .main-container {
+    background-color: var(--color-bg-primary);
+    min-height: calc(100vh - var(--size-height-header));
+    padding: 12px 32px;
 }

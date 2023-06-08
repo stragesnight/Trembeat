@@ -1,17 +1,5 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../static/css/site.css">
-    <link rel="stylesheet" href="../../static/css/header.css">
-</head>
-<body>
-
-</body>
-</html>
 <div id="header-container" th:fragment="header">
-    <header class="fixed fullwidth">
+    <header class="flex-row fixed fullwidth">
         <div class="main-container">
             <ul class="bordered">
                 <li id="logo"><a class="btn" th:href="@{~/}"><span>Trembeat</span></a></li>
@@ -27,7 +15,7 @@
                 <li class="btn"><a th:href="@{~/register}"><span>Sign up</span></a></li>
             </ul>
             <div th:if="${#authorization.expr('!isAnonymous()')}">
-                <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.id}}" alt="profile picture">
+                <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
             </div>
         </div>
     </header>

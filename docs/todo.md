@@ -34,7 +34,7 @@ Improve audio upload and playback
 General front-end improvements and goals
 
 - [ ] Substitute Bootstrap with own styles
-- [ ] Improve page layout
+- [x] Improve page layout
 - [x] AJAX content loading
 - [ ] Add localization support
 - [x] Add error page

@@ -10,8 +10,12 @@
     <link rel="stylesheet" th:href="@{~/css/footer.css}">
 </head>
 <body>
-    <header th:replace="~{fragments/header :: header (user = ${user})}"></header>
-    <div th:replace="${content}"></div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
+<header th:replace="~{fragments/header :: header (user = ${user})}"></header>
+<div id="content-container" class="flex-row fullwidth">
+    <div class="flex-col main-container">
+        <div th:replace="${content}"></div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

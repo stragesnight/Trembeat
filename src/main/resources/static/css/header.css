@@ -1,8 +1,6 @@
 header {
     top: 0;
-    display: flex;
     justify-content: center;
-    align-items: stretch;
     min-height: var(--size-height-header);
     max-height: var(--size-height-header);
     background-color: var(--color-bg-secondary);
@@ -20,10 +18,9 @@ header .main-container, header .main-container > * {
 
 header ul li, #form-header-search > * {
     display: flex;
-    align-items: stretch;
 }
 
-header ul li a , #form-header-search > * > * {
+header ul li a, #form-header-search > * > * {
     display: flex;
     align-items: center;
 }
@@ -51,4 +48,8 @@ header ul.bordered li {
     z-index: -1;
     width: var(--size-height-header);
     height: var(--size-height-header);
+}
+
+#menu-header-profile {
+    position: absolute;
 }
