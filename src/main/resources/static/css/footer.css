@@ -1,0 +1,13 @@
+footer {
+    min-height: var(--size-height-footer);
+    max-height: var(--size-height-footer);
+    align-items: stretch;
+    justify-content: center;
+    color: var(--color-fg-primary-dim);
+}
+
+footer .main-container {
+    background-color: var(--color-bg-secondary);
+    justify-content: center;
+    align-items: center;
+}

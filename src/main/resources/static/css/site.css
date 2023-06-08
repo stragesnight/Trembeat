@@ -139,6 +139,6 @@ ul.menu li > *:hover {
 
 #content-container .main-container {
     background-color: var(--color-bg-primary);
-    min-height: calc(100vh - var(--size-height-header));
+    min-height: calc(100vh - var(--size-height-header) - var(--size-height-footer));
     padding: 12px 32px;
 }
