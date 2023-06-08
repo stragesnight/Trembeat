@@ -7,16 +7,16 @@
                 <li><a class="btn-secondary" th:href="@{~/sound/upload}"><span>Upload</span></a></li>
             </ul>
             <form id="form-header-search" th:action="@{~/api/get-sounds}" th:method="post">
-                <input type="search" id="field-search-title" name="fieldSearchTitle" placeholder="Search for music" autocomplete="off">
+                <input type="search" id="field-header-search-title" name="fieldSearchTitle" placeholder="Search for music" autocomplete="off">
                 <button type="submit"><span>Search</span></button>
             </form>
             <ul th:if="${#authorization.expr('isAnonymous()')}">
                 <li class="btn-secondary"><a th:href="@{~/login}"><span>Sign in</span></a></li>
                 <li class="btn"><a th:href="@{~/register}"><span>Sign up</span></a></li>
             </ul>
-            <div th:if="${#authorization.expr('!isAnonymous()')}">
+            <a th:if="${#authorization.expr('!isAnonymous()')}">
                 <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
-            </div>
+            </a>
         </div>
     </header>
     <div th:if="${#authorization.expr('!isAnonymous()')}" hidden>

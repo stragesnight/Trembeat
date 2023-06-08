@@ -97,6 +97,7 @@ ul.menu {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    position: absolute;
     border: var(--size-border-thin) solid var(--color-bg-secondary);
     background-color: var(--color-bg-secondary-dim);
     padding: 8px 0px;

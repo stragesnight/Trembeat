@@ -40,7 +40,7 @@ header ul.bordered li {
     background-color: var(--color-fg-secondary) !important;
 }
 
-#field-search-title {
+#field-header-search-title {
     width: calc(var(--size-main-container) * 0.25);
 }
 
@@ -48,8 +48,4 @@ header ul.bordered li {
     z-index: -1;
     width: var(--size-height-header);
     height: var(--size-height-header);
-}
-
-#menu-header-profile {
-    position: absolute;
 }

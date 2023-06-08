@@ -7,10 +7,19 @@ const formSearch = document.getElementById("formSearch")
 const fieldSearchTitle = document.getElementById("fieldSearchTitle")
 const fieldSearchOrderby = document.getElementById("fieldSearchOrderby")
 
+let title = ""
+
 
 function loadSoundsWrapper(page, append) {
-    let orderby = fieldSearchOrderby.options[fieldSearchOrderby.selectedIndex].value
-    return ajaxLoadSounds(card, container, fieldSearchTitle.value, page, append, orderby)
+    let orderby = ''
+
+    if (fieldSearchOrderby)
+        orderby = fieldSearchOrderby.options[fieldSearchOrderby.selectedIndex].value
+
+    if (fieldSearchTitle && fieldSearchTitle.value)
+        title = fieldSearchTitle.value
+
+    return ajaxLoadSounds(card, container, title, page, append, orderby)
 }
 
 if (formSearch && fieldSearchTitle) {
@@ -20,5 +29,11 @@ if (formSearch && fieldSearchTitle) {
     })
 }
 
-startLoader(page => loadSoundsWrapper(page, true), container)
+let searchParams = new URLSearchParams(window.location.search)
+if (searchParams.has("title")) {
+    title = searchParams.get("title")
+    if (fieldSearchTitle)
+        fieldSearchTitle.value = title
+}
 
+startLoader(page => loadSoundsWrapper(page, true), container)
