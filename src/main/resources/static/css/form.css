@@ -1,0 +1,40 @@
+input:not([type=file]), textarea, select {
+    background-color: var(--color-bg-secondary-dim);
+    color: var(--color-fg-primary);
+    padding: 12px 4px 10px 10px;
+}
+
+textarea {
+    line-height: 1.5rem;
+}
+
+input:not([type=file]):focus, textarea:focus {
+    box-shadow: var(--color-fg-secondary) calc(0px - var(--size-border-thick)) 0px 0px;
+}
+
+input:not([type=file]):focus + label, textarea:focus + label {
+    text-shadow: var(--color-fg-primary) 0px 0px 1px;
+}
+
+input[type=file]::file-selector-button {
+    display: block;
+    width: 100%;
+}
+
+.main-form {
+    width: 40%;
+    align-items: stretch;
+    margin: 32px;
+}
+
+.main-form > * {
+    margin-top: 32px;
+}
+
+.main-form > .flex-col {
+    flex-direction: column-reverse;
+}
+
+.main-form > .flex-row {
+    flex-direction: row-reverse;
+}

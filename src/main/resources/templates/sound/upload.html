@@ -1,43 +1,35 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
-<div th:fragment="content" class="container w-25">
-    <form id="formMain" th:action="@{~/api/put-sound}" th:method="post" th:object="${sound}">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter title" required>
+<div th:fragment="content">
+    <h1>Upload new track</h1>
+    <form id="form-upload-sound" class="flex-col main-form" th:action="@{~/api/put-sound}" th:method="post" th:object="${sound}">
+        <div class="flex-col">
+            <input type="text" id="field-title" th:field="*{title}" placeholder="Enter title" required>
+            <label for="field-title"><h4>Title</h4></label>
         </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" class="form-control" rows="3" th:field="*{description}"></textarea>
+        <div class="flex-col">
+            <textarea id="field-description" rows="5" th:field="*{description}"></textarea>
+            <label for="field-description"><h4>Description</h4></label>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="genreId">Genre</label>
-            </div>
-            <select class="custom-select" id="genreId" th:field="*{genreId}" required>
+        <div class="flex-col">
+            <select id="field-genre-id" th:field="*{genreId}" required>
                 <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"></option>
             </select>
+            <label for="field-genre-id"><h4>Genre</h4></label>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Audio file</span>
-            </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="file" th:field="*{file}" required>
-                <label class="custom-file-label" for="file">Choose file</label>
-            </div>
+        <div class="flex-col">
+            <input type="file" id="field-file" th:field="*{file}" required hidden>
+            <button id="redirect-field-file">Select file</button>
+            <label for="field-file"><h4>Audio file</h4></label>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Cover image</span>
-            </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="cover" th:field="*{cover}">
-                <label class="custom-file-label" for="cover">Choose file</label>
-            </div>
+        <div class="flex-col">
+            <input type="file" id="field-cover" th:field="*{cover}" required hidden>
+            <button id="redirect-field-cover">Select file</button>
+            <label for="field-cover"><h4>Cover image</h4></label>
         </div>
-        <input type="text" id="authorId" th:field="*{authorId}" required hidden>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <input type="text" id="field-author-id" th:field="*{authorId}" required hidden>
+        <button type="submit">Upload</button>
     </form>
     <script type="module" th:src="@{~/js/sound/upload.js}"></script>
+    <script type="module" th:src="@{~/js/common/file-input-redirect.js}"></script>
 </div>
 </div>

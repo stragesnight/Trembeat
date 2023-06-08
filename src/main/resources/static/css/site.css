@@ -33,14 +33,13 @@ h3 {
     border-bottom: var(--size-border-thin) solid var(--color-fg-primary-dim);
 }
 
-p {
-    margin-bottom: 16px;
+h4 {
+    font-size: var(--size-font-accent);
+    margin: 0px 0px 8px 4px;
 }
 
-input[type="search"] {
-    background-color: var(--color-bg-primary);
-    color: var(--color-fg-primary);
-    padding: 4px 8px;
+p {
+    margin-bottom: 16px;
 }
 
 .fullwidth {
@@ -70,19 +69,19 @@ input[type="search"] {
     flex-direction: column;
 }
 
-.btn, button {
+.btn, button, input[type=file]::file-selector-button {
     background-color: var(--color-fg-secondary);
     color: var(--color-fg-primary);
 }
 
-.btn:hover, button:hover {
+.btn:hover, button:hover, input[type=file]::file-selector-button:hover {
     background-color: var(--color-fg-secondary-dim);
     text-shadow: var(--color-fg-primary) 0px 0px 1px;
 }
 
-.btn, .btn-secondary, button {
+.btn, .btn-secondary, button, input[type=file]::file-selector-button {
     cursor: pointer;
-    padding: 0px 16px;
+    padding: 8px 16px;
 }
 
 .btn *, .btn-secondary * {

@@ -40,6 +40,7 @@ General front-end improvements and goals
 - [x] Add error page
 - [ ] Hide elements that require authentication
 - [ ] Show errors during form validation
+- [ ] Sound preview during editing
 
 ## Back-end general
 

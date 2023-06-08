@@ -1,15 +1,16 @@
 <div th:replace="~{layout :: layout(~{:: content})}">
-<div th:fragment="content" class="container w-25">
-    <form th:action="@{~/login}" th:method="POST">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter username">
+<div th:fragment="content">
+    <h1>Sign in</h1>
+    <form id="form-login" class="flex-col main-form" th:action="@{~/login}" th:method="POST">
+        <div class="flex-col">
+            <input type="text" id="field-username" name="username" placeholder="Enter username">
+            <label for="field-username"><h4>Username</h4></label>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <div class="flex-col">
+            <input type="password" id="field-password" name="password" placeholder="Enter password">
+            <label for="field-password"><h4>Password</h4></label>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit">Sign in</button>
     </form>
 </div>
 </div>
