@@ -1,6 +1,6 @@
 import {ajaxFormData} from "../modules/utils.js"
 
-const form = document.getElementById("form-upload-sound")
+const form = document.querySelector("form.main-form")
 
 form.addEventListener("submit", ev => {
     ajaxFormData(form).then(() => {})
