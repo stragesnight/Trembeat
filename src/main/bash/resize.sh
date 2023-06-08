@@ -5,8 +5,8 @@ FILE=$1
 TMP=$2
 OUT=$3
 
-OUT_WIDTH=512
-OUT_HEIGHT=512
+OUT_WIDTH=256
+OUT_HEIGHT=256
 
 # Get the size of input image:
 eval $(ffprobe -v error -of flat=s=_ -select_streams v:0 -show_entries stream=height,width ${FILE})

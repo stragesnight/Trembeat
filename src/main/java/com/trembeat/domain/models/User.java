@@ -67,6 +67,20 @@ public class User implements UserDetails {
     private Set<Comment> comments;
 
 
+    public void copyFrom(User other) {
+        id = other.id;
+        username = other.username;
+        bio = other.bio;
+        password = other.username;
+        email = other.email;
+        registrationDate = other.registrationDate;
+        profilePicture = other.profilePicture;
+        roles = other.roles;
+        sounds = other.sounds;
+        comments = other.comments;
+    }
+
+
     public void addAuthority(Role role) {
         if (roles == null)
             roles = new HashSet<>();

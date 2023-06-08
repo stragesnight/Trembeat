@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +35,7 @@ public class UserRestController extends GenericContentController {
 
     @PostMapping("/api/put-user")
     public ResponseEntity<?> putUser(@ModelAttribute("user") @Valid UserRegisterViewModel viewModel) {
-        if (!_userService.registerUser(viewModel))
+        if (_userService.registerUser(viewModel) == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         User user = (User)_userService.loadUserByUsername(viewModel.getUsername());
@@ -50,8 +52,11 @@ public class UserRestController extends GenericContentController {
         if (user == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        if (!_userService.updateUser(user.getId(), viewModel))
+        User updatedUser = _userService.updateUser(user.getId(), viewModel);
+        if (updatedUser == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        user.copyFrom(updatedUser);
 
         return getProfileRedirect(user);
     }

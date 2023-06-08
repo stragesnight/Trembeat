@@ -1,7 +1,6 @@
 package com.trembeat.services;
 
-import com.trembeat.domain.models.Image;
-import com.trembeat.domain.models.Role;
+import com.trembeat.domain.models.*;
 import com.trembeat.domain.models.User;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
@@ -63,7 +62,7 @@ public class UserService implements UserDetailsService {
      * @param viewModel User data to be registered
      * @return true, if user was registered successfully, otherwise - false
      */
-    public boolean registerUser(UserRegisterViewModel viewModel) {
+    public User registerUser(UserRegisterViewModel viewModel) {
         try {
             User user = new User(
                     viewModel.getUsername(),
@@ -77,9 +76,9 @@ public class UserService implements UserDetailsService {
 
             _userRepo.save(user);
 
-            return true;
+            return user;
         } catch (Exception ex) {
-            return false;
+            return null;
         }
     }
 
@@ -89,7 +88,7 @@ public class UserService implements UserDetailsService {
      * @param viewModel Updated user date
      * @return true, if user was updated successfully, otherwise - false
      */
-    public boolean updateUser(Long userId, UserEditViewModel viewModel) {
+    public User updateUser(Long userId, UserEditViewModel viewModel) {
         try {
             User user = _userRepo.findById(userId).get();
             user.setUsername(viewModel.getUsername());
@@ -104,7 +103,7 @@ public class UserService implements UserDetailsService {
                 Image picture = new Image();
                 picture.setMimeType(viewModel.getProfilePicture().getContentType());
                 if (!_storageService.isAcceptedContentType(picture.getMimeType()))
-                    return false;
+                    return null;
 
                 picture = _imageRepo.save(picture);
                 _storageService.save(picture, viewModel.getProfilePicture().getInputStream());
@@ -112,11 +111,11 @@ public class UserService implements UserDetailsService {
                 user.setProfilePicture(picture);
             }
 
-            _userRepo.save(user);
-            return true;
+            user = _userRepo.save(user);
+            return user;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-            return false;
+            return null;
         }
     }
 

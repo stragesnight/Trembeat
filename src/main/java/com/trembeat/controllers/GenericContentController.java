@@ -38,12 +38,13 @@ public abstract class GenericContentController {
 
     protected ResponseEntity<?> getImageData(Long id) {
         Optional<Image> optionalImage = _imageRepo.findById(id);
-        if (optionalImage.isEmpty())
+
+        try {
+            Image image = optionalImage.get();
+            InputStreamResource isr = new InputStreamResource(_imageStorageService.load(image));
+            return new ResponseEntity<>(isr, getHeaders(image), HttpStatus.OK);
+        } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        Image image = optionalImage.get();
-        InputStreamResource isr = new InputStreamResource(_imageStorageService.load(image));
-
-        return new ResponseEntity<>(isr, getHeaders(image), HttpStatus.OK);
+        }
     }
 }
