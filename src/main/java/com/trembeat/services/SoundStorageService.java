@@ -21,6 +21,7 @@ public class SoundStorageService extends StorageService<Sound> {
         _contentTypes = new HashMap<>();
         _contentTypes.put("audio/mpeg", "mp3");
         _contentTypes.put("audio/wav", "wav");
+        _contentTypes.put("audio/x-wav", "wav");
         _contentTypes.put("audio/opus", "opus");
         _contentTypes.put("audio/ogg", "ogg");
     }
