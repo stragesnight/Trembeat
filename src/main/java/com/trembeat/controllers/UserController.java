@@ -5,14 +5,19 @@ import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.SoundRepository;
 import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @Controller
@@ -26,6 +31,12 @@ public class UserController {
     @GetMapping("/login")
     public String getLogin() {
         return "user/login";
+    }
+
+    @GetMapping("/logout")
+    public String getLogout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "redirect:/";
     }
 
     @GetMapping("/register")
@@ -43,9 +54,8 @@ public class UserController {
     @GetMapping("/user/{userId}")
     public ModelAndView getView(@PathVariable Long userId) {
         User user = _userService.findById(userId);
-        // TODO: error page
         if (user == null)
-            return new ModelAndView("home/index");
+            return new ModelAndView("redirect:/error");
 
         Iterable<Sound> sounds = _soundRepo.findAllByAuthor(
                 user, PageRequest.of(0, WebConfiguration.PAGE_LEN));
