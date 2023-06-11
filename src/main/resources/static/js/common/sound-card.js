@@ -85,7 +85,10 @@ class SoundCard {
     }
 
     displayBufferedAmount = () => {
-        const bufferedAmount = Math.floor(this.audio.buffered.end(this.audio.buffered.length - 1));
+        let bufferedAmount = 0
+        if (this.audio.buffered.length > 0)
+            bufferedAmount = Math.floor(this.audio.buffered.end(this.audio.buffered.length - 1));
+
         this.card.style.setProperty("--d-buffered-width", `${(bufferedAmount / this.rangeSeek.max) * 100}%`);
     }
 

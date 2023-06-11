@@ -1,7 +1,7 @@
 import {ajaxLoadSounds} from "../modules/utils.js"
 import {startLoader} from "../modules/dynamic-loader.js";
 
-const card = document.getElementById("sound-card")
+const card = document.querySelector(".sound-card")
 const container = document.getElementById("sound-card-container")
 const formSearch = document.getElementById("formSearch")
 const fieldSearchTitle = document.getElementById("fieldSearchTitle")

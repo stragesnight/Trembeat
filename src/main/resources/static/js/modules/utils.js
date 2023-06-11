@@ -1,4 +1,4 @@
-import {addSoundCard} from "../common/sound-card";
+import {addSoundCard} from "../common/sound-card.js";
 
 export async function ajaxFormData(form) {
     const formData = new FormData(form)

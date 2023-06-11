@@ -1,6 +1,7 @@
 .sound-card {
     border: var(--size-border-thin) solid var(--color-bg-secondary-dim);
     padding: 10px;
+    margin-bottom: 16px;
 }
 
 .sound-card img {
@@ -18,7 +19,7 @@
     justify-content: space-between;
 }
 
-.sound-title {
+.sound-title-container {
     font-size: var(--size-font-bigger);
     font-weight: bold;
     padding: 0 !important;
