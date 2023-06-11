@@ -1,119 +1,33 @@
-<!--
-<div th:fragment="sound-card" id="sound-card" class="card text-center w-25">
-    <img th:src="@{'/api/get-cover?id=' + ${sound?.getCover()?.getId()}}" class="card-img-top --d-sound-cover" alt="cover image">
-    <div class="card-body">
-        <h3 class="card-title">
-            <a class="--d-sound-title" th:text="${sound?.getTitle()} ?: ''"></a>
-        </h3>
-        <p class="card-text">
-            By <span class="--d-sound-author" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>
-        </p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            Genre: <span class="--d-sound-genre" th:text="${sound?.getGenreName()} ?: ''"></span>
-        </li>
-        <li class="list-group-item">
-            <audio controls>
-                <source class="--d-sound-src" th:src="${'/api/get-sound-data?id=' + sound?.getId()} ?: ''">
-            </audio>
-        </li>
-        <li class="list-group-item">
-            <form th:action="@{~/api/bump-sound}" class="--d-sound-form-bump" th:method="post">
-                <input type="number" name="id" class="--d-sound-id" th:value="${sound?.getId()} ?: ''" hidden>
-                <button type="submit" class="btn btn-primary">Bump</button>
-            </form>
-        </li>
-    </ul>
-</div>
--->
-
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../../static/css/site.css">
-    <link rel="stylesheet" href="../../static/css/header.css">
-    <link rel="stylesheet" href="../../static/css/form.css">
-    <link rel="stylesheet" href="../../static/css/sound-card.css">
-    <link rel="stylesheet" href="../../static/css/footer.css">
-</head>
-<body>
-<div id="header-container" th:fragment="header">
-    <header class="flex-row fixed fullwidth">
-        <div class="main-container">
-            <ul class="bordered">
-                <li id="logo"><a class="btn" th:href="@{~/}"><span>Trembeat</span></a></li>
-                <li><a class="btn-secondary" href="/sound" th:href="@{~/sound}"><span>Explore</span></a></li>
-                <li><a class="btn-secondary" th:href="@{~/sound/upload}"><span>Upload</span></a></li>
-            </ul>
-            <form id="form-header-search" th:action="@{~/api/get-sounds}" th:method="post">
-                <input type="search" id="field-header-search-title" name="fieldSearchTitle" placeholder="Search for music" autocomplete="off">
-                <button type="submit"><span>Search</span></button>
-            </form>
-            <ul th:if="${#authorization.expr('isAnonymous()')}">
-                <li class="btn-secondary"><a th:href="@{~/login}"><span>Sign in</span></a></li>
-                <li class="btn"><a th:href="@{~/register}"><span>Sign up</span></a></li>
-            </ul>
-            <a th:if="${#authorization.expr('!isAnonymous()')}">
-                <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
+<div class="flex-row sound-card" th:fragment="sound-card">
+    <a th:href="@{'/sound/' + ${sound?.getId()}}" class="sound-cover-container">
+        <img th:src="@{'/api/get-cover?id=' + ${sound?.getCover()?.getId()}}" alt="cover image">
+    </a>
+    <div class="flex-col fullwidth sound-main-container">
+        <div class="flex-row sound-info">
+            <a th:href="@{'/sound/' + ${sound?.getId()}}" class="sound-title-container btn-secondary">
+                <span class="sound-author" th:text="${sound?.getTitle()} ?: ''"></span>
+                -
+                <span class="sound-title" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>
             </a>
+            <span class="sound-genre" th:text="${sound?.getGenreName()} ?: ''"></span>
         </div>
-    </header>
-    <div th:if="${#authorization.expr('!isAnonymous()')}" hidden>
-        <ul id="menu-header-profile" class="menu">
-            <li><a th:href="@{'/user/' + ${#authentication.principal.id}}"><span>View profile</span></a></li>
-            <li><a th:href="@{~/edit-profile}"><span>Edit profile</span></a></li>
-            <li><a th:href="@{~/sound/upload}"><span>Upload</span></a></li>
-            <li class="menu-divider"></li>
-            <li class="menu-danger"><a th:href="@{~/logout}"><span>Logout</span></a></li>
-        </ul>
-    </div>
-    <script type="module" th:src="@{~/js/common/header.js}"></script>
-</div>
-<div id="content-container" class="flex-row fullwidth">
-    <div class="flex-col main-container">
-
-
-        <div class="flex-row sound-card" th:fragment="sound-card">
-            <a href="#">
-                <!--<img th:src="@{'/api/get-cover?id=' + ${sound?.getCover()?.getId()}}" class="--d-sound-cover" alt="cover image">-->
-                <img src="../../../../../target/classes/static/uploads/image/13.jpeg" class="--d-sound-cover" alt="cover image">
-            </a>
-            <div class="flex-col fullwidth sound-main-container">
-                <div class="flex-row sound-info">
-                    <!--<a class="--d-sound-title" th:text="${sound?.getTitle()} ?: ''"></a>-->
-                    <!--By <span class="--d-sound-author" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>-->
-                    <a href="#" class="sound-title btn-secondary">Admin - Some cool title</a>
-                    <!--Genre: <span class="--d-sound-genre" th:text="${sound?.getGenreName()} ?: ''"></span>-->
-                    <span class="sound-genre">Classical</span>
+        <div class="flex-row sound-play-container">
+            <button class="sound-button-play">&#x23F5;</button>
+            <div class="flex-col sound-time-container">
+                <audio class="audio-source" th:src="${'/api/get-sound-data?id=' + sound?.getId()} ?: ''" preload="metadata"></audio>
+                <div class="flex-row sound-time">
+                    <span class="sound-time-play">00:00</span>
+                    <span>/</span>
+                    <span class="sound-time-duration">05:53</span>
                 </div>
-                <div class="flex-row sound-play-container">
-                    <button class="sound-button-play">&#x23F5;</button>
-                    <div class="flex-col sound-time-container">
-                        <!--<audio class="--d-sound-src" th:src="${'/api/get-sound-data?id=' + sound?.getId()} ?: ''" preload="metadata" hidden></audio>-->
-                        <audio class="--d-sound-src" src="../../../../../target/classes/static/uploads/sound/1.wav" preload="metadata"></audio>
-                        <div class="flex-row sound-time">0:00 / 5:23</div>
-                        <input type="range" class="sound-time-track" min="0" max="1000" value="0">
-                    </div>
-                    <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
-                        <input type="number" name="id" class="--d-sound-id" th:value="${sound?.getId()} ?: ''" hidden>
-                        <button type="submit" class="sound-button">Bump</button>
-                    </form>
-                    <button class="sound-button">Share</button>
-                </div>
+                <input type="range" class="sound-time-track" min="0" max="100" value="0">
             </div>
+            <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
+                <input type="number" name="id" class="sound-id" th:value="${sound?.getId()} ?: ''" hidden>
+                <button type="submit" class="sound-button">Bump</button>
+            </form>
+            <!-- TODO: share button -->
+            <button class="sound-button">Share</button>
         </div>
-
-
     </div>
 </div>
-<footer th:fragment="footer" class="flex-row fullwidth">
-    <div class="main-container flex-col">
-        <span>Trembeat &copy; <span th:text="${#dates.year(#dates.createNow())}"></span></span>
-    </div>
-</footer>
-</body>
-</html>

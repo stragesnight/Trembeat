@@ -1,3 +1,5 @@
+import {addSoundCard} from "../common/sound-card";
+
 export async function ajaxFormData(form) {
     const formData = new FormData(form)
 
@@ -60,18 +62,7 @@ export async function ajaxLoadSounds(
     const json = await ajaxSend(`/api/get-sounds?title=${title}&page=${page}&orderby=${orderby}`)
 
     updateContainer(card, container, json.responseObject.content, append, (n, e) => {
-        n.querySelector(".--d-sound-id").value = e.id
-        n.querySelector(".--d-sound-title").innerText = e.title
-        n.querySelector(".--d-sound-title").href = `/sound/${e.id}`
-        n.querySelector(".--d-sound-author").innerText = e.author.username
-        n.querySelector(".--d-sound-genre").innerText = e.genreName
-        n.querySelector(".--d-sound-src").src = `/api/get-sound-data?id=${e.id}`
-        n.querySelector(".--d-sound-cover").src = `/api/get-cover?id=${e.cover.id}`
-
-        n.querySelector(".--d-sound-form-bump").addEventListener("submit", ev => {
-            ajaxFormData(ev.target)
-            ev.preventDefault()
-        })
+        addSoundCard(e, n, ajaxFormData)
     })
 
     return json.responseObject

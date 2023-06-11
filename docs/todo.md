@@ -20,7 +20,7 @@ Improve audio upload and playback
 - [x] Audio format recognition and support on upload
 - [x] Audio search
 - [x] Audio sorting
-- [ ] Custom playback element with controls
+- [x] Custom playback element with controls
 - [x] Cover image upload
 - [x] Proper audio deletion
 - [x] Audio view page
