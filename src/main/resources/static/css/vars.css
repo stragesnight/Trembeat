@@ -17,5 +17,8 @@
     --size-font-biggest: 2.6rem;
     --size-height-header: 44px;
     --size-height-footer: 44px;
+    --size-height-track: 8px;
     --size-main-container: 1280px;
+
+    --d-buffered-width: 50%;
 }
