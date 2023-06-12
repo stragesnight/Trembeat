@@ -26,8 +26,6 @@ export function initActionMenu(menu, parent, direction) {
     if (activeMenu != null)
         return
 
-    console.log("initActionMenu")
-
     oldParent = menu.parentNode
     document.body.appendChild(menu)
     activeMenu = menu
@@ -51,10 +49,10 @@ export function initActionMenu(menu, parent, direction) {
             menu.style.top = `${parentBounds.bottom}px`
             break
         case DIRECTION_LEFT:
-            menu.style.top = `${parentBounds.top}px`
+            menu.style.left = `${parentBounds.left - menuBounds.width}px`
             break
         case DIRECTION_RIGHT:
-            menu.style.top = `${parentBounds.top}px`
+            menu.style.left = `${parentBounds.right}px`
             break
         default:
             break
