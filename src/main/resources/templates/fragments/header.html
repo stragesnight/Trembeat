@@ -22,6 +22,7 @@
             </ul>
             <a th:if="${#authorization.expr('!isAnonymous()')}">
                 <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
+                <input type="number" id="field-authentication-id" th:value="${#authentication.principal.id}" hidden>
             </a>
         </div>
     </header>

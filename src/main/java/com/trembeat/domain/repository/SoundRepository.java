@@ -21,9 +21,18 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
 
     /**
      * Find all sounds uploaded by user with given id
-     * @param author Author of sound to find
+     * @param authorId Id of author of sound to find
      * @param pageable Pagination to apply for query
      * @return Set of found sounds
      */
-    Page<Sound> findAllByAuthor(User author, Pageable pageable);
+    Page<Sound> findAllByAuthor_Id(Long authorId, Pageable pageable);
+
+    /**
+     * Find all sound that match given title and author id
+     * @param title Title of sound to be found
+     * @param authorId Id of author of sound to find
+     * @param pageable Pagination to apply for query
+     * @return Set of found sounds
+     */
+    Page<Sound> findAllByTitleLikeIgnoreCaseAndAuthor_Id(String title, Long authorId, Pageable pageable);
 }

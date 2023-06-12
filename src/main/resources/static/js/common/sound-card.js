@@ -1,3 +1,5 @@
+const fieldAuthId = document.getElementById("field-authentication-id")
+
 class SoundCard {
     constructor(sound, card, ajaxFormData) {
         this.sound = sound
@@ -20,6 +22,11 @@ class SoundCard {
             this.card.querySelector(".sound-title").href = `/sound/${this.sound.id}`
             this.card.querySelector(".sound-genre").innerText = this.sound.genreName
             this.audio.src = `/api/get-sound-data?id=${this.sound.id}`
+
+            if (fieldAuthId && fieldAuthId.value != this.sound.author.id) {
+                const btnAction = this.card.querySelector(".btn-audio-action")
+                btnAction.parentNode.removeChild(btnAction)
+            }
         }
 
         let formBump = this.card.querySelector(".sound-form-bump")

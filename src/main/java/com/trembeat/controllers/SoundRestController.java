@@ -64,6 +64,7 @@ public class SoundRestController extends GenericContentController {
     public ResponseEntity<?> getSounds(
             @RequestParam("title") Optional<String> title,
             @RequestParam("page") Optional<Integer> page,
+            @RequestParam("authorId") Optional<Long> authorId,
             @RequestParam("orderby") Optional<String> orderby,
             @RequestParam("asc") Optional<Boolean> orderAsc) {
 
@@ -79,12 +80,29 @@ public class SoundRestController extends GenericContentController {
                 WebConfiguration.PAGE_LEN,
                 sort);
 
-        Page<SoundViewModel> sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
-                String.format("%%%s%%", title.orElse("")),
-                pageRequest)
-            .map(SoundViewModel::new);
+        Page<Sound> sounds = null;
+        String titleString = String.format("%%%s%%", title.orElse(""));
 
-        return new ResponseEntity<>(new Response(sounds), null, HttpStatus.OK);
+        if (title.isPresent() && authorId.isPresent()) {
+            sounds = _soundRepo.findAllByTitleLikeIgnoreCaseAndAuthor_Id(
+                    titleString,
+                    authorId.get(),
+                    pageRequest);
+        } else if (title.isPresent()) {
+            sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
+                    titleString,
+                    pageRequest);
+        } else if (authorId.isPresent()) {
+            sounds = _soundRepo.findAllByAuthor_Id(
+                    authorId.get(),
+                    pageRequest);
+        } else {
+            sounds = _soundRepo.findAll(pageRequest);
+        }
+
+        Page<SoundViewModel> soundViewModels = sounds.map(SoundViewModel::new);
+
+        return new ResponseEntity<>(new Response(soundViewModels), null, HttpStatus.OK);
     }
 
     @Secured("ROLE_USER")

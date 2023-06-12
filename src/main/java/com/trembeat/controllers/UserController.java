@@ -57,12 +57,7 @@ public class UserController {
         if (user == null)
             return new ModelAndView("redirect:/error");
 
-        Iterable<Sound> sounds = _soundRepo.findAllByAuthor(
-                user, PageRequest.of(0, WebConfiguration.PAGE_LEN));
         UserViewModel viewModel = new UserViewModel(user);
-
-        return new ModelAndView("user/view", Map.of(
-                "viewedUser", viewModel,
-                "uploads", sounds));
+        return new ModelAndView("user/view", "viewedUser", viewModel);
     }
 }

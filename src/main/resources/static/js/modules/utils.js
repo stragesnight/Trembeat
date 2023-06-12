@@ -58,11 +58,20 @@ export async function ajaxLoadSounds(
     card,
     container,
     title = '',
+    authorId = null,
     page = 0,
     mode = MODE_REPLACE,
     orderby = '') {
 
-    const json = await ajaxSend(`/api/get-sounds?title=${title}&page=${page}&orderby=${orderby}`)
+    let requestString = `/api/get-sounds?page=${page}`
+    if (title)
+        requestString += `&title=${title}`
+    if (authorId)
+        requestString += `&authorId=${authorId}`
+    if (orderby)
+        requestString += `&orderby=${orderby}`
+
+    const json = await ajaxSend(requestString)
 
     updateContainer(card, container, json.responseObject.content, mode, (n, e) => {
         addSoundCard(e, n, ajaxFormData)
