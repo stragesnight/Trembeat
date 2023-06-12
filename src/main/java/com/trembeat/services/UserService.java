@@ -74,6 +74,8 @@ public class UserService implements UserDetailsService {
             if (_userRepo.findAll().isEmpty())
                 user.addAuthority(_roleAdmin);
 
+            user.setProfilePicture(_imageRepo.findById(1L).get());
+
             _userRepo.save(user);
 
             return user;
