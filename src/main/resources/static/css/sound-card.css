@@ -21,8 +21,13 @@
 
 .sound-title-container {
     font-size: var(--size-font-bigger);
-    font-weight: bold;
+    color: var(--color-fg-primary-dim);
+}
+
+.sound-title-container .btn-secondary {
     padding: 0 !important;
+    font-weight: bold;
+    color: var(--color-fg-primary)
 }
 
 .sound-genre {

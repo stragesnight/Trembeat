@@ -4,12 +4,12 @@
     </a>
     <div class="flex-col fullwidth sound-main-container">
         <div class="flex-row sound-info">
-            <a th:href="@{'/sound/' + ${sound?.getId()}}" class="sound-title-container btn-secondary">
-                <span class="sound-author" th:text="${sound?.getTitle()} ?: ''"></span>
-                -
-                <span class="sound-title" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></span>
-            </a>
-            <span class="sound-genre" th:text="${sound?.getGenreName()} ?: ''"></span>
+            <div class="sound-title-container">
+                <a class="sound-author btn-secondary" th:href="@{'/user/' + ${sound?.getAuthor()?.getId()}}" th:text="${sound?.getAuthor()?.getUsername()} ?: ''"></a>
+                <span>&mdash;</span>
+                <a class="sound-title btn-secondary" th:href="@{'/sound/' + ${sound?.getId()}}" th:text="${sound?.getTitle()} ?: ''"></a>
+            </div>
+            <span class="sound-genre btn-secondary" th:text="${sound?.getGenreName()} ?: ''"></span>
         </div>
         <div class="flex-row sound-play-container">
             <button class="sound-button-play">&#x23F5;</button>
