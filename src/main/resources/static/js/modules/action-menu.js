@@ -37,7 +37,7 @@ export function initActionMenu(menu, parent, direction) {
         let left = Math.max(MARGIN, Math.min(window.innerWidth - menuBounds.width - MARGIN, parentBounds.left))
         menu.style.left = `${left}px`
     } else {
-        let top = Math.max(MARGIN, Math.min(window.innerHeight - menuBounds.height - MARGIN, parentBounds.bottom))
+        let top = Math.max(MARGIN, Math.min(window.innerHeight - MARGIN, parentBounds.bottom))
         menu.style.top = `${top}px`
     }
 

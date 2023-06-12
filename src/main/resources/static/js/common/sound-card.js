@@ -1,4 +1,4 @@
-const fieldAuthId = document.getElementById("field-authentication-id")
+import {DIRECTION_DOWN, DIRECTION_RIGHT, initActionMenu} from "../modules/action-menu.js";
 
 class SoundCard {
     constructor(sound, card, ajaxFormData) {
@@ -23,18 +23,29 @@ class SoundCard {
             this.card.querySelector(".sound-genre").innerText = this.sound.genreName
             this.audio.src = `/api/get-sound-data?id=${this.sound.id}`
 
-            if (fieldAuthId && fieldAuthId.value != this.sound.author.id) {
-                const btnAction = this.card.querySelector(".btn-audio-action")
-                btnAction.parentNode.removeChild(btnAction)
-            }
+            for (let node of this.card.querySelectorAll(".sound-id"))
+                node.value = this.sound.id
+        }
+
+        let menuSoundAction = this.card.querySelector(".menu-sound-action")
+        if (menuSoundAction) {
+            let btnAction = this.card.querySelector(".btn-sound-action")
+            btnAction.addEventListener("click", ev => {
+                ev.stopPropagation()
+                initActionMenu(menuSoundAction, btnAction, DIRECTION_RIGHT)
+            })
+        }
+
+        let formDeleteSound  = this.card.querySelector(".sound-form-delete")
+        if (formDeleteSound) {
+            formDeleteSound.addEventListener("submit", ev => {
+                ajaxFormData(ev.target)
+                ev.preventDefault()
+            })
         }
 
         let formBump = this.card.querySelector(".sound-form-bump")
         if (formBump) {
-            if (this.sound) {
-                this.card.querySelector(".sound-id").value = this.sound.id
-            }
-
             formBump.addEventListener("submit", ev => {
                 ajaxFormData(ev.target)
                 ev.preventDefault()
