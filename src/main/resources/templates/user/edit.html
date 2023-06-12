@@ -1,4 +1,8 @@
-<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:replace="~{layout :: layout(content = ~{:: content}, scripts = ~{:: scripts})}">
+<th:block th:fragment="scripts">
+    <script type="module" th:src="@{~/js/common/form-sender.js}"></script>
+    <script type="module" th:src="@{~/js/common/file-input-redirect.js}"></script>
+</th:block>
 <div th:fragment="content">
     <h1>Edit your profile</h1>
     <form id="form-edit-user" class="flex-col main-form" th:action="@{~/api/patch-user}" th:method="post" th:object="${user}">
@@ -28,7 +32,5 @@
         </div>
         <button type="submit">Edit</button>
     </form>
-    <script type="module" th:src="@{~/js/common/form-sender.js}"></script>
-    <script type="module" th:src="@{~/js/common/file-input-redirect.js}"></script>
 </div>
 </div>

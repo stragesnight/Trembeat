@@ -1,4 +1,4 @@
-<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:replace="~{layout :: layout(content = ~{:: content})}">
 <div th:fragment="content">
     <h1>Sign in</h1>
     <form id="form-login" class="flex-col main-form" th:action="@{~/login}" th:method="POST">

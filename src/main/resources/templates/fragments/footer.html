@@ -1,3 +1,8 @@
+<th:block th:fragment="footer-styles">
+    <link rel="stylesheet" th:href="@{~/css/footer.css}">
+</th:block>
+<th:block th:fragment="footer-scripts">
+</th:block>
 <footer th:fragment="footer" class="flex-row fullwidth">
     <div class="main-container flex-col">
         <span>Trembeat &copy; <span th:text="${#dates.year(#dates.createNow())}"></span></span>

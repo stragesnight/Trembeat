@@ -1,4 +1,10 @@
-<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:replace="~{layout :: layout(content = ~{:: content}, styles = ~{:: styles}, scripts = ~{:: scripts})}">
+<th:block th:fragment="styles">
+    <link rel="stylesheet" th:href="@{~/css/sound-card.css}">
+</th:block>
+<th:block th:fragment="scripts">
+    <script type="module" th:src="@{~/js/sound/view.js}"></script>
+</th:block>
 <div th:fragment="content">
     <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
     <h3>Leave comment</h3>
@@ -13,6 +19,5 @@
     <div hidden>
         <div th:replace="~{fragments/comment-card :: comment-card}"></div>
     </div>
-    <script type="module" th:src="@{~/js/sound/view.js}"></script>
 </div>
 </div>

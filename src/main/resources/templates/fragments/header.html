@@ -1,3 +1,9 @@
+<th:block th:fragment="header-styles">
+    <link rel="stylesheet" th:href="@{~/css/header.css}">
+</th:block>
+<th:block th:fragment="header-scripts">
+    <script type="module" th:src="@{~/js/common/header.js}"></script>
+</th:block>
 <div id="header-container" th:fragment="header">
     <header class="flex-row fixed fullwidth">
         <div class="main-container">
@@ -28,5 +34,4 @@
             <li class="menu-danger"><a th:href="@{~/logout}"><span>Logout</span></a></li>
         </ul>
     </div>
-    <script type="module" th:src="@{~/js/common/header.js}"></script>
 </div>

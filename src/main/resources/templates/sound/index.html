@@ -1,4 +1,11 @@
-<div th:replace="~{layout :: layout(~{:: content})}">
+<div th:replace="~{layout :: layout(content = ~{:: content}, styles = ~{:: styles}, scripts = ~{:: scripts})}">
+<th:block th:fragment="styles">
+    <link rel="stylesheet" th:href="@{~/css/sound-card.css}">
+</th:block>
+<th:block th:fragment="scripts">
+    <script type="module" th:src="@{~/js/sound/index.js}"></script>
+    <script type="module" th:src="@{~/js/common/sound-loader.js}"></script>
+</th:block>
 <div th:fragment="content">
     <form id="formSearch" class="container w-50" th:method="post">
         <div class="input-group col justify-content-center">
@@ -15,7 +22,5 @@
     <div hidden>
         <div th:replace="~{fragments/sound-card :: sound-card}"></div>
     </div>
-    <script type="module" th:src="@{~/js/sound/index.js}"></script>
-    <script type="module" th:src="@{~/js/common/sound-loader.js}"></script>
 </div>
 </div>
