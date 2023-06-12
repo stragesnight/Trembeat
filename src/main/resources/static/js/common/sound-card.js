@@ -18,12 +18,15 @@ class SoundCard {
         this.card.querySelector(".sound-title").innerText = this.sound.title
         this.card.querySelector(".sound-genre").innerText = this.sound.genreName
         this.audio.src = `/api/get-sound-data?id=${this.sound.id}`
-        this.card.querySelector(".sound-id").value = this.sound.id
 
-        this.card.querySelector(".sound-form-bump").addEventListener("submit", ev => {
-            ajaxFormData(ev.target)
-            ev.preventDefault()
-        })
+        let formBump = this.card.querySelector(".sound-form-bump")
+        if (formBump) {
+            this.card.querySelector(".sound-id").value = this.sound.id
+            formBump.addEventListener("submit", ev => {
+                ajaxFormData(ev.target)
+                ev.preventDefault()
+            })
+        }
 
         if (this.audio.readyState > 0) {
             this.prepareAudio()

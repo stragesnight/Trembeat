@@ -18,11 +18,11 @@
                 <div class="flex-row sound-time">
                     <span class="sound-time-play">00:00</span>
                     <span>/</span>
-                    <span class="sound-time-duration">05:53</span>
+                    <span class="sound-time-duration">00:00</span>
                 </div>
                 <input type="range" class="sound-time-track" min="0" max="100" value="0">
             </div>
-            <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
+            <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post" th:if="${#authorization.expr('!isAnonymous()')}">
                 <input type="number" name="id" class="sound-id" th:value="${sound?.getId()} ?: ''" hidden>
                 <button type="submit" class="sound-button">Bump</button>
             </form>
