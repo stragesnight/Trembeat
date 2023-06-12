@@ -1,4 +1,4 @@
-import {ajaxLoadSounds} from "../modules/utils.js"
+import {ajaxLoadSounds, MODE_APPEND, MODE_REPLACE} from "../modules/utils.js"
 import {startLoader} from "../modules/dynamic-loader.js";
 
 const card = document.querySelector(".sound-card")
@@ -10,7 +10,7 @@ const fieldSearchOrderby = document.getElementById("fieldSearchOrderby")
 let title = ""
 
 
-function loadSoundsWrapper(page, append) {
+function loadSoundsWrapper(page, mode) {
     let orderby = ''
 
     if (fieldSearchOrderby)
@@ -19,12 +19,12 @@ function loadSoundsWrapper(page, append) {
     if (fieldSearchTitle && fieldSearchTitle.value)
         title = fieldSearchTitle.value
 
-    return ajaxLoadSounds(card, container, title, page, append, orderby)
+    return ajaxLoadSounds(card, container, title, page, mode, orderby)
 }
 
 if (formSearch && fieldSearchTitle) {
     formSearch.addEventListener("submit", ev => {
-        loadSoundsWrapper(0, false)
+        loadSoundsWrapper(0, MODE_REPLACE)
         ev.preventDefault()
     })
 }
@@ -36,4 +36,4 @@ if (searchParams.has("title")) {
         fieldSearchTitle.value = title
 }
 
-startLoader(page => loadSoundsWrapper(page, true), container)
+startLoader(page => loadSoundsWrapper(page, MODE_APPEND), container)

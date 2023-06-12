@@ -1,5 +1,9 @@
 import {addSoundCard} from "../common/sound-card.js";
 
+export const MODE_REPLACE = 0
+export const MODE_APPEND = 1
+export const MODE_PREPEND = 2
+
 export async function ajaxFormData(form) {
     const formData = new FormData(form)
 
@@ -30,7 +34,6 @@ export async function ajaxFormData(form) {
 }
 
 export async function ajaxSend(url, method = "GET") {
-    console.log(url)
     const response = await fetch(
         url,
         {
@@ -56,12 +59,12 @@ export async function ajaxLoadSounds(
     container,
     title = '',
     page = 0,
-    append = false,
+    mode = MODE_REPLACE,
     orderby = '') {
 
     const json = await ajaxSend(`/api/get-sounds?title=${title}&page=${page}&orderby=${orderby}`)
 
-    updateContainer(card, container, json.responseObject.content, append, (n, e) => {
+    updateContainer(card, container, json.responseObject.content, mode, (n, e) => {
         addSoundCard(e, n, ajaxFormData)
     })
 
@@ -73,11 +76,11 @@ export async function ajaxLoadComments(
     container,
     soundId,
     page = 0,
-    append = false) {
+    mode = MODE_REPLACE) {
 
     const json = await ajaxSend(`/api/get-comments?soundId=${soundId}&page=${page}`)
 
-    updateContainer(card, container, json.responseObject.content, append, (n, e) => {
+    updateContainer(card, container, json.responseObject.content, mode, (n, e) => {
         n.querySelector(".--d-comment-text").innerText = e.text
         n.querySelector(".--d-comment-username").innerText = e.user.username
         n.querySelector(".--d-comment-username").href = `/user/${e.user.id}`
@@ -87,13 +90,18 @@ export async function ajaxLoadComments(
     return json.responseObject
 }
 
-export function updateContainer(card, container, data, append, init) {
-    if (!append)
+export function updateContainer(card, container, data, mode, init) {
+    if (mode === MODE_REPLACE)
         container.innerHTML = ""
 
     for (let entry of data) {
         let node = card.cloneNode(true)
         init(node, entry)
-        container.appendChild(node)
+
+        if (mode === MODE_APPEND || container.childElementCount < 1) {
+            container.appendChild(node)
+        } else if (mode === MODE_PREPEND) {
+            container.insertBefore(node, container.children.item(0))
+        }
     }
 }

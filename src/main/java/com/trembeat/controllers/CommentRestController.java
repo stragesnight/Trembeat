@@ -61,7 +61,7 @@ public class CommentRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new Response(new CommentViewModel(comment)), null, HttpStatus.OK);
     }
 
     @Secured("ROLE_USER")
