@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     @Setter
     @NonNull
-    @Column(name = "bio", length = 256, nullable = false)
+    @Column(name = "bio", length = 2048, nullable = false)
     private String bio;
 
     @Setter
