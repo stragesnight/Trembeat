@@ -7,15 +7,16 @@
 </th:block>
 <div th:fragment="content">
     <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
+    <h3>Description</h3>
+    <p th:text="${sound.getDescription()}"></p>
     <input type="number" id="sound-id" th:value="${comment.getSoundId()}" hidden>
     <div th:if="${#authorization.expr('!isAnonymous()')}">
         <h3>Leave comment</h3>
-        <form id="form-comment" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">
-            <div>
-                <textarea rows="3" id="field-comment-text" th:field="*{text}" required></textarea>
-            </div>
+        <form id="form-comment" class="flex-col" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">
+            <textarea rows="3" id="field-comment-text" class="fullwidth" th:field="*{text}" placeholder="Enter your comment" required></textarea>
+            <p></p>
             <input type="number" id="field-sound-id" th:field="*{soundId}" hidden>
-            <button type="submit">Comment</button>
+            <div><button type="submit">Comment</button></div>
         </form>
     </div>
     <h3>Comments</h3>
