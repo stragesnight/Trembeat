@@ -27,7 +27,7 @@ Improve audio upload and playback
 - [x] Editing page
 - [x] Bump button
 - [x] Comments
-- [ ] Allow only bump per user per sound
+- [ ] Allow only one bump per user per sound
 - [ ] Filtering by user bumps
 
 ## Front-end general
