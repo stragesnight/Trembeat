@@ -7,13 +7,13 @@
     <script type="module" th:src="@{~/js/common/sound-loader.js}"></script>
 </th:block>
 <div th:fragment="content">
-    <h1>Explore new music</h1>
+    <h1 th:text="#{sound.index.header}"></h1>
     <form id="form-search" class="flex-row" th:method="post">
-        <input type="search" id="field-search-title" class="flex-grow" placeholder="Enter title">
+        <input type="search" id="field-search-title" class="flex-grow" th:placeholder="#{sound.title_placeholder}">
         <select id="field-search-orderby">
-            <option th:each="orderby: ${orderFields}" th:value="${orderby}" th:text="${orderby}"></option>
+            <option th:each="orderby: ${orderFields}" th:value="${orderby}" th:text="#{'orderby.' + ${orderby}}"></option>
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" th:text="#{search}"></button>
     </form>
     <div id="sound-card-container"></div>
     <div hidden>

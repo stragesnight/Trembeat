@@ -4,29 +4,29 @@
     <script type="module" th:src="@{~/js/common/file-input-redirect.js}"></script>
 </th:block>
 <div th:fragment="content">
-    <h1>Edit your track</h1>
+    <h1 th:text="#{sound.edit.header}"></h1>
     <form id="form-edit-sound" class="flex-col main-form" th:action="${'/api/patch-sound?id=' + sound.getId()}" th:method="post" th:object="${sound}">
         <div class="flex-col">
-            <input type="text" id="field-title" th:field="*{title}" placeholder="Enter title" required>
-            <label for="field-title"><h4>Title</h4></label>
+            <input type="text" id="field-title" th:field="*{title}" th:placeholder="#{sound.title_placeholder}" required>
+            <label for="field-title"><h4 th:text="#{sound.title}"></h4></label>
         </div>
         <div class="flex-col">
-            <textarea id="field-description" rows="5" th:field="*{description}" placeholder="Enter description"></textarea>
-            <label for="field-description"><h4>Description</h4></label>
+            <textarea id="field-description" rows="5" th:field="*{description}" th:placeholder="#{sound.description_placeholder}"></textarea>
+            <label for="field-description"><h4 th:text="#{sound.description}"></h4></label>
         </div>
         <div class="flex-col">
             <select id="field-genre-id" th:field="*{genreId}" required>
                 <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="${genre.getName()}"></option>
             </select>
-            <label for="field-genre-id"><h4>Genre</h4></label>
+            <label for="field-genre-id"><h4 th:text="#{sound.genre}"></h4></label>
         </div>
         <div class="flex-col">
             <input type="file" id="field-cover" th:field="*{cover}" hidden>
-            <button id="redirect-field-cover">Select file</button>
-            <label for="field-cover"><h4>Cover image</h4></label>
+            <button id="redirect-field-cover" th:text="#{select_file}"></button>
+            <label for="field-cover"><h4 th:text="#{sound.cover_image}"></h4></label>
         </div>
         <input type="text" id="field-author-id" th:field="*{authorId}" required hidden>
-        <button type="submit">Edit</button>
+        <button type="submit" th:text="#{edit}"></button>
     </form>
 </div>
 </div>

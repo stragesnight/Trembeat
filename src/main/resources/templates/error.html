@@ -1,6 +1,8 @@
 <div th:replace="~{layout :: layout(content = ~{:: content})}">
 <div th:fragment="content">
-    <h1>Error</h1>
-    <h2 th:if="${status}">Status code <span th:text="${status}"></span></h2>
+    <h1 th:text="#{error.header}"></h1>
+    <h2 th:if="${status}">
+        <th:block th:text="#{error.status_code}"></th:block> <th:block th:text="${status}"></th:block>
+    </h2>
 </div>
 </div>

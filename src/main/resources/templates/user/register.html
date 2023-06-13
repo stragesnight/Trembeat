@@ -3,24 +3,24 @@
     <script type="module" th:src="@{~/js/common/form-sender.js}"></script>
 </th:block>
 <div th:fragment="content">
-    <h1>Sign up</h1>
+    <h1 th:text="#{sign_up}"></h1>
     <form id="form-register-user" class="flex-col main-form" th:action="@{~/api/put-user}" th:method="post" th:object="${user}">
         <div class="flex-col">
-            <input type="text" id="field-username" th:field="*{username}" placeholder="Enter username" required>
-            <label for="field-username"><h4>Username</h4></label>
+            <input type="text" id="field-username" th:field="*{username}" th:placeholder="#{user.username_placeholder}" required>
+            <label for="field-username"><h4 th:text="#{user.username}"></h4></label>
         </div>
         <div class="flex-col">
-            <input type="text" id="field-email" th:field="*{email}" placeholder="Enter email" required>
-            <label for="field-email"><h4>Email</h4></label>
+            <input type="text" id="field-email" th:field="*{email}" th:placeholder="#{user.email_placeholder}" required>
+            <label for="field-email"><h4 th:text="#{user.email}"></h4></label>
         </div>
         <div class="flex-col">
-            <input type="password" id="field-password" th:field="*{password}" placeholder="Enter password" required>
-            <label for="field-password"><h4>Password</h4></label>
+            <input type="password" id="field-password" th:field="*{password}" th:placeholder="#{user.password_placeholder}" required>
+            <label for="field-password"><h4 th:text="#{user.password}"></h4></label>
         </div>
         <div class="flex-col">
-            <input type="password" id="field-password-confirmation" th:field="*{passwordConfirmation}" placeholder="Confirm password" required>
+            <input type="password" id="field-password-confirmation" th:field="*{passwordConfirmation}" th:placeholder="#{user.password_confirmation_placeholder}" required>
         </div>
-        <button type="submit">Sign up</button>
+        <button type="submit" th:text="#{sign_up}"></button>
     </form>
 </div>
 </div>

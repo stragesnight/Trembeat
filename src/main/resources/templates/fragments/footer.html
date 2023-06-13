@@ -5,6 +5,6 @@
 </th:block>
 <footer th:fragment="footer" class="flex-row fullwidth">
     <div class="main-container flex-col">
-        <span>Trembeat &copy; <span th:text="${#dates.year(#dates.createNow())}"></span></span>
+        <span><th:block th:text="#{project_name}"></th:block> &copy; <th:block th:text="${#dates.year(#dates.createNow())}"></th:block></span>
     </div>
 </footer>

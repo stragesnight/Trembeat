@@ -1,16 +1,16 @@
 <div th:replace="~{layout :: layout(content = ~{:: content})}">
 <div th:fragment="content">
-    <h1>Sign in</h1>
+    <h1 th:text="#{sign_in}"></h1>
     <form id="form-login" class="flex-col main-form" th:action="@{~/login}" th:method="POST">
         <div class="flex-col">
-            <input type="text" id="field-username" name="username" placeholder="Enter username">
-            <label for="field-username"><h4>Username</h4></label>
+            <input type="text" id="field-username" name="username" th:placeholder="#{user.username_placeholder}">
+            <label for="field-username"><h4 th:text="#{user.username}"></h4></label>
         </div>
         <div class="flex-col">
-            <input type="password" id="field-password" name="password" placeholder="Enter password">
-            <label for="field-password"><h4>Password</h4></label>
+            <input type="password" id="field-password" name="password" th:placeholder="#{user.password_placeholder}">
+            <label for="field-password"><h4 th:text="#{user.password}"></h4></label>
         </div>
-        <button type="submit">Sign in</button>
+        <button type="submit" th:text="#{sign_in}"></button>
     </form>
 </div>
 </div>

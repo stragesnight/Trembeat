@@ -8,19 +8,19 @@
 </th:block>
 <div th:fragment="content">
     <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
-    <h3>Description</h3>
+    <h3 th:text="#{sound.description}"></h3>
     <p th:text="${sound.getDescription()}"></p>
     <input type="number" id="sound-id" th:value="${comment.getSoundId()}" hidden>
     <div th:if="${#authorization.expr('!isAnonymous()')}">
-        <h3>Leave comment</h3>
+        <h3 th:text="#{sound.view.comment.header}"></h3>
         <form id="form-comment" class="flex-col" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">
-            <textarea rows="3" id="field-comment-text" class="fullwidth" th:field="*{text}" placeholder="Enter your comment" required></textarea>
+            <textarea rows="3" id="field-comment-text" class="fullwidth" th:field="*{text}" th:placeholder="#{sound.view.comment_placeholder}" required></textarea>
             <p></p>
             <input type="number" id="field-sound-id" th:field="*{soundId}" hidden>
-            <div><button type="submit">Comment</button></div>
+            <div><button type="submit" th:text="#{sound.view.comment}"></button></div>
         </form>
     </div>
-    <h3>Comments</h3>
+    <h3 th:text="#{sound.view.comments}"></h3>
     <div id="comment-container"></div>
     <div hidden>
         <div th:replace="~{fragments/comment-card :: comment-card}"></div>

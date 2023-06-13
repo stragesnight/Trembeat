@@ -8,31 +8,40 @@
     <header class="flex-row fixed fullwidth">
         <div class="main-container">
             <ul class="bordered">
-                <li id="logo"><a class="btn" th:href="@{~/}"><span>Trembeat</span></a></li>
-                <li><a class="btn-secondary" href="/sound" th:href="@{~/sound}"><span>Explore</span></a></li>
-                <li><a class="btn-secondary" th:href="@{~/sound/upload}"><span>Upload</span></a></li>
+                <li id="logo"><a class="btn" th:href="@{~/}"><span th:text="#{project_name}"></span></a></li>
+                <li><a class="btn-secondary" href="/sound" th:href="@{~/sound}"><span th:text="#{header.explore}"></span></a></li>
+                <li><a class="btn-secondary" th:href="@{~/sound/upload}"><span th:text="#{header.upload}"></span></a></li>
             </ul>
             <form id="form-header-search" th:action="@{~/api/get-sounds}" th:method="post">
-                <input type="search" id="field-header-search-title" name="fieldSearchTitle" placeholder="Search for music" autocomplete="off">
-                <button type="submit"><span>Search</span></button>
+                <input type="search" id="field-header-search-title" th:placeholder="#{header.search_placeholder}" autocomplete="off">
+                <button type="submit"><span th:text="#{search}"></span></button>
             </form>
-            <ul th:if="${#authorization.expr('isAnonymous()')}">
-                <li><a class="btn-secondary" th:href="@{~/login}"><span>Sign in</span></a></li>
-                <li><a class="btn" th:href="@{~/register}"><span>Sign up</span></a></li>
+            <ul>
+                <li><a id="btn-lang" class="btn-secondary"><span th:text="#{lang.current}"></span></a></li>
+                <th:block th:if="${#authorization.expr('isAnonymous()')}">
+                    <li><a class="btn-secondary" th:href="@{~/login}"><span th:text="#{sign_in}"></span></a></li>
+                    <li><a class="btn" th:href="@{~/register}"><span th:text="#{sign_up}"></span></a></li>
+                </th:block>
+                <li th:if="${#authorization.expr('!isAnonymous()')}">
+                    <a>
+                        <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
+                        <input type="number" id="field-authentication-id" th:value="${#authentication.principal.id}" hidden>
+                    </a>
+                </li>
             </ul>
-            <a th:if="${#authorization.expr('!isAnonymous()')}">
-                <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">
-                <input type="number" id="field-authentication-id" th:value="${#authentication.principal.id}" hidden>
-            </a>
         </div>
     </header>
-    <div th:if="${#authorization.expr('!isAnonymous()')}" hidden>
-        <ul id="menu-header-profile" class="menu">
-            <li><a th:href="@{'/user/' + ${#authentication.principal.id}}"><span>View profile</span></a></li>
-            <li><a th:href="@{~/edit-profile}"><span>Edit profile</span></a></li>
-            <li><a th:href="@{~/sound/upload}"><span>Upload</span></a></li>
+    <div hidden>
+        <ul id="menu-header-profile" class="menu" th:if="${#authorization.expr('!isAnonymous()')}">
+            <li><a th:href="@{'/user/' + ${#authentication.principal.id}}"><span th:text="#{header.view_profile}"></span></a></li>
+            <li><a th:href="@{~/edit-profile}"><span th:text="#{header.edit_profile}"></span></a></li>
+            <li><a th:href="@{~/sound/upload}"><span th:text="#{header.upload}"></span></a></li>
             <li class="menu-divider"></li>
-            <li class="menu-danger"><a th:href="@{~/logout}"><span>Logout</span></a></li>
+            <li class="menu-danger"><a th:href="@{~/logout}"><span th:text="#{sign_out}"></span></a></li>
+        </ul>
+        <ul id="menu-header-lang" class="menu">
+            <li><a href="?lang=en"><span th:text="#{lang.en}"></span></a></li>
+            <li><a href="?lang=ua"><span th:text="#{lang.ua}"></span></a></li>
         </ul>
     </div>
 </div>

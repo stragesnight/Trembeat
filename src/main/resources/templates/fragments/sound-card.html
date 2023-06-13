@@ -23,22 +23,22 @@
                 <input type="range" class="sound-time-track" min="0" max="100" value="0">
             </div>
             <!-- TODO: share button -->
-            <button class="sound-button">Share</button>
+            <button class="sound-button" th:text="#{sound_card.share}"></button>
             <th:block th:if="${#authorization.expr('!isAnonymous()')}">
                 <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
                     <input type="hidden" name="id" class="sound-id" th:value="${sound?.getId()} ?: ''">
-                    <button type="submit" class="sound-button">Bump</button>
+                    <button type="submit" class="sound-button" th:text="#{sound_card.bump}"></button>
                 </form>
                 <th:block th:if="${sound != null && sound.author.id == #authentication.principal.id}">
                     <button class="sound-button btn-sound-action">...</button>
                     <div hidden>
                         <ul class="menu menu-sound-action">
-                            <li><a th:href="@{'/sound/edit/' + ${sound.id}}"><span>Edit</span></a></li>
+                            <li><a th:href="@{'/sound/edit/' + ${sound.id}}"><span th:text="#{sound_card.edit}"></span></a></li>
                             <li class="menu-divider"></li>
                             <li class="menu-danger">
                                 <form class="sound-form-delete" th:action="@{~/api/delete-sound}" th:method="post">
                                     <input type="hidden" name="id" class="sound-id" th:value="${sound?.getId()} ?: ''">
-                                    <button type="submit">Delete</button>
+                                    <button type="submit" th:text="#{sound_card.delete}"></button>
                                 </form>
                             </li>
                         </ul>

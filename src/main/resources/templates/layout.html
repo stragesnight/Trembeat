@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="layout">
+<html th:lang="${lang} ?: 'en'" th:fragment="layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Trembeat</title>
     <link rel="stylesheet" th:href="@{~/css/site.css}">
     <link rel="stylesheet" th:href="@{~/css/footer.css}">
     <link rel="stylesheet" th:href="@{~/css/form.css}">
     <link th:replace="~{fragments/header :: header-styles}">
     <th:block th:if="${styles}"><link th:replace="${styles}"></th:block>
     <link th:replace="~{fragments/footer :: footer-styles}">
+    <title th:text="#{project_name}"></title>
 </head>
 <body>
 <header th:replace="~{fragments/header :: header}"></header>
