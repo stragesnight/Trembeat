@@ -1,6 +1,7 @@
 <div th:replace="~{layout :: layout(content = ~{:: content}, styles = ~{:: styles}, scripts = ~{:: scripts})}">
 <th:block th:fragment="styles">
     <link rel="stylesheet" th:href="@{~/css/sound-card.css}">
+    <link rel="stylesheet" th:href="@{~/css/comment-card.css}">
 </th:block>
 <th:block th:fragment="scripts">
     <script type="module" th:src="@{~/js/sound/view.js}"></script>

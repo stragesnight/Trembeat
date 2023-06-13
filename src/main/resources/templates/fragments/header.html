@@ -17,8 +17,8 @@
                 <button type="submit"><span>Search</span></button>
             </form>
             <ul th:if="${#authorization.expr('isAnonymous()')}">
-                <li class="btn-secondary"><a th:href="@{~/login}"><span>Sign in</span></a></li>
-                <li class="btn"><a th:href="@{~/register}"><span>Sign up</span></a></li>
+                <li><a class="btn-secondary" th:href="@{~/login}"><span>Sign in</span></a></li>
+                <li><a class="btn" th:href="@{~/register}"><span>Sign up</span></a></li>
             </ul>
             <a th:if="${#authorization.expr('!isAnonymous()')}">
                 <img id="header-user-picture" th:src="@{'/api/get-profile-picture?id=' + ${#authentication.principal.profilePicture.id}}" alt="profile picture">

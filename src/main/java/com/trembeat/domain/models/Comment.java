@@ -21,7 +21,7 @@ public class Comment {
 
     @Setter
     @NonNull
-    @Column(name = "text", length = 256, nullable = false)
+    @Column(name = "text", length = 2048, nullable = false)
     private String text;
 
     @Column(name = "creation_date")

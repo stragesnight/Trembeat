@@ -1,0 +1,19 @@
+.comment-card {
+    margin-bottom: 16px;
+    padding: 16px 32px 16px 16px;
+    border: var(--size-border-thin) solid var(--color-bg-secondary-dim);
+}
+
+.comment-picture-link {
+    margin-right: 16px;
+}
+
+.comment-picture {
+    width: 64px;
+    height: 64px;
+}
+
+.comment-username {
+    margin: 0px 0px 16px 0px;
+    font-weight: bold;
+}

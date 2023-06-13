@@ -90,10 +90,11 @@ export async function ajaxLoadComments(
     const json = await ajaxSend(`/api/get-comments?soundId=${soundId}&page=${page}`)
 
     updateContainer(card, container, json.responseObject.content, mode, (n, e) => {
-        n.querySelector(".--d-comment-text").innerText = e.text
-        n.querySelector(".--d-comment-username").innerText = e.user.username
-        n.querySelector(".--d-comment-username").href = `/user/${e.user.id}`
-        n.querySelector(".--d-comment-picture").src = `/api/get-profile-picture?id=${e.user.profilePicture.id}`
+        n.querySelector(".comment-text").innerText = e.text
+        n.querySelector(".comment-username-link").href = `/user/${e.user.id}`
+        n.querySelector(".comment-username").innerText = e.user.username
+        n.querySelector(".comment-picture").src = `/api/get-profile-picture?id=${e.user.profilePicture.id}`
+        n.querySelector(".comment-picture-link").href = `/user/${e.user.id}`
     })
 
     return json.responseObject

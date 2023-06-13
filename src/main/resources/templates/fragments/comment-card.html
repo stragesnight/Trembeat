@@ -1,10 +1,9 @@
-<div id="comment-card" class="toast show" th:fragment="comment-card">
-    <div class="toast-header">
-        <img class="rounded me-2 --d-comment-picture" style="width: 64px; height: 64px">
-        <strong class="me-auto">
-            <a class="--d-comment-username"></a>
-        </strong>
-        <!--<small></small>-->
+<div class="comment-card flex-row" th:fragment="comment-card">
+    <a class="comment-picture-link flex-col">
+        <img class="comment-picture">
+    </a>
+    <div class="flex-col">
+        <a class="comment-username-link btn-secondary"><h4 class="comment-username"></h4></a>
+        <p class="comment-text"></p>
     </div>
-    <div class="toast-body --d-comment-text"></div>
 </div>
