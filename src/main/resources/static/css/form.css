@@ -1,4 +1,4 @@
-form {
+form.flex-row {
     margin: 16px 4px;
 }
 
@@ -6,6 +6,9 @@ input:not([type=file]), textarea, select {
     background-color: var(--color-bg-secondary-dim);
     color: var(--color-fg-primary);
     padding: 12px 4px 10px 10px;
+}
+
+form.flex-row > * {
     margin-right: 8px;
 }
 
