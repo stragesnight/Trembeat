@@ -3,9 +3,9 @@ import {startLoader} from "../modules/dynamic-loader.js";
 
 const card = document.querySelector(".sound-card")
 const container = document.getElementById("sound-card-container")
-const formSearch = document.getElementById("formSearch")
-const fieldSearchTitle = document.getElementById("fieldSearchTitle")
-const fieldSearchOrderby = document.getElementById("fieldSearchOrderby")
+const formSearch = document.getElementById("form-search")
+const fieldSearchTitle = document.getElementById("field-search-title")
+const fieldSearchOrderby = document.getElementById("field-search-orderby")
 const fieldUserId = document.getElementById("field-user-id")
 const userId = fieldUserId ? fieldUserId.value : undefined
 

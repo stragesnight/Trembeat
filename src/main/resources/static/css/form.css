@@ -1,7 +1,12 @@
+form {
+    margin: 16px 4px;
+}
+
 input:not([type=file]), textarea, select {
     background-color: var(--color-bg-secondary-dim);
     color: var(--color-fg-primary);
     padding: 12px 4px 10px 10px;
+    margin-right: 8px;
 }
 
 textarea {

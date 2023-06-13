@@ -51,6 +51,10 @@ p {
     height: 100%;
 }
 
+.flex-grow {
+    flex-grow: 1;
+}
+
 .main-container {
     min-width: var(--size-main-container);
     max-width: var(--size-main-container);
