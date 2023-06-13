@@ -37,7 +37,7 @@ General front-end improvements and goals
 - [x] Substitute Bootstrap with own styles
 - [x] Improve page layout
 - [x] AJAX content loading
-- [ ] Add localization support
+- [x] Add localization support
 - [x] Add error page
 - [x] Hide elements that require authentication
 - [ ] Show errors during form validation
