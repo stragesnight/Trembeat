@@ -25,22 +25,22 @@ Improve audio upload and playback
 - [x] Proper audio deletion
 - [x] Audio view page
 - [x] Editing page
-- [x] Reaction button
+- [x] Bump button
 - [x] Comments
-- [ ] Playlists
+- [ ] Allow only bump per user per sound
+- [ ] Filtering by user bumps
 
 ## Front-end general
 
 General front-end improvements and goals
 
-- [ ] Substitute Bootstrap with own styles
+- [x] Substitute Bootstrap with own styles
 - [x] Improve page layout
 - [x] AJAX content loading
 - [ ] Add localization support
 - [x] Add error page
-- [ ] Hide elements that require authentication
+- [x] Hide elements that require authentication
 - [ ] Show errors during form validation
-- [ ] Sound preview during editing
 
 ## Back-end general
 
