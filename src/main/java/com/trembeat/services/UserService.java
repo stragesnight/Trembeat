@@ -21,19 +21,16 @@ public class UserService implements UserDetailsService {
     private ImageRepository _imageRepo;
     @Autowired
     private ImageStorageService _storageService;
+    @Autowired
     private RoleRepository _roleRepo;
     private BCryptPasswordEncoder _passwordEncoder;
 
-    private Role _roleAdmin;
-    private Role _roleUser;
+    private Role _roleUser = null;
+    private Image _defaultPicture = null;
 
 
-    public UserService(RoleRepository roleRepository) {
+    public UserService() {
         _passwordEncoder = new BCryptPasswordEncoder();
-
-        _roleRepo = roleRepository;
-        _roleAdmin = _roleRepo.findByName("ROLE_ADMIN").get();
-        _roleUser = _roleRepo.findByName("ROLE_USER").get();
     }
 
     /**
@@ -70,11 +67,13 @@ public class UserService implements UserDetailsService {
                     _passwordEncoder.encode(viewModel.getPassword()),
                     viewModel.getEmail());
 
-            user.addAuthority(_roleUser);
-            if (_userRepo.findAll().isEmpty())
-                user.addAuthority(_roleAdmin);
+            if (_roleUser == null)
+                _roleUser = _roleRepo.findByName("ROLE_USER").get();
+            if (_defaultPicture == null)
+                _defaultPicture = _imageRepo.findById(1L).get();
 
-            user.setProfilePicture(_imageRepo.findById(1L).get());
+            user.addAuthority(_roleUser);
+            user.setProfilePicture(_defaultPicture);
 
             _userRepo.save(user);
 

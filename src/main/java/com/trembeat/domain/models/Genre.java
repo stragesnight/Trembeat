@@ -10,7 +10,8 @@ import java.util.Set;
  */
 @Entity
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 @Table(name = "genres", indexes = {
         @Index(columnList = "name", unique = true)
 })
@@ -21,6 +22,7 @@ public class Genre {
     private Long id;
 
     @Setter
+    @NonNull
     @Column(name = "name", length = 64, nullable = false, unique = true)
     private String name;
 
