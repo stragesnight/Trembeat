@@ -21,8 +21,12 @@ export async function ajaxFormData(form) {
         const json = await response.json()
 
         if (response.status !== 200) {
-            for (let key in json.errors)
-                document.getElementById(key + "-error").innerText = json.errors[key]
+            for (let key in json.errors) {
+                console.log(key)
+                let element = document.getElementById(key + "-error")
+                if (element)
+                    element.innerText = json.errors[key]
+            }
 
             return;
         }

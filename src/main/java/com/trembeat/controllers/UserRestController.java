@@ -62,6 +62,15 @@ public class UserRestController extends GenericContentController {
                 _passwordEncoder.encode(viewModel.getPassword()),
                 viewModel.getEmail());
 
+        if (_userRepo.findByUsername(viewModel.getUsername()).isPresent())
+            errors.put("username", "error.username_exists");
+
+        if (_userRepo.findByEmail(viewModel.getEmail()).isPresent())
+            errors.put("email", "error.email_exists");
+
+        if (!errors.isEmpty())
+            return getErrorResponse(errors);
+
         if (_roleUser == null)
             _roleUser = _roleRepo.findByName("ROLE_USER").get();
         if (_defaultPicture == null)
