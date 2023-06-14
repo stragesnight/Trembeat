@@ -10,23 +10,39 @@
         <div class="flex-col">
             <input type="file" id="field-profile-picture" th:field="*{profilePicture}" hidden>
             <button id="redirect-field-profile-picture" th:text="#{select_file}"></button>
-            <label for="field-profile-picture"><h4 th:text="#{user.profile_picture}"></h4></label>
+            <div class="flex-row">
+                <label for="field-profile-picture"><h4 th:text="#{user.profile_picture}"></h4></label>
+                <span id="profilePicture-error" class="form-error"></span>
+                <span id="user-error" class="form-error"></span>
+            </div>
         </div>
         <div class="flex-col">
             <input type="text" id="field-username" th:field="*{username}" th:placeholder="#{user.username_placeholder}" required>
-            <label for="field-username"><h4 th:text="#{user.username}"></h4></label>
+            <div class="flex-row">
+                <label for="field-username"><h4 th:text="#{user.username}"></h4></label>
+                <span id="username-error" class="form-error"></span>
+            </div>
         </div>
         <div class="flex-col">
             <textarea id="field-bio" rows="5" th:field="*{bio}" th:placeholder="#{user.bio_placeholder}"></textarea>
-            <label for="field-bio"><h4 th:text="#{user.bio}"></h4></label>
+            <div class="flex-row">
+                <label for="field-bio"><h4 th:text="#{user.bio}"></h4></label>
+                <span id="bio-error" class="form-error"></span>
+            </div>
         </div>
         <div class="flex-col">
             <input type="text" id="field-email" th:field="*{email}" th:placeholder="#{user.email_placeholder}" required>
-            <label for="field-email"><h4 th:text="#{user.email}"></h4></label>
+            <div class="flex-row">
+                <label for="field-email"><h4 th:text="#{user.email}"></h4></label>
+                <span id="email-error" class="form-error"></span>
+            </div>
         </div>
         <div class="flex-col">
             <input type="password" id="field-password" th:field="*{password}" th:placeholder="#{user.edit.password_placeholder}">
-            <label for="field-password"><h4 th:text="#{user.edit.password}"></h4></label>
+            <div class="flex-row">
+                <label for="field-password"><h4 th:text="#{user.edit.password}"></h4></label>
+                <span id="password-error" class="form-error"></span>
+            </div>
         </div>
         <div class="flex-col">
             <input type="password" id="field-password-confirmation" th:field="*{passwordConfirmation}" th:placeholder="#{user.edit.password_confirmation_placeholder}">

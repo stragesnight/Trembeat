@@ -46,3 +46,10 @@ input[type=file]::file-selector-button {
 .main-form > .flex-row {
     flex-direction: row-reverse;
 }
+
+.form-error {
+    color: var(--color-fg-secondary);
+    margin-left: 16px;
+    overflow: visible !important;
+    padding-top: 1px;
+}

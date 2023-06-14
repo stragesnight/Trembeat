@@ -40,7 +40,7 @@ General front-end improvements and goals
 - [x] Add localization support
 - [x] Add error page
 - [x] Hide elements that require authentication
-- [ ] Show errors during form validation
+- [x] Show errors during form validation
 
 ## Back-end general
 

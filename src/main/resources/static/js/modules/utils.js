@@ -17,13 +17,16 @@ export async function ajaxFormData(form) {
             body: formData
         })
 
-    if (response.status !== 200) {
-        // TODO: error handling
-        return;
-    }
-
     try {
         const json = await response.json()
+
+        if (response.status !== 200) {
+            for (let key in json.errors)
+                document.getElementById(key + "-error").innerText = json.errors[key]
+
+            return;
+        }
+
         if (json.redirectURL && json.redirectURL.length > 0)
             window.location = json.redirectURL
 
