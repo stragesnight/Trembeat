@@ -113,7 +113,7 @@ public class UserRestController extends GenericContentController {
             user.setEmail(viewModel.getEmail());
         }
 
-        if (viewModel.getProfilePicture() != null) {
+        if (!viewModel.getProfilePicture().isEmpty()) {
             Image picture = new Image();
             picture.setMimeType(viewModel.getProfilePicture().getContentType());
             if (!_storageService.isAcceptedContentType(picture.getMimeType()))

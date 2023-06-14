@@ -205,7 +205,7 @@ public class SoundRestController extends GenericContentController {
                     sound.setGenre(optionalGenre.get());
             }
 
-            if (viewModel.getCover() != null && !updateCover(sound.getCover(), viewModel.getCover(), sound))
+            if (!viewModel.getCover().isEmpty() && !updateCover(sound.getCover(), viewModel.getCover(), sound))
                 errors.put("cover", "error.invalid_cover");
         }
 
