@@ -3,8 +3,10 @@ package com.trembeat.controllers;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.UserRepository;
 import com.trembeat.domain.viewmodels.*;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -44,10 +46,12 @@ public class UserController {
     }
 
     @GetMapping("/user/{userId}")
-    public ModelAndView getView(@PathVariable Long userId) {
+    public ModelAndView getView(HttpServletRequest request, @PathVariable Long userId) {
         Optional<User> optionalUser = _userRepo.findById(userId);
-        if (optionalUser.isEmpty())
+        if (optionalUser.isEmpty()) {
+            request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, HttpStatus.NOT_FOUND);
             return new ModelAndView("redirect:/error");
+        }
 
         UserViewModel viewModel = new UserViewModel(optionalUser.get());
         return new ModelAndView("user/view", "viewedUser", viewModel);

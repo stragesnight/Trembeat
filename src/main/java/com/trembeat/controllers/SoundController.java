@@ -3,11 +3,11 @@ package com.trembeat.controllers;
 import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
-import jakarta.annotation.security.RolesAllowed;
-import lombok.Setter;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +39,12 @@ public class SoundController {
     }
 
     @GetMapping("/sound/{id}")
-    public ModelAndView getView(@PathVariable Long id) {
+    public ModelAndView getView(HttpServletRequest request, @PathVariable Long id) {
         Optional<Sound> optionalSound = _soundRepo.findById(id);
-        // TODO: error page
-        if (optionalSound.isEmpty())
-            return new ModelAndView("home/index");
+        if (optionalSound.isEmpty()) {
+            request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, HttpStatus.NOT_FOUND);
+            return new ModelAndView("redirect:/error");
+        }
 
         Sound sound = optionalSound.get();
 
@@ -54,12 +55,14 @@ public class SoundController {
 
     @Secured("ROLE_USER")
     @GetMapping("/sound/edit/{id}")
-    public ModelAndView getEdit(Authentication auth, @PathVariable Long id) {
+    public ModelAndView getEdit(Authentication auth, HttpServletRequest request, @PathVariable Long id) {
         User user = (User)auth.getPrincipal();
         Optional<Sound> optionalSound = _soundRepo.findById(id);
-        // TODO: error page
-        if (optionalSound.isEmpty() || optionalSound.get().getAuthor().getId() != user.getId())
-            return new ModelAndView("home/index");
+
+        if (optionalSound.isEmpty() || optionalSound.get().getAuthor().getId() != user.getId()) {
+            request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, HttpStatus.FORBIDDEN);
+            return new ModelAndView("redirect:/error");
+        }
 
         return new ModelAndView("sound/edit", Map.of(
                 "sound", new SoundEditViewModel(optionalSound.get()),
