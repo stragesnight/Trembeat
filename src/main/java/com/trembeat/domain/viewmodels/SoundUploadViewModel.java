@@ -11,22 +11,23 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class SoundUploadViewModel {
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_title")
+    @NotEmpty(message = "error.invalid_title")
     private String title;
 
-    @NotNull
+    @NotNull(message = "error.invalid_description")
     private String description;
 
-    @NotNull
+    @NotNull(message = "error.invalid_file")
     private MultipartFile file;
 
+    @NotNull(message = "error.invalid_cover")
     private MultipartFile cover;
 
-    @NotNull
+    @NotNull(message = "error.invalid_genre")
     private Long genreId;
 
-    @NotNull
     @NonNull
+    @NotNull(message = "error.not_an_author")
     private Long authorId;
 }

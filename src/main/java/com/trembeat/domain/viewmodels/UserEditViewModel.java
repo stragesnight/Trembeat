@@ -10,14 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
  * User view model during profile editing
  */
 @Data
-@ValidPassword
+@ValidPassword(message = "error.unmatched_password")
 @NoArgsConstructor
 public class UserEditViewModel {
 
     private MultipartFile profilePicture;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_username")
+    @NotEmpty(message = "error.invalid_username")
     private String username;
 
     private String bio;
@@ -26,8 +26,8 @@ public class UserEditViewModel {
 
     private String passwordConfirmation;
 
-    @NotNull
-    @ValidEmail
+    @NotNull(message = "error.invalid_email")
+    @ValidEmail(message = "error.invalid_email")
     private String email;
 
 

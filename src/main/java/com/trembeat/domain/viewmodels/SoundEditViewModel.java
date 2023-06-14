@@ -15,19 +15,19 @@ public class SoundEditViewModel {
 
     private Long id;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_title")
+    @NotEmpty(message = "error.invalid_title")
     private String title;
 
-    @NotNull
+    @NotNull(message = "error.invalid_description")
     private String description;
 
     private MultipartFile cover;
 
-    @NotNull
+    @NotNull(message = "error.invalid_genre")
     private Long genreId;
 
-    @NotNull
+    @NotNull(message = "error.invalid_author")
     @NonNull
     private Long authorId;
 

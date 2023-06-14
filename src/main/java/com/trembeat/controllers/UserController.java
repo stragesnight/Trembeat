@@ -1,31 +1,23 @@
 package com.trembeat.controllers;
 
-import com.trembeat.configuration.WebConfiguration;
 import com.trembeat.domain.models.*;
-import com.trembeat.domain.repository.SoundRepository;
+import com.trembeat.domain.repository.UserRepository;
 import com.trembeat.domain.viewmodels.*;
-import com.trembeat.services.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.Optional;
+
 
 @Controller
 public class UserController {
     @Autowired
-    private UserService _userService;
-    @Autowired
-    private SoundRepository _soundRepo;
+    private UserRepository _userRepo;
 
 
     @GetMapping("/login")
@@ -53,11 +45,11 @@ public class UserController {
 
     @GetMapping("/user/{userId}")
     public ModelAndView getView(@PathVariable Long userId) {
-        User user = _userService.findById(userId);
-        if (user == null)
+        Optional<User> optionalUser = _userRepo.findById(userId);
+        if (optionalUser.isEmpty())
             return new ModelAndView("redirect:/error");
 
-        UserViewModel viewModel = new UserViewModel(user);
+        UserViewModel viewModel = new UserViewModel(optionalUser.get());
         return new ModelAndView("user/view", "viewedUser", viewModel);
     }
 }

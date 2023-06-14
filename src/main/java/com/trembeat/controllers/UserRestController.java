@@ -4,7 +4,6 @@ import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.*;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.access.annotation.Secured;
@@ -52,7 +51,11 @@ public class UserRestController extends GenericContentController {
     }
 
     @PostMapping("/api/put-user")
-    public ResponseEntity<?> putUser(@ModelAttribute("user") @Valid UserRegisterViewModel viewModel) {
+    public ResponseEntity<?> putUser(@ModelAttribute("user") UserRegisterViewModel viewModel) {
+        Map<String, String> errors = new HashMap<>();
+        for (var violation : _validator.validate(viewModel))
+            errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+
         User user = new User(
                 viewModel.getUsername(),
                 "",
@@ -80,12 +83,18 @@ public class UserRestController extends GenericContentController {
     @PostMapping("/api/patch-user")
     public ResponseEntity<?> patchUser(
             Authentication auth,
-            @ModelAttribute("user") @Valid UserEditViewModel viewModel) {
+            @ModelAttribute("user") UserEditViewModel viewModel) {
 
         Map<String, String> errors = new HashMap<>();
+        for (var violation : _validator.validate(viewModel))
+            errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("user", "error.invalid_user");
+
+        if (!errors.isEmpty())
+            return getErrorResponse(errors);
 
         user.setUsername(viewModel.getUsername());
         user.setBio(viewModel.getBio());
@@ -107,9 +116,12 @@ public class UserRestController extends GenericContentController {
                 picture = _imageRepo.save(picture);
                 user.setProfilePicture(picture);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                errors.put("cover", "error.invalid_cover");
             }
         }
+
+        if (!errors.isEmpty())
+            return getErrorResponse(errors);
 
         try {
             user = _userRepo.save(user);

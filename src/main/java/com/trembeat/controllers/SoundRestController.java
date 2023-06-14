@@ -5,7 +5,6 @@ import com.trembeat.domain.models.*;
 import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
 import com.trembeat.services.*;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.*;
@@ -109,30 +108,40 @@ public class SoundRestController extends GenericContentController {
     @PostMapping("/api/put-sound")
     public ResponseEntity<?> putSound(
             Authentication auth,
-            @ModelAttribute("sound") @Valid SoundUploadViewModel viewModel) {
+            @ModelAttribute("sound") SoundUploadViewModel viewModel) {
+
+        Map<String, String> errors = new HashMap<>();
+        for (var violation : _validator.validate(viewModel))
+            errors.put(violation.getPropertyPath().toString(), violation.getMessage());
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("user", "error.invalid_user");
 
         if (!_soundStorageService.isAcceptedContentType(viewModel.getFile().getContentType()))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("file", "error.unaccepted_content_type");
+
+        if (!_imageStorageService.isAcceptedContentType(viewModel.getCover().getContentType()))
+            errors.put("cover", "error.unaccepted_content_type");
 
         Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
         if (optionalGenre.isEmpty())
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("genreId", "error.invalid_genre");
 
         Sound sound = new Sound(
                 viewModel.getTitle(),
                 viewModel.getDescription(),
-                optionalGenre.get(),
+                optionalGenre.orElse(null),
                 user);
 
         // TODO: move this into constructor?
         sound.setMimeType(viewModel.getFile().getContentType());
 
-        if (viewModel.getCover() != null && !updateCover(new Image(), viewModel.getCover(), sound))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!updateCover(new Image(), viewModel.getCover(), sound))
+            errors.put("cover", "error.invalid_cover");
+
+        if (!errors.isEmpty())
+            return getErrorResponse(errors);
 
         try {
             sound = _soundRepo.save(sound);
@@ -171,29 +180,37 @@ public class SoundRestController extends GenericContentController {
     public ResponseEntity<?> patchSound(
             Authentication auth,
             @RequestParam("id") Long id,
-            @ModelAttribute("sound") @Valid SoundEditViewModel viewModel) {
+            @ModelAttribute("sound") SoundEditViewModel viewModel) {
+
+        Map<String, String> errors = new HashMap<>();
+        for (var violation : _validator.validate(viewModel))
+            errors.put(violation.getPropertyPath().toString(), violation.getMessage());
 
         User user = (User)auth.getPrincipal();
         if (user == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("user", "error.invalid_user");
 
         Sound sound = tryGetSound(id, user);
         if (sound == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            errors.put("user", "error.not_an_author");
+        else {
+            sound.setTitle(viewModel.getTitle());
+            sound.setDescription(viewModel.getDescription());
 
-        sound.setTitle(viewModel.getTitle());
-        sound.setDescription(viewModel.getDescription());
+            if (viewModel.getGenreId() != sound.getGenre().getId()) {
+                Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
+                if (optionalGenre.isEmpty())
+                    errors.put("genre", "error.invalid_genre");
+                else
+                    sound.setGenre(optionalGenre.get());
+            }
 
-        if (viewModel.getGenreId() != sound.getGenre().getId()) {
-            Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
-            if (optionalGenre.isEmpty())
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
-            sound.setGenre(optionalGenre.get());
+            if (viewModel.getCover() != null && !updateCover(sound.getCover(), viewModel.getCover(), sound))
+                errors.put("cover", "error.invalid_cover");
         }
 
-        if (viewModel.getCover() != null && !updateCover(sound.getCover(), viewModel.getCover(), sound))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (!errors.isEmpty())
+            return getErrorResponse(errors);
 
         try {
             _soundRepo.save(sound);

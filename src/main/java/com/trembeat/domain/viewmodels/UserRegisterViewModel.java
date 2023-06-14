@@ -9,23 +9,23 @@ import lombok.*;
  * User view model during registration
  */
 @Data
-@ValidPassword
+@ValidPassword(message = "error.unmatched_password")
 @NoArgsConstructor
 public class UserRegisterViewModel {
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_username")
+    @NotEmpty(message = "error.invalid_username")
     private String username;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_password")
+    @NotEmpty(message = "error.invalid_password")
     private String password;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "error.invalid_password")
+    @NotEmpty(message = "error.invalid_password")
     private String passwordConfirmation;
 
-    @NotNull
-    @ValidEmail
+    @NotNull(message = "error.invalid_email")
+    @ValidEmail(message = "error.invalid_email")
     private String email;
 
 
