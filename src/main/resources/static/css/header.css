@@ -4,6 +4,7 @@ header {
     min-height: var(--size-height-header);
     max-height: var(--size-height-header);
     background-color: var(--color-bg-secondary);
+    z-index: 1;
 }
 
 header .main-container {

@@ -13,7 +13,7 @@
     <p th:text="${sound.getDescription()}"></p>
     <input type="number" id="sound-id" th:value="${comment.getSoundId()}" hidden>
     <div th:if="${#authorization.expr('!isAnonymous()')}">
-        <h3 th:text="#{sound.view.comment.header}"></h3>
+        <h3 th:text="#{sound.view.comment}"></h3>
         <form id="form-comment" class="flex-col" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">
             <textarea rows="3" id="field-comment-text" class="fullwidth" th:field="*{text}" th:placeholder="#{sound.view.comment_placeholder}" required></textarea>
             <p></p>
