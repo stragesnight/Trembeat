@@ -24,7 +24,7 @@ public class SoundRestController extends GenericContentController {
     @Autowired
     private GenreRepository _genreRepo;
     @Autowired
-    private SoundStorageService _soundStorageService;
+    private SoundStorageService _soundStorage;
 
 
     @GetMapping("/api/get-sound-data")
@@ -35,7 +35,7 @@ public class SoundRestController extends GenericContentController {
 
         try {
             Sound sound = optionalSound.get();
-            InputStreamResource isr = new InputStreamResource(_soundStorageService.load(sound));
+            InputStreamResource isr = new InputStreamResource(_soundStorage.load(sound));
             return new ResponseEntity<>(isr, getHeaders(sound), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -118,10 +118,10 @@ public class SoundRestController extends GenericContentController {
         if (user == null)
             errors.put("user", "error.invalid_user");
 
-        if (!_soundStorageService.isAcceptedContentType(viewModel.getFile().getContentType()))
+        if (!_soundStorage.isAcceptedContentType(viewModel.getFile().getContentType()))
             errors.put("file", "error.unaccepted_content_type");
 
-        if (!_imageStorageService.isAcceptedContentType(viewModel.getCover().getContentType()))
+        if (!_imageStorage.isAcceptedContentType(viewModel.getCover().getContentType()))
             errors.put("cover", "error.unaccepted_content_type");
 
         Optional<Genre> optionalGenre = _genreRepo.findById(viewModel.getGenreId());
@@ -145,7 +145,7 @@ public class SoundRestController extends GenericContentController {
 
         try {
             sound = _soundRepo.save(sound);
-            _soundStorageService.save(sound, viewModel.getFile().getInputStream());
+            _soundStorage.save(sound, viewModel.getFile().getInputStream());
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -232,7 +232,7 @@ public class SoundRestController extends GenericContentController {
         if (sound == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        _soundStorageService.delete(sound);
+        _soundStorage.delete(sound);
         _soundRepo.deleteById(id);
 
         return getProfileRedirect(user);
@@ -240,12 +240,12 @@ public class SoundRestController extends GenericContentController {
 
     private boolean updateCover(Image cover, MultipartFile file, Sound sound) {
         cover.setMimeType(file.getContentType());
-        if (!_imageStorageService.isAcceptedContentType(cover.getMimeType()))
+        if (!_imageStorage.isAcceptedContentType(cover.getMimeType()))
             return false;
 
         try {
             cover = _imageRepo.save(cover);
-            _imageStorageService.save(cover, file.getInputStream());
+            _imageStorage.save(cover, file.getInputStream());
             cover = _imageRepo.save(cover);
             sound.setCover(cover);
         } catch (IOException ex) {

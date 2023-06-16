@@ -21,7 +21,7 @@ public abstract class GenericContentController {
     @Autowired
     protected ImageRepository _imageRepo;
     @Autowired
-    protected ImageStorageService _imageStorageService;
+    protected ImageStorageService _imageStorage;
     @Autowired
     private MessageResolverService _messageResolver;
     protected Validator _validator;
@@ -34,7 +34,6 @@ public abstract class GenericContentController {
     protected HttpHeaders getHeaders(FileEntity fileEntity) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(fileEntity.getMimeType()));
-        //headers.setContentLength(fileEntity.getContentLength());
 
         return headers;
     }
@@ -58,7 +57,7 @@ public abstract class GenericContentController {
 
         try {
             Image image = optionalImage.get();
-            InputStreamResource isr = new InputStreamResource(_imageStorageService.load(image));
+            InputStreamResource isr = new InputStreamResource(_imageStorage.load(image));
             return new ResponseEntity<>(isr, getHeaders(image), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

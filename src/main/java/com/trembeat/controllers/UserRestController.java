@@ -20,10 +20,6 @@ public class UserRestController extends GenericContentController {
     @Autowired
     private UserRepository _userRepo;
     @Autowired
-    private ImageRepository _imageRepo;
-    @Autowired
-    private ImageStorageService _storageService;
-    @Autowired
     private RoleRepository _roleRepo;
     private BCryptPasswordEncoder _passwordEncoder;
 
@@ -116,12 +112,12 @@ public class UserRestController extends GenericContentController {
         if (!viewModel.getProfilePicture().isEmpty()) {
             Image picture = new Image();
             picture.setMimeType(viewModel.getProfilePicture().getContentType());
-            if (!_storageService.isAcceptedContentType(picture.getMimeType()))
+            if (!_imageStorage.isAcceptedContentType(picture.getMimeType()))
                 errors.put("profilePicture", "error.unaccepted_content_type");
 
             try {
                 picture = _imageRepo.save(picture);
-                _storageService.save(picture, viewModel.getProfilePicture().getInputStream());
+                _imageStorage.save(picture, viewModel.getProfilePicture().getInputStream());
                 picture = _imageRepo.save(picture);
                 user.setProfilePicture(picture);
             } catch (IOException e) {
@@ -150,7 +146,7 @@ public class UserRestController extends GenericContentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         try {
-            _storageService.delete(user.getProfilePicture());
+            _imageStorage.delete(user.getProfilePicture());
             _userRepo.delete(user);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

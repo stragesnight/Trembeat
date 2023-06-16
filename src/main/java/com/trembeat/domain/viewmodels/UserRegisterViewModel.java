@@ -27,11 +27,4 @@ public class UserRegisterViewModel {
     @NotNull(message = "error.invalid_email")
     @ValidEmail(message = "error.invalid_email")
     private String email;
-
-
-    public UserRegisterViewModel(User user) {
-        username = user.getUsername();
-        password = user.getPassword();
-        email = user.getEmail();
-    }
 }

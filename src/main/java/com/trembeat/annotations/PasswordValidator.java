@@ -8,21 +8,21 @@ import java.util.regex.Pattern;
 
 public class PasswordValidator implements ConstraintValidator<ValidPassword, Object> {
 
-    private Pattern pattern;
-    private static final String passwordRegex = "^[a-zA-Z0-9!@#$%^&*()\\-_=\\.]{4,}$";
+    private Pattern _pattern;
+    private static final String _passwordRegex = "^[a-zA-Z0-9!@#$%^&*()\\-_=\\.]{4,}$";
 
 
     public PasswordValidator() {
-        pattern = Pattern.compile(passwordRegex);
+        _pattern = Pattern.compile(_passwordRegex);
     }
 
     @Override
-    public void initialize(ValidPassword constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
+    public void initialize(ValidPassword annotation) {
+        ConstraintValidator.super.initialize(annotation);
     }
 
     @Override
-    public boolean isValid(Object o, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object o, ConstraintValidatorContext context) {
         if (o == null)
             return false;
 
@@ -53,6 +53,6 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Obj
     }
 
     private boolean isValidPassword(String password) {
-        return pattern.matcher(password).matches();
+        return _pattern.matcher(password).matches();
     }
 }

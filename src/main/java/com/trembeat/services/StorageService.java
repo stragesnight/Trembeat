@@ -88,11 +88,9 @@ public abstract class StorageService<TID> {
             if (!file.exists())
                 throw new FileNotFoundException();
 
-            file.delete();
+            return file.delete();
         } catch (Exception ex) {
             return false;
         }
-
-        return true;
     }
 }

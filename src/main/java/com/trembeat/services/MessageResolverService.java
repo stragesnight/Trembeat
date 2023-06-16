@@ -14,8 +14,8 @@ public class MessageResolverService implements MessageSourceAware {
 
 
     @Override
-    public void setMessageSource(MessageSource messageSource) {
-        _messageSource = messageSource;
+    public void setMessageSource(MessageSource src) {
+        _messageSource = src;
     }
 
     public String getMessage(String code) {

@@ -15,4 +15,8 @@ public class Image extends FileEntity {
     @Getter
     @OneToMany(mappedBy = "profilePicture")
     private Set<User> users;
+
+    @Getter
+    @OneToMany(mappedBy = "cover")
+    private Set<Sound> sounds;
 }
