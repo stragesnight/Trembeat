@@ -10,7 +10,7 @@ export const DIRECTION_RIGHT = 3
 const MARGIN = 32
 
 
-function clickListener(ev) {
+function closeListener(ev) {
     closeActionMenu()
 }
 
@@ -24,12 +24,12 @@ export function closeActionMenu() {
     activeMenu = null
     oldParent = null
 
-    document.removeEventListener("click", clickListener)
+    document.removeEventListener("click", closeListener)
 }
 
 export function initActionMenu(menu, parent, direction) {
     if (activeMenu != null)
-        clickListener(null)
+        closeListener(null)
 
     oldParent = menu.parentNode
     document.body.appendChild(menu)
@@ -65,5 +65,8 @@ export function initActionMenu(menu, parent, direction) {
             break
     }
 
-    document.addEventListener("click", clickListener)
+    document.addEventListener("click", closeListener)
 }
+
+visualViewport.addEventListener("resize", closeListener)
+document.addEventListener("scroll", closeListener)
