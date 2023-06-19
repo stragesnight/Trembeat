@@ -28,7 +28,7 @@ export async function ajaxFormData(form) {
                     element.innerText = json.errors[key]
             }
 
-            return;
+            return null
         }
 
         if (json.redirectURL && json.redirectURL.length > 0)
@@ -50,9 +50,8 @@ export async function ajaxSend(url, method = "GET") {
             redirect: "manual"
         })
 
-    if (response.status !== 200) {
-        return;
-    }
+    if (response.status !== 200)
+        return null
 
     try {
         return await response.json()
@@ -87,6 +86,11 @@ export async function ajaxLoadSounds(
     return json.responseObject
 }
 
+export async function ajaxLoadSuggestions(title) {
+    const json = await ajaxSend(`/api/get-suggestions?title=${title}`)
+    return json == null ? null : json.responseObject
+}
+
 export async function ajaxLoadComments(
     card,
     container,
@@ -115,10 +119,9 @@ export function updateContainer(card, container, data, mode, init) {
         let node = card.cloneNode(true)
         init(node, entry)
 
-        if (mode === MODE_APPEND || container.childElementCount < 1) {
-            container.appendChild(node)
-        } else if (mode === MODE_PREPEND) {
+        if (mode === MODE_PREPEND)
             container.insertBefore(node, container.children.item(0))
-        }
+        else
+            container.appendChild(node)
     }
 }

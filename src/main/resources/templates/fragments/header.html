@@ -3,6 +3,7 @@
 </th:block>
 <th:block th:fragment="header-scripts">
     <script type="module" th:src="@{~/js/common/header.js}"></script>
+    <script type="module" th:src="@{~/js/common/search-suggestion.js}"></script>
 </th:block>
 <div id="header-container" th:fragment="header">
     <header class="flex-row fixed fullwidth">
@@ -13,8 +14,8 @@
                 <li><a class="btn-secondary" th:href="@{~/sound/upload}"><span th:text="#{header.upload}"></span></a></li>
             </ul>
             <form id="form-header-search" th:action="@{~/api/get-sounds}" th:method="post">
-                <input type="search" id="field-header-search-title" th:placeholder="#{header.search_placeholder}" autocomplete="off">
-                <button type="submit"><span th:text="#{search}"></span></button>
+                <input type="search" id="field-header-search-title" class="field-search-title" th:placeholder="#{header.search_placeholder}" autocomplete="off">
+                <button type="submit" class="btn-submit-search"><span th:text="#{search}"></span></button>
             </form>
             <ul>
                 <li><a id="btn-lang" class="btn-secondary"><span th:text="#{lang.current}"></span></a></li>
@@ -42,6 +43,9 @@
         <ul id="menu-header-lang" class="menu">
             <li><a href="?lang=en"><span th:text="#{lang.en}"></span></a></li>
             <li><a href="?lang=ua"><span th:text="#{lang.ua}"></span></a></li>
+        </ul>
+        <ul id="menu-suggestions" class="menu">
+            <li class="menu-item"><a><span class="menu-item-text"></span></a></li>
         </ul>
     </div>
 </div>

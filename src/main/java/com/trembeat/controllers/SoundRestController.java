@@ -104,6 +104,21 @@ public class SoundRestController extends GenericContentController {
         return new ResponseEntity<>(new Response(soundViewModels), null, HttpStatus.OK);
     }
 
+    @GetMapping("/api/get-suggestions")
+    public ResponseEntity<?> getSuggestions(@ModelAttribute("title") String title) {
+        if (title.isBlank())
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        List<Sound> sounds = _soundRepo.findTop10ByTitleLikeIgnoreCase(
+                String.format("%%%s%%", title));
+        if (sounds.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        List<String> titles = sounds.stream().map(Sound::getTitle).toList();
+
+        return new ResponseEntity<>(new Response(titles), null, HttpStatus.OK);
+    }
+
     @Secured("ROLE_USER")
     @PostMapping("/api/put-sound")
     public ResponseEntity<?> putSound(

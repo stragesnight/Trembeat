@@ -10,11 +10,11 @@
 <div th:fragment="content">
     <h1 th:text="#{sound.index.header}"></h1>
     <form id="form-search" class="flex-row" th:method="post">
-        <input type="search" id="field-search-title" class="flex-grow" th:placeholder="#{sound.title_placeholder}">
+        <input type="search" id="field-search-title" class="flex-grow field-search-title" th:placeholder="#{sound.title_placeholder}" autocomplete="off">
         <select id="field-search-orderby">
             <option th:each="orderby: ${orderFields}" th:value="${orderby}" th:text="#{'orderby.' + ${orderby}}"></option>
         </select>
-        <button type="submit" th:text="#{search}"></button>
+        <button type="submit" class="btn-submit-search" th:text="#{search}"></button>
     </form>
     <div id="sound-card-container"></div>
     <div hidden>

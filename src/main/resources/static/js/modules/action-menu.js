@@ -1,6 +1,7 @@
 let oldParent = null
 let activeMenu = null
 
+export const DIRECTION_DROPDOWN = -1
 export const DIRECTION_UP = 0
 export const DIRECTION_DOWN = 1
 export const DIRECTION_LEFT = 2
@@ -10,6 +11,10 @@ const MARGIN = 32
 
 
 function clickListener(ev) {
+    closeActionMenu()
+}
+
+export function closeActionMenu() {
     if (activeMenu == null)
         return
 
@@ -24,7 +29,7 @@ function clickListener(ev) {
 
 export function initActionMenu(menu, parent, direction) {
     if (activeMenu != null)
-        return
+        clickListener(null)
 
     oldParent = menu.parentNode
     document.body.appendChild(menu)
@@ -45,6 +50,8 @@ export function initActionMenu(menu, parent, direction) {
         case DIRECTION_UP:
             menu.style.top = `${parentBounds.top + menuBounds.height}px`
             break
+        case DIRECTION_DROPDOWN:
+            menu.style.width = `${parentBounds.width}px`
         case DIRECTION_DOWN:
             menu.style.top = `${parentBounds.bottom}px`
             break

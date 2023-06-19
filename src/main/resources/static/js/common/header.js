@@ -15,10 +15,11 @@ if (userPicture) {
     })
 }
 
-formSearch.addEventListener("submit", ev => {
-    window.location = `/sound?title=${fieldTitle.value}`
-    ev.preventDefault()
-})
+if (formSearch) {
+    formSearch.addEventListener("submit", ev => { window.location = `/sound?title=${fieldTitle.value}`
+        ev.preventDefault()
+    })
+}
 
 btnLang.addEventListener("click", ev => {
     ev.stopPropagation()

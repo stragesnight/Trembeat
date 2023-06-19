@@ -20,8 +20,8 @@
     </div>
 </div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
-<script th:replace="~{fragments/header :: header-scripts}"></script>
 <th:block th:if="${scripts}"><script th:replace="${scripts}"></script></th:block>
+<script th:replace="~{fragments/header :: header-scripts}"></script>
 <script th:replace="~{fragments/footer :: footer-scripts}"></script>
 </body>
 </html>

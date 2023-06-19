@@ -41,6 +41,7 @@ General front-end improvements and goals
 - [x] Add error page
 - [x] Hide elements that require authentication
 - [x] Show errors during form validation
+- [x] Show suggestions during music search
 
 ## Back-end general
 

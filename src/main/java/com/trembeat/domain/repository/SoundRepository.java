@@ -3,6 +3,7 @@ package com.trembeat.domain.repository;
 import com.trembeat.domain.models.*;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -35,4 +36,11 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
      * @return Set of found sounds
      */
     Page<Sound> findAllByTitleLikeIgnoreCaseAndAuthor_Id(String title, Long authorId, Pageable pageable);
+
+    /**
+     * Find first 10 matching sounds by given title
+     * @param title Partial title to search for
+     * @return Set of found sounds
+     */
+    List<Sound> findTop10ByTitleLikeIgnoreCase(String title);
 }
