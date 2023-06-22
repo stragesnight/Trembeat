@@ -1,0 +1,22 @@
+#main-img-container {
+    min-width: fit-content;
+    min-height: fit-content;
+}
+
+#main-img {
+    width: calc(100% + 64px);
+    margin: -12px -32px;
+}
+
+#main-title {
+    position: absolute;
+    left: 48%;
+    top: 27%;
+    background-color: var(--color-bg-secondary);
+    font-weight: bold;
+    font-size: 6rem;
+    text-shadow: var(--color-fg-secondary) 3px 3px 0px;
+    border: calc(var(--size-border-thick) * 2) solid var(--color-fg-secondary);
+    color: var(--color-fg-primary);
+    padding: 32px 64px;
+}

@@ -1,6 +1,23 @@
 <!DOCTYPE html>
-<div th:replace="~{layout :: layout(content = ~{:: content})}">
+<div th:replace="~{layout :: layout(content = ~{:: content}, styles = ~{:: styles})}">
+<th:block th:fragment="styles">
+    <link rel="stylesheet" th:href="@{~/css/index.css}">
+</th:block>
 <div th:fragment="content">
-    <h1 th:text="#{project_name}"></h1>
+    <div id="content-container" class="flex-row fullwidth">
+        <div class="flex-col main-container">
+            <div id="main-img-container">
+                <img id="main-img" th:src="@{~/images/trembeat.jpeg}">
+                <span id="main-title" th:text="#{project_name}"></span>
+            </div>
+            <h1 th:text="#{index.h1}"></h1>
+            <p th:text="#{index.p1}"></p>
+            <h2 th:text="#{index.h2}"></h2>
+            <p th:text="#{index.p2}"></p>
+            <p th:text="#{index.p3}"></p>
+            <h2 th:text="#{index.h3}"></h2>
+            <p th:text="#{index.p4}"></p>
+        </div>
+    </div>
 </div>
 </div>
