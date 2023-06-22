@@ -22,8 +22,7 @@
                 </div>
                 <input type="range" class="sound-time-track" min="0" max="100" value="0">
             </div>
-            <!-- TODO: share button -->
-            <button class="sound-button" th:text="#{sound_card.share}"></button>
+            <button class="sound-button btn-sound-share" th:text="#{sound_card.share}"></button>
             <th:block th:if="${#authorization.expr('!isAnonymous()')}">
                 <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
                     <input type="hidden" name="id" class="sound-id" th:value="${sound?.getId()} ?: ''">

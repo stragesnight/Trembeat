@@ -1,4 +1,4 @@
-import {DIRECTION_DOWN, DIRECTION_RIGHT, initActionMenu} from "../modules/action-menu.js";
+import {DIRECTION_DOWN, initActionMenu} from "../modules/action-menu.js";
 
 class SoundCard {
     constructor(sound, card, ajaxFormData) {
@@ -32,7 +32,7 @@ class SoundCard {
             let btnAction = this.card.querySelector(".btn-sound-action")
             btnAction.addEventListener("click", ev => {
                 ev.stopPropagation()
-                initActionMenu(menuSoundAction, btnAction, DIRECTION_RIGHT)
+                initActionMenu(menuSoundAction, btnAction, DIRECTION_DOWN)
             })
         }
 
@@ -85,6 +85,11 @@ class SoundCard {
                 this.isPlaying = false
             }
         });
+
+        this.card.querySelector(".btn-sound-share").addEventListener("click", ev => {
+            const audioPath = this.card.querySelector(".sound-title").href
+            navigator.clipboard.writeText(audioPath).then(() => {})
+        })
 
         this.rangeSeek.value = 0
     }
