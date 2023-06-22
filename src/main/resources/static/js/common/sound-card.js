@@ -1,5 +1,7 @@
 import {DIRECTION_DOWN, initActionMenu} from "../modules/action-menu.js";
 
+let currentlyPlayedAudio = null
+
 class SoundCard {
     constructor(sound, card, ajaxFormData) {
         this.sound = sound
@@ -73,18 +75,11 @@ class SoundCard {
         });
 
         this.buttonPlay.addEventListener("click", ev => {
-            if (!this.isPlaying) {
-                this.audio.play();
-                this.buttonPlay.textContent = "\u23F8"
-                requestAnimationFrame(this.whilePlaying)
-                this.isPlaying = true
-            } else {
-                this.audio.pause();
-                this.buttonPlay.textContent = "\u23F5"
-                cancelAnimationFrame(this.animationFrame)
-                this.isPlaying = false
-            }
-        });
+            if (!this.isPlaying)
+                this.startAudio()
+            else
+                this.pauseAudio()
+        })
 
         this.card.querySelector(".btn-sound-share").addEventListener("click", ev => {
             const audioPath = this.card.querySelector(".sound-title").href
@@ -92,6 +87,29 @@ class SoundCard {
         })
 
         this.rangeSeek.value = 0
+    }
+
+    startAudio = () => {
+        if (currentlyPlayedAudio !== null)
+            currentlyPlayedAudio.pauseAudio()
+
+        currentlyPlayedAudio = this
+        this.audio.play();
+        this.buttonPlay.textContent = "\u23F8"
+        this.isPlaying = true
+
+        requestAnimationFrame(this.whilePlaying)
+    }
+
+    pauseAudio = () => {
+        if (currentlyPlayedAudio === this)
+            currentlyPlayedAudio = null
+
+        this.audio.pause();
+        this.buttonPlay.textContent = "\u23F5"
+        this.isPlaying = false
+
+        cancelAnimationFrame(this.animationFrame)
     }
 
     prepareAudio = () => {
