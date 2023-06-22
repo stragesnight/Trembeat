@@ -1,9 +1,15 @@
 @import "reset.css";
 @import "vars.css";
 
+@font-face {
+    font-family: 'Montserrat';
+    src: url("/fonts/montserrat.ttf") format('truetype');
+    font-weight: 100 900;
+}
+
 html {
-    /* TODO: choose font */
-    font-family: sans-serif;
+    font-family: 'Montserrat';
+    font-weight: 500;
     background-color: var(--color-bg-secondary-dim);
     color: var(--color-fg-primary);
     font-size: var(--size-font-normal);

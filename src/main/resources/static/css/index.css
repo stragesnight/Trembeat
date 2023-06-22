@@ -10,11 +10,12 @@
 
 #main-title {
     position: absolute;
-    left: 48%;
+    left: 46%;
     top: 27%;
     background-color: var(--color-bg-secondary);
-    font-weight: bold;
+    font-weight: 800;
     font-size: 6rem;
+    letter-spacing: 0.3rem;
     text-shadow: var(--color-fg-secondary) 3px 3px 0px;
     border: calc(var(--size-border-thick) * 2) solid var(--color-fg-secondary);
     color: var(--color-fg-primary);

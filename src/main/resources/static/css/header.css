@@ -36,7 +36,7 @@ header ul.bordered li {
 
 #logo {
     font-size: var(--size-font-bigger);
-    font-weight: bold;
+    font-weight: 800;
     letter-spacing: 0.1rem;
     background-color: var(--color-fg-secondary) !important;
 }
