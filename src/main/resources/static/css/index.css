@@ -1,6 +1,7 @@
 #main-img-container {
     min-width: fit-content;
     min-height: fit-content;
+    margin-bottom: -5rem;
 }
 
 #main-img {
@@ -9,9 +10,9 @@
 }
 
 #main-title {
-    position: absolute;
-    left: 46%;
-    top: 27%;
+    position: relative;
+    left: 500px;
+    top: -320px;
     background-color: var(--color-bg-secondary);
     font-weight: 800;
     font-size: 6rem;
