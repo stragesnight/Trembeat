@@ -17,6 +17,9 @@ export async function ajaxFormData(form) {
             body: formData
         })
 
+    for (let element of document.querySelectorAll(".form-error"))
+        element.innerText = ""
+
     try {
         const json = await response.json()
 
