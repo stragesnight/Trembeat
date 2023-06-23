@@ -113,6 +113,11 @@ class SoundCard {
     }
 
     prepareAudio = () => {
+        if (this.audio.duration === Infinity || isNaN(this.audio.duration)) {
+            this.audio.addEventListener("durationchange", this.prepareAudio)
+            return
+        }
+
         this.displayDuration();
         this.setSliderMax();
         this.displayBufferedAmount();
