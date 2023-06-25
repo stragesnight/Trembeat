@@ -27,6 +27,10 @@ class SoundCard {
 
             for (let node of this.card.querySelectorAll(".sound-id"))
                 node.value = this.sound.id
+
+            this.prepareAudio()
+        } else {
+            this.card.style.setProperty("--d-buffered-width", 0)
         }
 
         let menuSoundAction = this.card.querySelector(".menu-sound-action")
@@ -52,12 +56,6 @@ class SoundCard {
                 ajaxFormData(ev.target)
                 ev.preventDefault()
             })
-        }
-
-        if (this.audio.readyState > 0) {
-            this.prepareAudio()
-        } else {
-            this.audio.addEventListener("loadedmetadata", this.prepareAudio);
         }
 
         this.audio.addEventListener("progress", this.displayBufferedAmount);
@@ -113,30 +111,27 @@ class SoundCard {
     }
 
     prepareAudio = () => {
-        if (this.audio.duration === Infinity || isNaN(this.audio.duration)) {
-            this.audio.addEventListener("durationchange", this.prepareAudio)
-            return
-        }
-
         this.displayDuration();
         this.setSliderMax();
         this.displayBufferedAmount();
     }
 
     calculateTime = (sec) => {
-        const minutes = Math.floor(sec / 60);
-        const seconds = Math.floor(sec % 60);
-        const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+        const h = Math.floor(sec / 3600);
+        const m = Math.floor(sec / 60) % 60;
+        const s = Math.floor(sec % 60);
 
-        return `${minutes}:${returnedSeconds}`;
+        return h < 1
+            ? `${m}:${s < 10 ? '0' : ''}${s}`
+            : `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`
     }
 
     displayDuration = () => {
-        this.duration.innerText = this.calculateTime(this.audio.duration);
+        this.duration.innerText = this.calculateTime(this.sound.length);
     }
 
     setSliderMax = () => {
-        this.rangeSeek.max = Math.floor(this.audio.duration);
+        this.rangeSeek.max = Math.floor(this.sound.length);
     }
 
     displayBufferedAmount = () => {

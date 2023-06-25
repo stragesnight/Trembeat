@@ -33,8 +33,13 @@ public class Sound extends FileEntity {
 
     @Setter
     @NonNull
-    @Column(name = "description", length = 512, nullable = false)
+    @Column(name = "description", length = 2048, nullable = false)
     private String description;
+
+    @Setter
+    @NonNull
+    @Column(name = "length", nullable = false)
+    private Float length;
 
     @Setter
     @NonNull

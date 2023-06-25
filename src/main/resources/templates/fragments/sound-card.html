@@ -14,13 +14,13 @@
         <div class="flex-row sound-play-container">
             <button type="button" class="sound-button-play">&#x23F5;</button>
             <div class="flex-col sound-time-container">
-                <audio class="audio-source" th:src="${'/api/get-sound-data?id=' + sound?.id} ?: ''" preload="metadata"></audio>
+                <audio class="audio-source" th:src="${'/api/get-sound-data?id=' + sound?.id} ?: ''" preload="none"></audio>
                 <div class="flex-row sound-time">
                     <span class="sound-time-play">00:00</span>
                     <span>/</span>
-                    <span class="sound-time-duration">00:00</span>
+                    <span class="sound-time-duration" th:text="${sound?.getFormattedLength()} ?: '00:00'"></span>
                 </div>
-                <input type="range" class="sound-time-track" min="0" max="100" value="0">
+                <input type="range" class="sound-time-track" min="0" th:max="${sound?.length} ?: 100" value="0">
             </div>
             <button type="button" class="sound-button btn-sound-share" th:text="#{sound_card.share}"></button>
             <th:block th:if="${#authorization.expr('!isAnonymous()')}">

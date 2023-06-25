@@ -146,6 +146,7 @@ public class SoundRestController extends GenericContentController {
         Sound sound = new Sound(
                 viewModel.getTitle(),
                 viewModel.getDescription(),
+                0f,
                 optionalGenre.orElse(null),
                 user);
 
@@ -161,6 +162,7 @@ public class SoundRestController extends GenericContentController {
         try {
             sound = _soundRepo.save(sound);
             _soundStorage.save(sound, viewModel.getFile().getInputStream());
+            _soundRepo.save(sound);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

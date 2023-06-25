@@ -4,6 +4,9 @@ package com.trembeat.services;
 import com.trembeat.domain.models.Sound;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,29 @@ public class SoundStorageService extends StorageService<Sound> {
         _contentTypes.put("audio/x-wav", "wav");
         _contentTypes.put("audio/opus", "opus");
         _contentTypes.put("audio/ogg", "ogg");
+    }
+
+    @Override
+    public boolean save(Sound sound, InputStream inputStream) {
+        if (!super.save(sound, inputStream))
+            return false;
+
+        try {
+            String cmdPath = getClass().getClassLoader().getResource("getlength.sh").getFile();
+            String fullCmd = String.format("%s %s", cmdPath, getFullPath(sound));
+            new File(cmdPath).setExecutable(true, true);
+
+            Process process = Runtime.getRuntime().exec(fullCmd);
+            process.waitFor();
+
+            BufferedReader reader = process.inputReader();
+            sound.setLength(Float.parseFloat(reader.readLine()));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     @Override
