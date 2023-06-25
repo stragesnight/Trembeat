@@ -10,8 +10,8 @@
 <div th:fragment="content">
     <div th:replace="~{fragments/sound-card :: sound-card(sound = ${sound})}"></div>
     <h3 th:text="#{sound.description}"></h3>
-    <p th:text="${sound.getDescription()}"></p>
-    <input type="number" id="sound-id" th:value="${comment.getSoundId()}" hidden>
+    <p th:text="${sound.description}"></p>
+    <input type="number" id="sound-id" th:value="${comment.soundId}" hidden>
     <div th:if="${#authorization.expr('!isAnonymous()')}">
         <h3 th:text="#{sound.view.comment}"></h3>
         <form id="form-comment" class="flex-col" th:action="@{~/api/put-comment}" th:method="post" th:object="${comment}">

@@ -25,7 +25,7 @@
         </div>
         <div class="flex-col">
             <select id="field-genre-id" th:field="*{genreId}" required>
-                <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="#{'genre.' + ${genre.getName()}}"></option>
+                <option th:each="genre: ${genres}" th:value="${genre.id}" th:text="#{'genre.' + ${genre.name}}"></option>
             </select>
             <div class="flex-row">
                 <label for="field-genre-id"><h4 th:text="#{sound.genre}"></h4></label>

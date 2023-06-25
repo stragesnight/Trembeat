@@ -6,7 +6,7 @@
 </th:block>
 <div th:fragment="content">
     <h1 th:text="#{sound.edit.header}"></h1>
-    <form id="form-edit-sound" class="flex-col main-form" th:action="${'/api/patch-sound?id=' + sound.getId()}" th:method="post" th:object="${sound}">
+    <form id="form-edit-sound" class="flex-col main-form" th:action="${'/api/patch-sound?id=' + sound.id}" th:method="post" th:object="${sound}">
         <div class="flex-col">
             <input type="text" id="field-title" th:field="*{title}" th:placeholder="#{sound.title_placeholder}" required>
             <div class="flex-row">
@@ -25,7 +25,7 @@
         </div>
         <div class="flex-col">
             <select id="field-genre-id" th:field="*{genreId}" required>
-                <option th:each="genre: ${genres}" th:value="${genre.getId()}" th:text="#{'genre.' + ${genre.getName()}}"></option>
+                <option th:each="genre: ${genres}" th:value="${genre.id}" th:text="#{'genre.' + ${genre.name}}"></option>
             </select>
             <div class="flex-row">
                 <label for="field-genre-id"><h4 th:text="#{sound.genre}"></h4></label>

@@ -8,25 +8,25 @@
     <script type="module" th:src="@{~/js/common/sound-loader.js}"></script>
 </th:block>
 <div class="flex-col" th:fragment="content">
-    <h1 th:text="${viewedUser.getUsername()}"></h1>
-    <input type="number" id="field-user-id" th:value="${viewedUser.getId()}" hidden>
+    <h1 th:text="${viewedUser.username}"></h1>
+    <input type="number" id="field-user-id" th:value="${viewedUser.id}" hidden>
     <div class="flex-row">
         <div class="flex-col">
-            <img id="profile-img" th:src="@{'/api/get-profile-picture?id=' + ${viewedUser.getProfilePicture().getId()}}" alt="profile picture">
+            <img id="profile-img" th:src="@{'/api/get-profile-picture?id=' + ${viewedUser.profilePicture.id}}" alt="profile picture">
             <span id="registration-date">
-                <th:block th:text="#{user.view.since}"></th:block> <th:block th:text="${#dates.year(viewedUser.getRegistrationDate())}"></th:block>
+                <th:block th:text="#{user.view.since}"></th:block> <th:block th:text="${#dates.year(viewedUser.registrationDate)}"></th:block>
             </span>
         </div>
         <div id="bio-container" class="flex-col">
             <h3 id="bio-label" th:text="#{user.bio}"></h3>
-            <p th:text="${viewedUser.getBio()}"></p>
+            <p th:text="${viewedUser.bio}"></p>
         </div>
     </div>
     <h2 th:text="#{user.view.uploads}"></h2>
     <div id="sound-card-container"></div>
     <div hidden>
         <div th:replace="~{fragments/sound-card :: sound-card}"></div>
-        <span th:each="g : ${genres}" th:id="${'genre-' + g.getName()}" th:text="#{'genre.' + ${g.getName()}}"></span>
+        <span th:each="g : ${genres}" th:id="${'genre-' + g.name}" th:text="#{'genre.' + ${g.name}}"></span>
     </div>
 </div>
 </div>
