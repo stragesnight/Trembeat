@@ -26,7 +26,9 @@ public class SoundController {
 
     @GetMapping("/sound")
     public ModelAndView getIndex() {
-        return new ModelAndView("sound/index", "orderFields", Sound.orderableFields);
+        return new ModelAndView("sound/index", Map.of(
+                "orderFields", Sound.orderableFields,
+                "genres", _genreRepo.findAll()));
     }
 
     @Secured("ROLE_USER")

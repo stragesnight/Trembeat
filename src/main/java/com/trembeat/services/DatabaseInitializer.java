@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Component
 public class DatabaseInitializer implements ApplicationRunner {
@@ -30,9 +29,19 @@ public class DatabaseInitializer implements ApplicationRunner {
         Role roleUser = _roleRepo.findByName("ROLE_USER").orElseGet(() -> _roleRepo.save(new Role("ROLE_USER")));
 
         if (_genreRepo.count() < 1) {
-            _genreRepo.save(new Genre("genre1"));
-            _genreRepo.save(new Genre("genre2"));
-            _genreRepo.save(new Genre("genre3"));
+            _genreRepo.save(new Genre("alternative"));
+            _genreRepo.save(new Genre("ambient"));
+            _genreRepo.save(new Genre("blues"));
+            _genreRepo.save(new Genre("classical"));
+            _genreRepo.save(new Genre("edm"));
+            _genreRepo.save(new Genre("folk"));
+            _genreRepo.save(new Genre("jazz"));
+            _genreRepo.save(new Genre("metal"));
+            _genreRepo.save(new Genre("new_age"));
+            _genreRepo.save(new Genre("pop"));
+            _genreRepo.save(new Genre("rnb"));
+            _genreRepo.save(new Genre("rock"));
+            _genreRepo.save(new Genre("other"));
         }
 
         Image defaultImage = _imageRepo.findById(1L).orElseGet(() -> {

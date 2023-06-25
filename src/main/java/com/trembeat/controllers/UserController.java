@@ -1,7 +1,7 @@
 package com.trembeat.controllers;
 
 import com.trembeat.domain.models.*;
-import com.trembeat.domain.repository.UserRepository;
+import com.trembeat.domain.repository.*;
 import com.trembeat.domain.viewmodels.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserRepository _userRepo;
+    @Autowired
+    private GenreRepository _genreRepo;
 
 
     @GetMapping("/login")
@@ -54,6 +57,8 @@ public class UserController {
         }
 
         UserViewModel viewModel = new UserViewModel(optionalUser.get());
-        return new ModelAndView("user/view", "viewedUser", viewModel);
+        return new ModelAndView("user/view", Map.of(
+                "viewedUser", viewModel,
+                "genres", _genreRepo.findAll()));
     }
 }

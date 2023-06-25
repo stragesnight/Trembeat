@@ -9,7 +9,7 @@
                 <span>&mdash;</span>
                 <a class="sound-title btn-secondary" th:href="@{'/sound/' + ${sound?.getId()}}" th:text="${sound?.getTitle()} ?: ''"></a>
             </div>
-            <span class="sound-genre btn-secondary" th:text="${sound?.getGenreName()} ?: ''"></span>
+            <span class="sound-genre btn-secondary" th:text="#{'genre.' + ${sound?.getGenreName() ?: 'other'}}"></span>
         </div>
         <div class="flex-row sound-play-container">
             <button class="sound-button-play">&#x23F5;</button>

@@ -19,6 +19,7 @@
     <div id="sound-card-container"></div>
     <div hidden>
         <div th:replace="~{fragments/sound-card :: sound-card}"></div>
+        <span th:each="g : ${genres}" th:id="${'genre-' + g.getName()}" th:text="#{'genre.' + ${g.getName()}}"></span>
     </div>
 </div>
 </div>

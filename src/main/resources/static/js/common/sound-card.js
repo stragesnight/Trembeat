@@ -22,7 +22,7 @@ class SoundCard {
             this.card.querySelector(".sound-author").href = `/user/${this.sound.author.id}`
             this.card.querySelector(".sound-title").innerText = this.sound.title
             this.card.querySelector(".sound-title").href = `/sound/${this.sound.id}`
-            this.card.querySelector(".sound-genre").innerText = this.sound.genreName
+            this.card.querySelector(".sound-genre").innerText = document.getElementById(`genre-${this.sound.genreName}`).innerText
             this.audio.src = `/api/get-sound-data?id=${this.sound.id}`
 
             for (let node of this.card.querySelectorAll(".sound-id"))
