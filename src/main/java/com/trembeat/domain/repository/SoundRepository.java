@@ -13,12 +13,29 @@ import java.util.List;
  */
 public interface SoundRepository extends JpaRepository<Sound, Long> {
     /**
-     * Find all sounds that match given title
+     * Find all sounds that match given title or username or genre name
      * @param title Title of sound to be found
+     * @param username Username of author to be found
+     * @param genreName Genre name of sound to be found
      * @param pageable Pagination to apply for query
      * @return Set of found sounds
      */
-    Page<Sound> findAllByTitleLikeIgnoreCase(String title, Pageable pageable);
+    Page<Sound> findAllByTitleLikeIgnoreCaseOrAuthor_UsernameLikeIgnoreCaseOrGenre_NameLikeIgnoreCase(
+            String title,
+            String username,
+            String genreName,
+            Pageable pageable);
+
+    /**
+     * Find all sounds that match given query
+     * @param query Search query
+     * @param pageable Pagination to apply for query
+     * @return Set of found sounds
+     */
+    default Page<Sound> findAllByQuery(String query, Pageable pageable) {
+        return findAllByTitleLikeIgnoreCaseOrAuthor_UsernameLikeIgnoreCaseOrGenre_NameLikeIgnoreCase(
+                query, query, query, pageable);
+    }
 
     /**
      * Find all sounds uploaded by user with given id
@@ -29,18 +46,25 @@ public interface SoundRepository extends JpaRepository<Sound, Long> {
     Page<Sound> findAllByAuthor_Id(Long authorId, Pageable pageable);
 
     /**
-     * Find all sound that match given title and author id
-     * @param title Title of sound to be found
-     * @param authorId Id of author of sound to find
-     * @param pageable Pagination to apply for query
-     * @return Set of found sounds
+     * Find first 10 matching sounds by given title or username or genre name
+     * @param title Partial title to search for
+     * @param username Username of author to be found
+     * @param genreName Genre name of sound to be found
+     * @return Set of found sound titles
      */
-    Page<Sound> findAllByTitleLikeIgnoreCaseAndAuthor_Id(String title, Long authorId, Pageable pageable);
+    List<Sound> findTop10ByTitleLikeIgnoreCaseOrAuthor_UsernameLikeIgnoreCaseOrGenre_NameLikeIgnoreCase(
+            String title, String username, String genreName);
 
     /**
-     * Find first 10 matching sounds by given title
-     * @param title Partial title to search for
-     * @return Set of found sounds
+     * Find top 10 sound titles that match given query
+     * @param query Search query
+     * @return List of found sound titles
      */
-    List<Sound> findTop10ByTitleLikeIgnoreCase(String title);
+    default List<String> findTop10TitlesByQuery(String query) {
+        return findTop10ByTitleLikeIgnoreCaseOrAuthor_UsernameLikeIgnoreCaseOrGenre_NameLikeIgnoreCase(
+                        query, query, query)
+                .stream()
+                .map(Sound::getTitle)
+                .toList();
+    }
 }

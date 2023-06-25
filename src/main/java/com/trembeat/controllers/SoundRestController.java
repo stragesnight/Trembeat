@@ -82,15 +82,8 @@ public class SoundRestController extends GenericContentController {
         Page<Sound> sounds = null;
         String titleString = String.format("%%%s%%", title.orElse(""));
 
-        if (title.isPresent() && authorId.isPresent()) {
-            sounds = _soundRepo.findAllByTitleLikeIgnoreCaseAndAuthor_Id(
-                    titleString,
-                    authorId.get(),
-                    pageRequest);
-        } else if (title.isPresent()) {
-            sounds = _soundRepo.findAllByTitleLikeIgnoreCase(
-                    titleString,
-                    pageRequest);
+        if (title.isPresent()) {
+            sounds = _soundRepo.findAllByQuery(titleString, pageRequest);
         } else if (authorId.isPresent()) {
             sounds = _soundRepo.findAllByAuthor_Id(
                     authorId.get(),
@@ -109,12 +102,9 @@ public class SoundRestController extends GenericContentController {
         if (title.isBlank())
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        List<Sound> sounds = _soundRepo.findTop10ByTitleLikeIgnoreCase(
-                String.format("%%%s%%", title));
-        if (sounds.isEmpty())
+        List<String> titles = _soundRepo.findTop10TitlesByQuery(String.format("%%%s%%", title));
+        if (titles.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
-        List<String> titles = sounds.stream().map(Sound::getTitle).toList();
 
         return new ResponseEntity<>(new Response(titles), null, HttpStatus.OK);
     }
