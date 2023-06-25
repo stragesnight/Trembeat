@@ -34,7 +34,7 @@
         </div>
         <div class="flex-col">
             <input type="file" id="field-file" th:field="*{file}" required hidden>
-            <button id="redirect-field-file" th:text="#{select_file}"></button>
+            <button type="button" id="redirect-field-file" th:text="#{select_file}"></button>
             <div class="flex-row">
                 <label for="field-file"><h4 th:text="#{sound.audio_file}"></h4></label>
                 <span id="file-error" class="form-error"></span>
@@ -42,7 +42,7 @@
         </div>
         <div class="flex-col">
             <input type="file" id="field-cover" th:field="*{cover}" required hidden>
-            <button id="redirect-field-cover" th:text="#{select_file}"></button>
+            <button type="button" id="redirect-field-cover" th:text="#{select_file}"></button>
             <div class="flex-row">
                 <label for="field-cover"><h4 th:text="#{sound.cover_image}"></h4></label>
                 <span id="cover-error" class="form-error"></span>

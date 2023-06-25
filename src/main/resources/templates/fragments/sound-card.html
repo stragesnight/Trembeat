@@ -12,7 +12,7 @@
             <span class="sound-genre btn-secondary" th:text="#{'genre.' + ${sound?.genreName ?: 'other'}}"></span>
         </div>
         <div class="flex-row sound-play-container">
-            <button class="sound-button-play">&#x23F5;</button>
+            <button type="button" class="sound-button-play">&#x23F5;</button>
             <div class="flex-col sound-time-container">
                 <audio class="audio-source" th:src="${'/api/get-sound-data?id=' + sound?.id} ?: ''" preload="metadata"></audio>
                 <div class="flex-row sound-time">
@@ -22,14 +22,14 @@
                 </div>
                 <input type="range" class="sound-time-track" min="0" max="100" value="0">
             </div>
-            <button class="sound-button btn-sound-share" th:text="#{sound_card.share}"></button>
+            <button type="button" class="sound-button btn-sound-share" th:text="#{sound_card.share}"></button>
             <th:block th:if="${#authorization.expr('!isAnonymous()')}">
                 <form class="sound-form-bump" th:action="@{~/api/bump-sound}" th:method="post">
                     <input type="hidden" name="id" class="sound-id" th:value="${sound?.id} ?: ''">
                     <button type="submit" class="sound-button" th:text="#{sound_card.bump}"></button>
                 </form>
                 <th:block th:if="${sound != null && sound.author.id == #authentication.principal.id}">
-                    <button class="sound-button btn-sound-action">...</button>
+                    <button type="button" class="sound-button btn-sound-action">...</button>
                     <div hidden>
                         <ul class="menu menu-sound-action">
                             <li><a th:href="@{'/sound/edit/' + ${sound.id}}"><span th:text="#{sound_card.edit}"></span></a></li>

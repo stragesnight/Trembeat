@@ -9,7 +9,7 @@
     <form id="form-edit-user" class="flex-col main-form" th:action="@{~/api/patch-user}" th:method="post" th:object="${user}">
         <div class="flex-col">
             <input type="file" id="field-profile-picture" th:field="*{profilePicture}" hidden>
-            <button id="redirect-field-profile-picture" th:text="#{select_file}"></button>
+            <button type="button" id="redirect-field-profile-picture" th:text="#{select_file}"></button>
             <div class="flex-row">
                 <label for="field-profile-picture"><h4 th:text="#{user.profile_picture}"></h4></label>
                 <span id="profilePicture-error" class="form-error"></span>
